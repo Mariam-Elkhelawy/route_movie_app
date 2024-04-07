@@ -10,14 +10,16 @@ class HomeRepoImplementation implements HomeRepo {
   HomeRepoImplementation(this.homeRemoteDS);
 
   @override
-  Future<Either<Failures, PopularFilmModel>> filmSlide(
-      PopularFilmModel popularFilm) async {
+  Future<Either<Failures, PopularFilmModel>> getPopularFilms() async {
     try {
-      PopularFilmModel popularFilmModel =
-          await homeRemoteDS.slideFilm(popularFilm);
+      PopularFilmModel popularFilmModel = await homeRemoteDS.getPopularFilms();
       return Right(popularFilmModel);
     } catch (e) {
-      return Left(RemoteFailures(e.toString()));
+      return Left(
+        RemoteFailures(
+          e.toString(),
+        ),
+      );
     }
   }
 }
