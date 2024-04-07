@@ -16,8 +16,9 @@ class BrowseRemoteDSImplement implements BrowseRemoteDS {
       "api_key": Constants.apiKey,
     });
     MovieListModel movieListModel = MovieListModel.fromJson(
-      json.decode(response.data),
+      jsonDecode(response.data.toString()),
     );
+
     return movieListModel;
   }
 }
