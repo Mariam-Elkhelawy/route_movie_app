@@ -93,7 +93,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
 List<Widget> screens = [
   const HomeTab(),
   const SearchTab(),
-  const BrowseTab(),
+   BrowseTab(),
   const WatchListTab()
 ];
 
