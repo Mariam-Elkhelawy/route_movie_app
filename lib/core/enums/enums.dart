@@ -1,5 +1,5 @@
 
-enum BrowseStatus {
+enum ScreenStatus {
   initial,
   loading,
   success,

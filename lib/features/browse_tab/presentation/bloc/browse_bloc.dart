@@ -16,12 +16,12 @@ class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
       // TODO: implement event handler
     });
     on<GetMovieListEvent>((event , emit)async{
-      emit(state.copyWith(status: BrowseStatus.loading));
+      emit(state.copyWith(status: ScreenStatus.loading));
       var result = await browseUseCase.call(event.genres);
       result.fold((l) {
-        emit(state.copyWith(status: BrowseStatus.failure, failures: l));
+        emit(state.copyWith(status: ScreenStatus.failure, failures: l));
       }, (r) {
-        emit(state.copyWith(status: BrowseStatus.success, movieList: r));
+        emit(state.copyWith(status: ScreenStatus.success, movieList: r));
       } );
 
     });

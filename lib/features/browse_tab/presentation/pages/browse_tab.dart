@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
-
 import '../../../../core/enums/enums.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../data/remote/data_sources/browse_remote_ds_impl.dart';
@@ -31,7 +30,7 @@ class BrowseTab extends StatelessWidget {
      ..add(GetMovieListEvent(genres: genres)),
       child: BlocConsumer<BrowseBloc, BrowseState>(
         listener: (context, state) {
-          if (state.status == BrowseStatus.loading) {
+          if (state.status == ScreenStatus.loading) {
             showDialog(
               context: context,
               builder: (context) {
@@ -43,7 +42,7 @@ class BrowseTab extends StatelessWidget {
           } /*else if(state.status == BrowseStatus.success){
             BlocProvider.of<BrowseBloc>(context).add(GetMovieListEvent(genres: genres));
           }*/
-          else if (state.status == BrowseStatus.failure) {
+          else if (state.status == ScreenStatus.failure) {
             showDialog(
               context: context,
               builder: (context) => Center(
