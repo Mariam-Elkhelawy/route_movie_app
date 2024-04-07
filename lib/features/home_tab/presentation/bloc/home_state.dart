@@ -18,5 +18,5 @@ class HomeState {
 }
 
 final class HomeInitialState extends HomeState {
-  HomeInitialState() : super(screenStatus: ScreenStatus.init);
+  HomeInitialState() : super(screenStatus: ScreenStatus.initial);
 }
