@@ -1,1 +1,8 @@
-enum ScreenStatus { init, loading, success, failure }
+
+enum BrowseStatus {
+  initial,
+  loading,
+  success,
+  failure,
+}
+
