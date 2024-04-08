@@ -24,7 +24,7 @@ class HomeTab extends StatelessWidget {
             HomeRemoteDSImplementation(),
           ),
         ),
-      )..add(HomePopularFilmEvent()),
+      ),
       child: BlocConsumer<HomeBloc, HomeState>(listener: (context, state) {
         if (state.screenStatus == ScreenStatus.loading) {
           showDialog(
