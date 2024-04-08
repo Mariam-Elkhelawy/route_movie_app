@@ -12,7 +12,7 @@ import '../bloc/browse_bloc.dart';
 import '../widgets/browse_category_item.dart';
 
 class BrowseTab extends StatelessWidget {
-   BrowseTab({super.key});
+  BrowseTab({super.key});
 
   List<Genres>? genres;
 
@@ -27,7 +27,7 @@ class BrowseTab extends StatelessWidget {
           ),
         ),
       )
-     ..add(GetMovieListEvent(genres: genres)),
+        ..add(GetMovieListEvent(genres: genres)),
       child: BlocConsumer<BrowseBloc, BrowseState>(
         listener: (context, state) {
           if (state.status == ScreenStatus.loading) {
