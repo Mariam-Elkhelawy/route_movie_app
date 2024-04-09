@@ -7,7 +7,7 @@ import '../../data/remote/models/MovieListModel.dart';
 class BrowseUseCase {
   BrowseRepo repo;
   BrowseUseCase(this.repo);
-  Future<Either<Failures, MovieListModel>> call(List<Genres>? genres) {
-    return repo.getMovieList(genres);
+  Future<Either<Failures, MovieListModel>> call() {
+    return repo.getMovieList();
   }
 }

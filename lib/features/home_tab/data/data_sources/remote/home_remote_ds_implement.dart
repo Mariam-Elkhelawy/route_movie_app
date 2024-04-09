@@ -10,11 +10,15 @@ class HomeRemoteDSImplementation implements HomeRemoteDS {
   @override
   Future<PopularFilmModel> getPopularFilms() async {
     ApiManager apiManager = ApiManager();
-    Response response = await apiManager.getData(EndPoints.popular, {
-      "Authorization":
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkODczNWEwYzVkMTI0YmQ0N2IwY2UzZjQ5MGEwZDE0MCIsInN1YiI6IjY2MDBiNTc2MTk3ZGU0MDE0OTE1ODE4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._dIN6k4iZg07W874BU5xWsWijkQC5lZ_kwRXgy2oj4s",
-       "accept": "application/json"
-    });
+    Response response = await apiManager.getData(
+      endPoint: EndPoints.popular,
+      queryParameters: {'language': 'en-US'},
+      headers: {
+        "Authorization":
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkODczNWEwYzVkMTI0YmQ0N2IwY2UzZjQ5MGEwZDE0MCIsInN1YiI6IjY2MDBiNTc2MTk3ZGU0MDE0OTE1ODE4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._dIN6k4iZg07W874BU5xWsWijkQC5lZ_kwRXgy2oj4s",
+        "accept": "application/json"
+      },
+    );
     PopularFilmModel popularFilmModel =
         PopularFilmModel.fromJson(response.data);
     return popularFilmModel;
