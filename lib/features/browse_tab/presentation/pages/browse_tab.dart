@@ -26,11 +26,10 @@ class BrowseTab extends StatelessWidget {
             BrowseRemoteDSImplement(),
           ),
         ),
-      )
-        ..add(GetMovieListEvent(genres: genres)),
+      )..add(GetMovieListEvent()),
       child: BlocConsumer<BrowseBloc, BrowseState>(
         listener: (context, state) {
-          if (state.status == ScreenStatus.loading) {
+          /*if (state.status == ScreenStatus.loading) {
             showDialog(
               context: context,
               builder: (context) {
@@ -39,10 +38,10 @@ class BrowseTab extends StatelessWidget {
                 );
               },
             );
-          } /*else if(state.status == BrowseStatus.success){
-            BlocProvider.of<BrowseBloc>(context).add(GetMovieListEvent(genres: genres));
+          } else if(state.status == ScreenStatus.success){
+            BlocProvider.of<BrowseBloc>(context).add(GetMovieListEvent());
           }*/
-          else if (state.status == ScreenStatus.failure) {
+          if (state.status == ScreenStatus.failure) {
             showDialog(
               context: context,
               builder: (context) => Center(
@@ -81,10 +80,10 @@ class BrowseTab extends StatelessWidget {
                       childAspectRatio: 1.7 / 1,
                     ),
                     itemBuilder: (context, index) => BrowseCategoryItem(
-                      genres: state.movieList?.genres![index] ?? Genres(/*id: index, name: genres![index].name ?? "unknown"*/),
+                      genres: state.movieList!.genres![index],
                       text: state.movieList!.genres?[index].name ?? "unknown",
                     ),
-                    itemCount: BlocProvider.of<BrowseBloc>(context).state.movieList?.genres?.length,
+                    itemCount: BlocProvider.of<BrowseBloc>(context).state.movieList?.genres?.length ??0,
                   ),
                 ),
               ],

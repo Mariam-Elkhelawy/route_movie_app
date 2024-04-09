@@ -9,9 +9,9 @@ class BrowseRepoImplement implements BrowseRepo {
   BrowseRepoImplement(this.browseRemoteDS);
   @override
   Future<Either<Failures, MovieListModel>> getMovieList(
-      List<Genres>? genres) async {
+      ) async {
     try {
-      var movieListModel = await browseRemoteDS.getMovieList(genres);
+      var movieListModel = await browseRemoteDS.getMovieList();
       return Right(movieListModel);
     } catch (e) {
       return Left(
