@@ -10,6 +10,8 @@ import 'package:route_movie_app/core/utils/styles.dart';
 import 'package:route_movie_app/features/home_tab/data/data_sources/remote/home_remote_ds_implement.dart';
 import 'package:route_movie_app/features/home_tab/data/repositories/home_repo_implement.dart';
 import 'package:route_movie_app/features/home_tab/domain/use_cases/get_popular_films_use_case.dart';
+import 'package:route_movie_app/features/home_tab/domain/use_cases/get_recommended_usecase.dart';
+import 'package:route_movie_app/features/home_tab/domain/use_cases/get_upcoming_films_usecase.dart';
 import 'package:route_movie_app/features/home_tab/presentation/bloc/home_bloc.dart';
 import 'package:route_movie_app/features/home_tab/presentation/widgets/new_relase_films.dart';
 import 'package:route_movie_app/features/home_tab/presentation/widgets/popular_film_widget.dart';
@@ -27,7 +29,22 @@ class HomeTab extends StatelessWidget {
             HomeRemoteDSImplementation(),
           ),
         ),
-      )..add(HomePopularFilmEvent()),
+        GetUpComingUseCase(
+          HomeRepoImplementation(
+            HomeRemoteDSImplementation(),
+          ),
+        ),
+        GetRecommendedUseCase(
+          HomeRepoImplementation(
+            HomeRemoteDSImplementation(),
+          ),
+        ),
+      )
+        ..add(
+          HomePopularFilmEvent(),
+        )
+        ..add(HomeUpComingFilmEvent())
+        ..add(HomeRecommendedFilmEvent()),
       child: BlocConsumer<HomeBloc, HomeState>(listener: (context, state) {
         if (state.screenStatus == ScreenStatus.loading) {
           showDialog(
@@ -76,7 +93,8 @@ class HomeTab extends StatelessWidget {
                               .releaseDate ??
                           '',
                       filmTitle:
-                          state.popularFilmModel?.results?[itemIndex].title ?? '',
+                          state.popularFilmModel?.results?[itemIndex].title ??
+                              '',
                     );
                   },
                   options: CarouselOptions(
@@ -96,25 +114,30 @@ class HomeTab extends StatelessWidget {
                   child: Container(
                     width: double.infinity,
                     height: 187.h,
-                    color: Color(0xFF282A28),
+                    color: AppColor.moviesContainerBgColor,
                     margin: EdgeInsets.symmetric(vertical: 10.h),
-                    padding: EdgeInsets.only(left: 16.w, top: 8.h,bottom: 16.h),
+                    padding:
+                        EdgeInsets.only(left: 16.w, top: 8.h, bottom: 16.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'New Releases ',
-                          style: AppStyles.bodyMedium.copyWith(fontSize: 15),
+                          AppStrings.newReleases,
+                          style: AppStyles.bodyMedium.copyWith(fontSize: 15.sp),
                         ),
                         SizedBox(height: 12.h),
                         Expanded(
                           child: ListView.separated(
                             itemBuilder: (context, index) {
-                              return NewReleasesFilms();
+                              return NewReleasesFilms(
+                                filmImage:
+                                    '${Constants.imagePath}${state.upComingFilmModel?.results?[index].posterPath ?? ''} ',
+                              );
                             },
                             itemCount: 12,
                             scrollDirection: Axis.horizontal,
-                            separatorBuilder: (BuildContext context, int index) {
+                            separatorBuilder:
+                                (BuildContext context, int index) {
                               return SizedBox(
                                 width: 12.w,
                               );
@@ -125,25 +148,29 @@ class HomeTab extends StatelessWidget {
                     ),
                   ),
                 ),
-            
                 Container(
                   width: double.infinity,
                   height: 246.h,
-                  color: Color(0xFF282A28),
+                  color: AppColor.moviesContainerBgColor,
                   margin: EdgeInsets.symmetric(vertical: 12.h),
-                  padding: EdgeInsets.only(left: 16.w, top: 8.h,bottom: 16.h),
+                  padding: EdgeInsets.only(left: 16.w, top: 8.h, bottom: 16.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Recommended ',
+                        AppStrings.recommended,
                         style: AppStyles.bodyMedium.copyWith(fontSize: 15.sp),
                       ),
                       SizedBox(height: 10.h),
                       Expanded(
                         child: ListView.separated(
                           itemBuilder: (context, index) {
-                            return RecommendedFilms();
+                            return RecommendedFilms(
+                              filmImage:
+                                  '${Constants.imagePath}${state.recommendedFilmModel?.results?[index].posterPath ?? ''} ',
+                              filmDate: state.recommendedFilmModel?.results?[index].releaseDate ?? '',filmName:state.recommendedFilmModel?.results?[index].title ?? '' ,
+                              filmRating:' ${state.recommendedFilmModel?.results?[index].popularity??'' }',
+                            );
                           },
                           itemCount: 12,
                           scrollDirection: Axis.horizontal,
@@ -157,7 +184,6 @@ class HomeTab extends StatelessWidget {
                     ],
                   ),
                 ),
-            
               ],
             ),
           ),

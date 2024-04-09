@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NewReleasesFilms extends StatefulWidget {
-  NewReleasesFilms({super.key});
+  NewReleasesFilms({super.key, required this.filmImage});
+  String filmImage;
 
   @override
   State<NewReleasesFilms> createState() => _NewReleasesFilmsState();
@@ -10,7 +11,6 @@ class NewReleasesFilms extends StatefulWidget {
 
 class _NewReleasesFilmsState extends State<NewReleasesFilms> {
   bool watchlist = false;
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -19,14 +19,14 @@ class _NewReleasesFilmsState extends State<NewReleasesFilms> {
           borderRadius: BorderRadius.circular(4.r),
           child: InkWell(
             onTap: () {},
-            child: Image.asset(
-              'assets/images/new_relase.png',
+            child: Image.network(
+              widget.filmImage,
               height: 128.h,
               width: 97.w,
             ),
           ),
         ),
-         InkWell(
+        InkWell(
           onTap: () {
             watchlist = true;
             setState(() {});
