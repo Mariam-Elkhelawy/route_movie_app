@@ -5,4 +5,5 @@ class AppStrings {
   static const String watchList = 'WATCHLIST';
   static const String error = 'Error !';
   static const String wrong = "Something went wrong";
+  static const String apiKey = "api_key";
 }

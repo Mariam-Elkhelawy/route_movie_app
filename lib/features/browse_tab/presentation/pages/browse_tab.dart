@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:route_movie_app/config/routes/app_routes_names.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/utils/app_strings.dart';
@@ -12,25 +13,23 @@ import '../bloc/browse_bloc.dart';
 import '../widgets/browse_category_item.dart';
 
 class BrowseTab extends StatelessWidget {
-   BrowseTab({super.key});
+  BrowseTab({super.key});
 
   List<Genres>? genres;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-      BrowseBloc(
+      create: (context) => BrowseBloc(
         BrowseUseCase(
           BrowseRepoImplement(
             BrowseRemoteDSImplement(),
           ),
         ),
-      )
-     ..add(GetMovieListEvent(genres: genres)),
+      )..add(GetMovieListEvent()),
       child: BlocConsumer<BrowseBloc, BrowseState>(
         listener: (context, state) {
-          if (state.status == ScreenStatus.loading) {
+          /*  if (state.status == ScreenStatus.loading) {
             showDialog(
               context: context,
               builder: (context) {
@@ -39,10 +38,10 @@ class BrowseTab extends StatelessWidget {
                 );
               },
             );
-          } /*else if(state.status == BrowseStatus.success){
-            BlocProvider.of<BrowseBloc>(context).add(GetMovieListEvent(genres: genres));
+          }*/ /*else if(state.status == ScreenStatus.success){
+            BlocProvider.of<BrowseBloc>(context).add(GetMovieListEvent());
           }*/
-          else if (state.status == ScreenStatus.failure) {
+          if (state.status == ScreenStatus.failure) {
             showDialog(
               context: context,
               builder: (context) => Center(
@@ -55,7 +54,6 @@ class BrowseTab extends StatelessWidget {
               ),
             );
           }
-
         },
         builder: (context, state) {
           return Padding(
@@ -72,19 +70,38 @@ class BrowseTab extends StatelessWidget {
                 ),
                 Expanded(
                   child: GridView.builder(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 20.h, horizontal: 5.h),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 20.h, horizontal: 5.h),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, // number of items in each row
                       mainAxisSpacing: 30, // spacing between rows
                       crossAxisSpacing: 40,
                       childAspectRatio: 1.7 / 1,
                     ),
                     itemBuilder: (context, index) => BrowseCategoryItem(
-                      genres: state.movieList?.genres![index] ?? Genres(/*id: index, name: genres![index].name ?? "unknown"*/),
+                      genres: state.movieList!.genres![index],
                       text: state.movieList!.genres?[index].name ?? "unknown",
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutesNames.discoverMovie,
+                          arguments: Map<String, dynamic>.from({
+                            "genreName": state.movieList!.genres![index].name,
+                            "genreId": state.movieList!.genres![index].id
+                          })
+
+                        );
+
+
+                      },
                     ),
-                    itemCount: BlocProvider.of<BrowseBloc>(context).state.movieList?.genres?.length,
+                    itemCount: BlocProvider.of<BrowseBloc>(context)
+                            .state
+                            .movieList
+                            ?.genres
+                            ?.length ??
+                        0,
                   ),
                 ),
               ],

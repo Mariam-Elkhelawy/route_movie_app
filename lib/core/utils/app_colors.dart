@@ -10,4 +10,5 @@ class AppColor{
   static const Color whiteColor=Colors.white;
   static const Color movieItemBgColor = Color(0xFF343534);
   static const Color blackColor = Color(0xFF000000);
+  static const Color bgAppBar = Color(0xFF1D1E1D);
 }
