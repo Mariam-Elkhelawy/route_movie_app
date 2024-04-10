@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:route_movie_app/core/utils/app_strings.dart';
 import 'package:route_movie_app/core/utils/constants.dart';
 
 class ApiManager {
@@ -8,9 +9,13 @@ class ApiManager {
   }
 
   Future<Response> getData(
-      String endPoint, Map<String, dynamic>? queryParameters) {
-    return dio.get(Constants.baseURL + endPoint,
-        queryParameters: queryParameters);
+      {required String endPoint,
+      Map<String, dynamic>? queryParameters,
+      Map<String, dynamic>? headers}) {
+    return dio.get('${Constants.baseURL}$endPoint?${AppStrings.apiKey}=${Constants.apiKey}',
+        queryParameters: queryParameters,options: Options(
+          headers: headers
+        ));
   }
 
   postData(String endPoint, Map<String, dynamic>? data) {

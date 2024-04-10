@@ -28,7 +28,7 @@ class CustomWatchList extends StatelessWidget {
                 Stack(
                   alignment: Alignment.topLeft,
                   children: [
-                    Image.asset(filmImage),
+                    Image.network(filmImage),
                     if (isWatchList)
                       Image.asset(
                         'assets/images/ic_watchList_bookmark.png',

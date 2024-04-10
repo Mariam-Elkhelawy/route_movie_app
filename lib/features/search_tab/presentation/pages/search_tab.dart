@@ -12,9 +12,17 @@ import 'package:route_movie_app/features/search_tab/domain/use_cases/search_use_
 import 'package:route_movie_app/features/search_tab/presentation/bloc/search_bloc.dart';
 import 'package:route_movie_app/features/search_tab/presentation/widgets/custom_watchlist.dart';
 
-class SearchTab extends StatelessWidget {
+class SearchTab extends StatefulWidget {
   SearchTab({super.key});
+
+  @override
+  State<SearchTab> createState() => _SearchTabState();
+}
+
+class _SearchTabState extends State<SearchTab> {
   TextEditingController searchController = TextEditingController();
+
+  String searchKey = '';
 
   @override
   Widget build(BuildContext context) {
@@ -25,23 +33,25 @@ class SearchTab extends StatelessWidget {
             SearchRemoteDSImplementation(),
           ),
         ),
-      ),
+      )..add(SearchFilmEvent( searchKey)),
       child: BlocConsumer<SearchBloc, SearchState>(
         listener: (context, state) {
-          if (state.screenStatus == ScreenStatus.loading) {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const AlertDialog(
-                  title: Center(
-                    child: CircularProgressIndicator(
-                      color: AppColor.primaryColor,
-                    ),
-                  ),
-                );
-              },
-            );
-          } else if (state.screenStatus == ScreenStatus.success) {
+          // if (state.screenStatus == ScreenStatus.loading) {
+          //   showDialog(
+          //     context: context,
+          //     builder: (context) {
+          //       return const AlertDialog(
+          //         title: Center(
+          //           child: CircularProgressIndicator(
+          //             color: AppColor.primaryColor,
+          //           ),
+          //         ),
+          //       );
+          //     },
+          //   );
+          // }
+           if (state.screenStatus == ScreenStatus.success) {
+            BlocProvider.of<SearchBloc>(context).add(SearchFilmEvent(searchKey));
             ListView.builder(
               itemBuilder: (context, index) {
                 CustomWatchList(
@@ -58,11 +68,11 @@ class SearchTab extends StatelessWidget {
               },
               itemCount: state.searchFilmModel?.results?.length,
             );
-          } else if (state.screenStatus == ScreenStatus.failure) {
+          }
+          if (state.screenStatus == ScreenStatus.failure) {
             showDialog(
               context: context,
               builder: (context) {
-                print(state.failures?.message);
                 return AlertDialog(
                   title: const Text(AppStrings.error),
                   content: Text(state.failures?.message ?? ""),
@@ -79,11 +89,10 @@ class SearchTab extends StatelessWidget {
                 children: [
                   SizedBox(height: 20.h),
                   TextFormField(
-                    onChanged: (value) {
-                      searchController.text = value;
-                      BlocProvider.of<SearchBloc>(context)
-                          .add(SearchFilmEvent(value));
-                    },
+                      onChanged: (String? value) {
+                        searchKey = value ?? '';
+                        setState(() {});
+                      },
                     controller: searchController,
                     style: AppStyles.bodyMedium,
                     cursorColor: const Color(0xFF48CFAD),
@@ -122,7 +131,7 @@ class SearchTab extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (searchController.text == '') ...[
+                  if ( searchKey == '') ...[
                     SizedBox(height: 250.h),
                     Image.asset('assets/images/no_movie.png'),
                     SizedBox(height: 10.h),
@@ -131,13 +140,13 @@ class SearchTab extends StatelessWidget {
                       style: AppStyles.bodyMedium,
                     ),
                   ],
-                  if (searchController.text != '') ...[
+                  if ( searchKey != '') ...[
                     ListView.builder(
                       itemBuilder: (context, index) {
                         CustomWatchList(
                           isWatchList: false,
                           filmImage:
-                              '${Constants.imagePath}${state.searchFilmModel?.results?[index].posterPath}',
+                              '${Constants.imagePath}${state.searchFilmModel?.results?[index].posterPath ?? ''} ',
                           filmName:
                               state.searchFilmModel?.results?[index].title ??
                                   '',
