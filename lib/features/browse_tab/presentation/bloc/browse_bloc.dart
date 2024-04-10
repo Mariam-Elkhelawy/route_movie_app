@@ -14,11 +14,11 @@ part 'browse_state.dart';
 class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
   BrowseUseCase browseUseCase;
   BrowseBloc(this.browseUseCase) : super(BrowseInitialState()) {
-    on<BrowseEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+
     on<GetMovieListEvent>((event , emit)async{
+
       //emit(state.copyWith(status: ScreenStatus.loading));
+
       var result = await browseUseCase.call();
       result.fold((l) {
         emit(state.copyWith(status: ScreenStatus.failure, failures: l));
