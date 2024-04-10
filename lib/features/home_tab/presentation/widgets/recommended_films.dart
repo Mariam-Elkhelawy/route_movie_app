@@ -5,11 +5,16 @@ import 'package:route_movie_app/core/utils/styles.dart';
 import 'package:route_movie_app/features/home_tab/presentation/widgets/new_relase_films.dart';
 
 class RecommendedFilms extends StatelessWidget {
-   RecommendedFilms({super.key,required this.filmImage,required this.filmDate,required this.filmName,required this.filmRating});
-String filmImage;
-String filmRating;
-String filmName;
-String filmDate;
+  RecommendedFilms(
+      {super.key,
+      required this.filmImage,
+      required this.filmDate,
+      required this.filmName,
+      required this.filmRating});
+  String filmImage;
+  String filmRating;
+  String filmName;
+  String filmDate;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +27,7 @@ String filmDate;
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          NewReleasesFilms(filmImage:filmImage ),
+          NewReleasesFilms(filmImage: filmImage),
           Padding(
             padding: const EdgeInsets.all(6.0),
             child: Column(

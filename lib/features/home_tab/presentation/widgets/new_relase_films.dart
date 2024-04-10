@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:route_movie_app/core/utils/app_colors.dart';
 
 class NewReleasesFilms extends StatefulWidget {
   NewReleasesFilms({super.key, required this.filmImage});
@@ -17,13 +19,19 @@ class _NewReleasesFilmsState extends State<NewReleasesFilms> {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(4.r),
-          child: InkWell(
-            onTap: () {},
-            child: Image.network(
-              widget.filmImage,
-              height: 128.h,
-              width: 97.w,
+          child: CachedNetworkImage(
+            imageUrl: widget.filmImage,
+            fit: BoxFit.cover,
+            width: 97.w,
+            height: 128.h,
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                Center(
+              child: CircularProgressIndicator(
+                value: downloadProgress.progress,
+                color: AppColor.primaryColor,
+              ),
             ),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
         ),
         InkWell(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:route_movie_app/core/utils/app_colors.dart';
@@ -22,11 +23,18 @@ class PopularFilmWidget extends StatelessWidget {
       clipBehavior: Clip.none,
       alignment: Alignment.center,
       children: [
-        Image.network(
-          imageBackdropPath,
+        CachedNetworkImage(
+          imageUrl: imageBackdropPath,
           fit: BoxFit.cover,
           width: double.infinity,
           height: 217.h,
+          progressIndicatorBuilder: (context, url, downloadProgress) => Center(
+            child: CircularProgressIndicator(
+              value: downloadProgress.progress,
+              color: AppColor.primaryColor,
+            ),
+          ),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
         const Icon(
           Icons.play_circle,
@@ -43,10 +51,20 @@ class PopularFilmWidget extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(4),
-                    child: Image.network(
-                      imagePosterPath,
+                    child: CachedNetworkImage(
+                      imageUrl: imagePosterPath,
                       width: 129.w,
                       height: 199.h,
+                      fit: BoxFit.fill,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => Center(
+                        child: CircularProgressIndicator(
+                          value: downloadProgress.progress,
+                          color: AppColor.primaryColor,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                   InkWell(
