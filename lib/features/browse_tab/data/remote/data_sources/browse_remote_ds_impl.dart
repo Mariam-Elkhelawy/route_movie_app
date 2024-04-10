@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:route_movie_app/core/api/api_manager.dart';
 import 'package:route_movie_app/core/api/end_points.dart';
@@ -10,6 +10,7 @@ class BrowseRemoteDSImplement implements BrowseRemoteDS {
   @override
   Future<MovieListModel> getMovieList() async {
     ApiManager apiManager = ApiManager();
+
     Response response =
         await apiManager.getData(endPoint: EndPoints.movieList, headers: {
       "Authorization":
@@ -19,6 +20,27 @@ class BrowseRemoteDSImplement implements BrowseRemoteDS {
     });
     MovieListModel movieListModel = MovieListModel.fromJson(response.data);
 
-    return movieListModel;
+
+    
+    print(response.data.toString());
+    if (response.statusCode == 200) {
+      return movieListModel;
+    } else {
+      throw Exception('Failed to load album');
+    }
   }
+  /* Future<MovieListModel> getMovieList() async {
+      final response = await http.get(
+        Uri.parse(
+            'https://api.themoviedb.org/3/genre/movie/list?api_key=f4bfbdc2321bbb554ce4a12311137853&language=en-US'),
+      );
+      var genresResponse = MovieListModel.fromJson(jsonDecode(response.body));
+      if (response.statusCode == 200) {
+        return genresResponse;
+      } else {
+        throw Exception('Failed to load album');
+      }
+
+
+    }*/
 }

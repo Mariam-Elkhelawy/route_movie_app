@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:route_movie_app/core/errors/failures.dart';
@@ -14,7 +16,9 @@ class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
   BrowseBloc(this.browseUseCase) : super(BrowseInitialState()) {
 
     on<GetMovieListEvent>((event , emit)async{
-      emit(state.copyWith(status: ScreenStatus.loading));
+
+      //emit(state.copyWith(status: ScreenStatus.loading));
+
       var result = await browseUseCase.call();
       result.fold((l) {
         emit(state.copyWith(status: ScreenStatus.failure, failures: l));
