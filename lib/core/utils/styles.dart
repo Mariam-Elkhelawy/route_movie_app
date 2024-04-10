@@ -14,4 +14,7 @@ class AppStyles {
   );
   static TextStyle bodyMedium = GoogleFonts.inter(
       fontSize: 14.sp, fontWeight: FontWeight.w400, color: Colors.white);
+  static TextStyle titleAppBar = GoogleFonts.inter(
+      fontSize: 20.sp, fontWeight: FontWeight.w400, color: Colors.white
+  );
 }
