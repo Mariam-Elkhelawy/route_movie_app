@@ -33,7 +33,9 @@ class _SearchTabState extends State<SearchTab> {
             SearchRemoteDSImplementation(),
           ),
         ),
-      )..add(SearchFilmEvent( searchKey)),
+      )..add(
+          SearchFilmEvent(searchKey),
+        ),
       child: BlocConsumer<SearchBloc, SearchState>(
         listener: (context, state) {
           // if (state.screenStatus == ScreenStatus.loading) {
@@ -50,23 +52,25 @@ class _SearchTabState extends State<SearchTab> {
           //     },
           //   );
           // }
-           if (state.screenStatus == ScreenStatus.success) {
-            BlocProvider.of<SearchBloc>(context).add(SearchFilmEvent(searchKey));
-            ListView.builder(
-              itemBuilder: (context, index) {
-                CustomWatchList(
-                  isWatchList: false,
-                  filmImage:
-                      '${Constants.imagePath}${state.searchFilmModel?.results?[index].posterPath}',
-                  filmName: state.searchFilmModel?.results?[index].title ?? '',
-                  filmOverView:
-                      state.searchFilmModel?.results?[index].originalTitle ??
-                          '',
-                  filmYear:
-                      state.searchFilmModel?.results?[index].releaseDate ?? '',
-                );
-              },
-              itemCount: state.searchFilmModel?.results?.length,
+          if (state.screenStatus == ScreenStatus.success) {
+            // BlocProvider.of<SearchBloc>(context).add(SearchFilmEvent(searchKey));
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  CustomWatchList(
+                    isWatchList: false,
+                    filmImage:
+                        '${Constants.imagePath}${state.searchFilmModel?.results?[index].posterPath}',
+                    filmName: state.searchFilmModel?.results?[index].title ?? '',
+                    filmOverView:
+                        state.searchFilmModel?.results?[index].originalTitle ??
+                            '',
+                    filmYear:
+                        state.searchFilmModel?.results?[index].releaseDate ?? '',
+                  );
+                },
+                itemCount: state.searchFilmModel?.results?.length,
+              ),
             );
           }
           if (state.screenStatus == ScreenStatus.failure) {
@@ -89,10 +93,10 @@ class _SearchTabState extends State<SearchTab> {
                 children: [
                   SizedBox(height: 20.h),
                   TextFormField(
-                      onChanged: (String? value) {
-                        searchKey = value ?? '';
-                        setState(() {});
-                      },
+                    onChanged: (String? value) {
+                      searchKey = value ?? '';
+                      setState(() {});
+                    },
                     controller: searchController,
                     style: AppStyles.bodyMedium,
                     cursorColor: const Color(0xFF48CFAD),
@@ -131,7 +135,7 @@ class _SearchTabState extends State<SearchTab> {
                       ),
                     ),
                   ),
-                  if ( searchKey == '') ...[
+                  if (searchKey == '') ...[
                     SizedBox(height: 250.h),
                     Image.asset('assets/images/no_movie.png'),
                     SizedBox(height: 10.h),
@@ -140,27 +144,29 @@ class _SearchTabState extends State<SearchTab> {
                       style: AppStyles.bodyMedium,
                     ),
                   ],
-                  if ( searchKey != '') ...[
-                    ListView.builder(
-                      itemBuilder: (context, index) {
-                        CustomWatchList(
-                          isWatchList: false,
-                          filmImage:
-                              '${Constants.imagePath}${state.searchFilmModel?.results?[index].posterPath ?? ''} ',
-                          filmName:
-                              state.searchFilmModel?.results?[index].title ??
-                                  '',
-                          filmOverView: state.searchFilmModel?.results?[index]
-                                  .originalTitle ??
-                              '',
-                          filmYear: state.searchFilmModel?.results?[index]
-                                  .releaseDate ??
-                              '',
-                        );
-                      },
-                      itemCount: state.searchFilmModel?.results?.length,
-                    )
-                  ]
+                  // if (searchKey != '') ...[
+                  //   Expanded(
+                  //     child: ListView.builder(
+                  //       itemBuilder: (context, index) {
+                  //         CustomWatchList(
+                  //           isWatchList: false,
+                  //           filmImage:
+                  //               '${Constants.imagePath}${state.searchFilmModel?.results?[index].posterPath ?? ''} ',
+                  //           filmName:
+                  //               state.searchFilmModel?.results?[index].title ??
+                  //                   '',
+                  //           filmOverView: state.searchFilmModel?.results?[index]
+                  //                   .originalTitle ??
+                  //               '',
+                  //           filmYear: state.searchFilmModel?.results?[index]
+                  //                   .releaseDate ??
+                  //               '',
+                  //         );
+                  //       },
+                  //       itemCount: state.searchFilmModel?.results?.length,
+                  //     ),
+                  //   )
+                  // ]
                 ],
               ),
             ),
