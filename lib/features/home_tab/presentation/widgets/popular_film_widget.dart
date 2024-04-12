@@ -90,7 +90,7 @@ class PopularFilmWidget extends StatelessWidget {
                 // mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 108.h),
+                  SizedBox(height: 128.h),
                   Text(
                     filmTitle,
                     overflow: TextOverflow.ellipsis,

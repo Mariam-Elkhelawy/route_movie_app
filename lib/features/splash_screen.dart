@@ -8,7 +8,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 3), () {
-       Navigator.pushReplacementNamed(context, AppRoutesNames.layout);
+      Navigator.pushReplacementNamed(context, AppRoutesNames.layout);
     });
     return Image.asset(
       AppImages.splash,

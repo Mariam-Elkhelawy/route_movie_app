@@ -3,8 +3,9 @@ import 'package:route_movie_app/config/routes/app_routes_names.dart';
 import 'package:route_movie_app/core/components/reusable_components.dart';
 import 'package:route_movie_app/features/discover_movie/presentation/pages/discover_movie_page.dart';
 import 'package:route_movie_app/features/layout_screen.dart';
-import 'package:route_movie_app/features/movie_details/presentation/pages/movie_details_screen.dart';
 import 'package:route_movie_app/features/splash_screen.dart';
+
+import '../../features/movie_details/presentation/pages/movie_details_page.dart';
 
 class AppRoutes {
   static Route onGenerate(RouteSettings settings) {
@@ -22,13 +23,13 @@ class AppRoutes {
         );
       case AppRoutesNames.discoverMovie:
         return MaterialPageRoute(
-          builder: (context) => DiscoverMoviePage(),
+          builder: (context) => const DiscoverMoviePage(),
           settings: settings,
 
         );
          case AppRoutesNames.movieDetails:
         return MaterialPageRoute(
-            builder: (context) => const MovieDetailsScreen(),
+            builder: (context) => const MovieDetailsPage(),
             settings: settings);
 
       default:
