@@ -21,8 +21,12 @@ class HomeRemoteDSImplementation implements HomeRemoteDS {
       },
     );
     PopularFilmModel popularFilmModel =
-        PopularFilmModel.fromJson(response.data);
-    return popularFilmModel;
+    PopularFilmModel.fromJson(response.data);
+    if (response.statusCode == 200) {
+      return popularFilmModel;
+    } else {
+      throw Exception('Failed to load album');
+    }
   }
 
   @override
@@ -30,13 +34,18 @@ class HomeRemoteDSImplementation implements HomeRemoteDS {
     Response response = await apiManager.getData(
       endPoint: EndPoints.newRelease,
       headers: {
-        "Authorization": Constants.apiToken,
+        "Authorization":
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkODczNWEwYzVkMTI0YmQ0N2IwY2UzZjQ5MGEwZDE0MCIsInN1YiI6IjY2MDBiNTc2MTk3ZGU0MDE0OTE1ODE4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._dIN6k4iZg07W874BU5xWsWijkQC5lZ_kwRXgy2oj4s",
         "accept": "application/json"
       },
     );
     UpComingFilmModel upComingFilmModel =
-        UpComingFilmModel.fromJson(response.data);
-    return upComingFilmModel;
+    UpComingFilmModel.fromJson(response.data);
+    if (response.statusCode == 200) {
+      return upComingFilmModel;
+    } else {
+      throw Exception('Failed to load album');
+    }
   }
 
   @override
@@ -44,12 +53,17 @@ class HomeRemoteDSImplementation implements HomeRemoteDS {
     Response response = await apiManager.getData(
       endPoint: EndPoints.recommended,
       headers: {
-        "Authorization": Constants.apiToken,
+        "Authorization":
+        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkODczNWEwYzVkMTI0YmQ0N2IwY2UzZjQ5MGEwZDE0MCIsInN1YiI6IjY2MDBiNTc2MTk3ZGU0MDE0OTE1ODE4NSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._dIN6k4iZg07W874BU5xWsWijkQC5lZ_kwRXgy2oj4s",
         "accept": "application/json"
       },
     );
     RecommendedFilmModel recommendedFilmModel =
-        RecommendedFilmModel.fromJson(response.data);
-    return recommendedFilmModel;
+    RecommendedFilmModel.fromJson(response.data);
+    if (response.statusCode == 200) {
+      return recommendedFilmModel;
+    } else {
+      throw Exception('Failed to load album');
+    }
   }
 }
