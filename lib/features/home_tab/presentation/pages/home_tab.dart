@@ -112,7 +112,7 @@ class HomeTab extends StatelessWidget {
                     clipBehavior: Clip.none,
                     viewportFraction: 1,
                     enlargeCenterPage: true,
-                    autoPlay: true,
+                    autoPlay: false,
                     autoPlayInterval: const Duration(seconds: 2),
                     autoPlayAnimationDuration: const Duration(seconds: 2),
                     // autoPlayCurve: Curves.easeInBack,
