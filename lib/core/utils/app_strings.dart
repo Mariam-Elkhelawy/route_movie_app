@@ -9,6 +9,6 @@ class AppStrings {
   static const String noMovie = "No movies found";
   static const String newReleases = "New Releases";
   static const String recommended = "Recommended";
-
   static const String apiKey = "api_key";
+  static const String authorization = "Authorization";
 }

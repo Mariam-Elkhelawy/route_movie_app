@@ -114,7 +114,7 @@ class HomeTab extends StatelessWidget {
                     enlargeCenterPage: true,
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 2),
-                    autoPlayAnimationDuration: const Duration(seconds: 1),
+                    autoPlayAnimationDuration: const Duration(seconds: 2),
                     // autoPlayCurve: Curves.easeInBack,
                   ),
                 ),
