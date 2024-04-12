@@ -12,9 +12,6 @@ class HomeRemoteDSImplementation implements HomeRemoteDS {
 
   @override
   Future<PopularFilmModel> getPopularFilms() async {
-
-    
-
     Response response = await apiManager.getData(
       endPoint: EndPoints.popular,
       queryParameters: {'language': 'en-US'},
@@ -25,7 +22,7 @@ class HomeRemoteDSImplementation implements HomeRemoteDS {
     );
 
     PopularFilmModel popularFilmModel =
-    PopularFilmModel.fromJson(response.data);
+        PopularFilmModel.fromJson(response.data);
     return popularFilmModel;
   }
 
