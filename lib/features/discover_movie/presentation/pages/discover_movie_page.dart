@@ -10,6 +10,7 @@ import 'package:route_movie_app/features/discover_movie/data/repositories/discov
 import 'package:route_movie_app/features/discover_movie/domain/use_cases/discover_movie_use_case.dart';
 import 'package:route_movie_app/features/discover_movie/presentation/widgets/discover_movie_item.dart';
 
+import '../../../../config/routes/app_routes_names.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/constants.dart';
@@ -62,7 +63,6 @@ class DiscoverMoviePage extends StatelessWidget {
             );
           }
         },
-
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
@@ -89,9 +89,18 @@ class DiscoverMoviePage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return DiscoverMovieItem(
                       imageUrl:
-                          '${Constants.imagePath}${state.movieDiscoverModel!.results?[index].posterPath ?? ""}',
+                          '${Constants.imagePath}${state.movieDiscoverModel?.results?[index].posterPath ?? ""}',
                       text:
-                          state.movieDiscoverModel!.results?[index].title ?? "",
+                          state.movieDiscoverModel?.results?[index].title ?? "",
+                      voteAverage:
+                          "${state.movieDiscoverModel?.results?[index].voteAverage ?? 0.toStringAsFixed(2)}",
+                      onTap: (){
+                        Navigator.pushNamed(
+                            context,
+                            AppRoutesNames.movieDetails,
+                          arguments: state.movieDiscoverModel?.results?[index].id ??0
+                        );
+                      },
                     );
                   },
                   itemCount: BlocProvider.of<DiscoverMovieBloc>(context)

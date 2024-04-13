@@ -10,12 +10,12 @@ import '../../utils/app_images.dart';
 class ContainerMovie extends StatelessWidget {
   const ContainerMovie({
     super.key,
-     this.text,
+     required this.text,
      this.width,
      this.height,
     required this.child,
   });
-  final String? text;
+  final String text;
   final double? width;
   final double? height;
   final Widget child;
@@ -26,20 +26,21 @@ class ContainerMovie extends StatelessWidget {
       width: width,
       height: height,
       color: AppColor.moviesContainerBgColor,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 10.h,
-          ),
-          Text(
-            text ?? "null",
-            style: AppStyles.bodyMedium.copyWith(fontSize: 15.sp),
-          ),
-          SizedBox(height: 13.h,),
-          Expanded(
-            child: child,
-          ),
-        ],
+      child: Padding(
+        padding:  EdgeInsets.only(left: 24.w,top: 10.h,bottom: 17.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              text,
+              style: AppStyles.bodyMedium.copyWith(fontSize: 15.sp),
+            ),
+            SizedBox(height: 13.h,),
+            Expanded(
+              child: child,
+            ),
+          ],
+        ),
       ),
     );
   }

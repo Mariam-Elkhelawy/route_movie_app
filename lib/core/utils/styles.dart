@@ -45,4 +45,9 @@ class AppStyles {
     color: AppColor.whiteColor,
     fontWeight: FontWeight.w400,
   );
+  static TextStyle dateText = GoogleFonts.inter(
+    fontSize: 8.sp,
+    color: AppColor.movieDateColor,
+    fontWeight: FontWeight.w400,
+  );
 }

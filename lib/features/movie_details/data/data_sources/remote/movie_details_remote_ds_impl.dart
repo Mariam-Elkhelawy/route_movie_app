@@ -1,7 +1,6 @@
 import 'package:route_movie_app/core/api/end_points.dart';
 import 'package:route_movie_app/features/movie_details/data/data_sources/remote/movie_details_remote_ds.dart';
 import 'package:route_movie_app/features/movie_details/data/models/MovieDetailsModel.dart';
-
 import '../../../../../core/api/api_manager.dart';
 import '../../../../../core/utils/app_strings.dart';
 import '../../../../../core/utils/constants.dart';
@@ -11,12 +10,8 @@ class MovieDetailsRemoteDSImpl implements MovieDetailsRemoteDS {
   @override
   Future<MovieDetailsModel> getMovieDetails(int movieId) async {
     String endPointWithId = '${EndPoints.details}/$movieId';
-    var queryParam = {
-      "movie_id": movieId,
-    };
     var response = await apiManager.getData(
       endPoint: endPointWithId,
-      queryParameters: queryParam,
       headers: {
         AppStrings.authorization: Constants.apiToken,
       },
