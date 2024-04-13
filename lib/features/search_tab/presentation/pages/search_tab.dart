@@ -10,10 +10,11 @@ import 'package:route_movie_app/features/search_tab/data/data_sources/remote/sea
 import 'package:route_movie_app/features/search_tab/data/repositories/search_repo_implement.dart';
 import 'package:route_movie_app/features/search_tab/domain/use_cases/search_use_case.dart';
 import 'package:route_movie_app/features/search_tab/presentation/bloc/search_bloc.dart';
-import 'package:route_movie_app/features/search_tab/presentation/widgets/custom_watchlist.dart';
+import 'package:route_movie_app/features/search_tab/presentation/widgets/custom_search_widget.dart';
+import 'package:route_movie_app/features/search_tab/presentation/widgets/custom_text_field.dart';
 
 class SearchTab extends StatefulWidget {
-  SearchTab({super.key});
+  const SearchTab({super.key});
 
   @override
   State<SearchTab> createState() => _SearchTabState();
@@ -33,32 +34,30 @@ class _SearchTabState extends State<SearchTab> {
             SearchRemoteDSImplementation(),
           ),
         ),
-      )..add(
-          SearchFilmEvent(searchKey),
-        ),
+      )..add(SearchFilmEvent(searchKey)),
       child: BlocConsumer<SearchBloc, SearchState>(
         listener: (context, state) {
-          // if (state.screenStatus == ScreenStatus.loading) {
-          //   showDialog(
-          //     context: context,
-          //     builder: (context) {
-          //       return const AlertDialog(
-          //         title: Center(
-          //           child: CircularProgressIndicator(
-          //             color: AppColor.primaryColor,
-          //           ),
-          //         ),
-          //       );
-          //     },
-          //   );
-          // }
+          if (state.screenStatus == ScreenStatus.loading) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const AlertDialog(
+                  title: Center(
+                    child: CircularProgressIndicator(
+                      color: AppColor.primaryColor,
+                    ),
+                  ),
+                );
+              },
+            );
+          }
           if (state.screenStatus == ScreenStatus.success) {
-            // BlocProvider.of<SearchBloc>(context).add(SearchFilmEvent(searchKey));
+            // BlocProvider.of<SearchBloc>(context)
+            //     .add(SearchFilmEvent(searchKey));
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, index) {
-                  CustomWatchList(
-                    isWatchList: false,
+                  CustomSearchWidget(
                     filmImage:
                         '${Constants.imagePath}${state.searchFilmModel?.results?[index].posterPath}',
                     filmName: state.searchFilmModel?.results?[index].title ?? '',
@@ -92,48 +91,12 @@ class _SearchTabState extends State<SearchTab> {
               child: Column(
                 children: [
                   SizedBox(height: 20.h),
-                  TextFormField(
+                  CustomTextField(
                     onChanged: (String? value) {
                       searchKey = value ?? '';
                       setState(() {});
                     },
-                    controller: searchController,
-                    style: AppStyles.bodyMedium,
-                    cursorColor: const Color(0xFF48CFAD),
-                    decoration: InputDecoration(
-                      hintText: 'Search',
-                      contentPadding: EdgeInsets.all(14.r),
-                      hintStyle: AppStyles.bodyMedium.copyWith(
-                        color: AppColor.whiteColor.withOpacity(.46),
-                      ),
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(left: 4.0.r),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: const ImageIcon(
-                            AssetImage('assets/images/ic_textField.png'),
-                            color: AppColor.whiteColor,
-                          ),
-                        ),
-                      ),
-                      filled: true,
-                      fillColor: const Color(0xFF514F4F).withOpacity(.58),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.r),
-                        borderSide: const BorderSide(
-                            color: AppColor.whiteColor, width: .5),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.r),
-                        borderSide: const BorderSide(
-                            color: AppColor.whiteColor, width: .5),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30.r),
-                        borderSide: const BorderSide(
-                            color: AppColor.whiteColor, width: .5),
-                      ),
-                    ),
+                    searchController: searchController,
                   ),
                   if (searchKey == '') ...[
                     SizedBox(height: 250.h),
@@ -148,8 +111,7 @@ class _SearchTabState extends State<SearchTab> {
                   //   Expanded(
                   //     child: ListView.builder(
                   //       itemBuilder: (context, index) {
-                  //         CustomWatchList(
-                  //           isWatchList: false,
+                  //         CustomSearchWidget(
                   //           filmImage:
                   //               '${Constants.imagePath}${state.searchFilmModel?.results?[index].posterPath ?? ''} ',
                   //           filmName:

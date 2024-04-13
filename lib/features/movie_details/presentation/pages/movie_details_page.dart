@@ -4,10 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:route_movie_app/core/components/reusable_components/Container_movie.dart';
+import 'package:route_movie_app/core/components/reusable_components/movie_list_widget.dart';
 import 'package:route_movie_app/core/utils/app_colors.dart';
+import 'package:route_movie_app/features/movie_details/data/data_sources/remote/more_like_remote_ds_impl.dart';
 import 'package:route_movie_app/features/movie_details/data/data_sources/remote/movie_details_remote_ds_impl.dart';
+import 'package:route_movie_app/features/movie_details/data/repositories/more_like_repo_impl.dart';
 import 'package:route_movie_app/features/movie_details/data/repositories/movie_details_repo_impl.dart';
+import 'package:route_movie_app/features/movie_details/domain/use_cases/more_like_use_case.dart';
 import 'package:route_movie_app/features/movie_details/domain/use_cases/movie_details_use_case.dart';
+import '../../../../config/routes/app_routes_names.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/utils/app_images.dart';
 import '../../../../core/utils/app_strings.dart';
@@ -28,8 +34,17 @@ class MovieDetailsPage extends StatelessWidget {
             MovieDetailsRemoteDSImpl(),
           ),
         ),
-      )..add(
+        MoreLikeUseCase(
+          MoreLikeRepoImplement(
+            MoreLikeRemoteDsImplement(),
+          ),
+        ),
+      )
+        ..add(
           GetMovieDetailsEvent(movieId),
+        )
+        ..add(
+          MoreLikeMovieEvent(movieId),
         ),
       child: BlocConsumer<MovieDetailsBloc, MovieDetailsState>(
         listener: (context, state) {
@@ -117,6 +132,7 @@ class MovieDetailsPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Stack(
+                            alignment: Alignment.topLeft,
                             children: [
                               CachedNetworkImage(
                                 width: 129.w,
@@ -206,10 +222,20 @@ class MovieDetailsPage extends StatelessWidget {
                                     Expanded(
                                       child: Row(
                                         children: [
-                                          Icon(
-                                            Icons.star,
-                                            size: 20.w,
-                                            color: AppColor.primaryColor,
+                                          ShaderMask(
+                                            blendMode: BlendMode.srcIn,
+                                            shaderCallback: (Rect bounds) {
+                                              return const RadialGradient(
+                                                colors: [
+                                                  AppColor.primaryColor,
+                                                  AppColor.primaryLinearColor
+                                                ],
+                                              ).createShader(bounds);
+                                            },
+                                            child: const Icon(
+                                              Icons.star,
+                                              size: 20,
+                                            ),
                                           ),
                                           SizedBox(
                                             width: 7.w,
@@ -231,6 +257,44 @@ class MovieDetailsPage extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(
+                  height: 18.h,
+                ),
+                Expanded(
+                  child: ContainerMovie(
+                    text: "More Like This",
+                    child: ListView.separated(
+                      itemCount: state.moreLikeModel?.results?.length ?? 0,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return MovieListWidget(
+                          imageUrl:
+                              "${Constants.imagePath}${state.moreLikeModel?.results?[index].posterPath ?? ""}",
+                          voteAverage:
+                              "${state.moreLikeModel?.results?[index].voteAverage ?? 0.toStringAsFixed(2)}",
+                          movieTitle:
+                              state.moreLikeModel?.results?[index].title ?? "",
+                          releaseDate: state
+                                  .moreLikeModel?.results?[index].releaseDate ??
+                              "",
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutesNames.movieDetails,
+                              arguments:
+                                  state.moreLikeModel?.results?[index].id ?? 0,
+                            );
+                          },
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return SizedBox(
+                          width: 14.w,
+                        );
+                      },
+                    ),
+                  ),
+                )
               ],
             ),
           );
