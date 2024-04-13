@@ -27,7 +27,7 @@ class RecommendedFilms extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          NewReleasesFilms(filmImage: filmImage),
+          //NewReleasesFilms(filmImage: filmImage),
           Padding(
             padding: const EdgeInsets.all(6.0),
             child: Column(
