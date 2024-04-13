@@ -1,22 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:route_movie_app/core/firebase/firebase_functions.dart';
+import 'package:route_movie_app/core/components/reusable_components/isWatchList_widget.dart';
 import 'package:route_movie_app/core/utils/app_colors.dart';
 import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
 
 class NewReleasesFilms extends StatefulWidget {
-  NewReleasesFilms({super.key, required this.filmImage,  required this.onTap});
+  NewReleasesFilms(
+      {super.key,
+      required this.filmImage,
+      required this.onTap,
+        required this.watchListModel,
+       this.isWatchList});
   String filmImage;
-
   VoidCallback onTap;
+  WatchListModel watchListModel;
+  bool? isWatchList;
 
   @override
   State<NewReleasesFilms> createState() => _NewReleasesFilmsState();
 }
 
 class _NewReleasesFilmsState extends State<NewReleasesFilms> {
-  bool watchlist = false;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -39,20 +44,23 @@ class _NewReleasesFilmsState extends State<NewReleasesFilms> {
           ),
         ),
         InkWell(
-          onTap: (){
+          onTap: () {
             widget.onTap();
+            // showDialog(
+            //   context: context,
+            //   builder: (context) => AlertDialog(
+            //     content: const Text('Film Added To WatchList'),
+            //     actions: [
+            //       ElevatedButton(
+            //           onPressed: () {
+            //             Navigator.pop(context);
+            //           },
+            //           child: const Text('OK'),)
+            //     ],
+            //   ),
+            // );
           },
-          child: watchlist
-              ? Image.asset(
-                  'assets/images/ic_watchList_bookmark.png',
-                  width: 27.w,
-                  height: 36.h,
-                )
-              : Image.asset(
-                  'assets/images/ic_bookmark.png',
-                  width: 27.w,
-                  height: 36.h,
-                ),
+          child: IsWatchList(watchListModel: widget.watchListModel),
         ),
       ],
     );
