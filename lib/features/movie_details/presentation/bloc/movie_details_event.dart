@@ -6,3 +6,7 @@ class GetMovieDetailsEvent extends MovieDetailsEvent {
   int movieId;
   GetMovieDetailsEvent(this.movieId);
 }
+class MoreLikeMovieEvent extends MovieDetailsEvent {
+  int movieId;
+  MoreLikeMovieEvent(this.movieId);
+}
