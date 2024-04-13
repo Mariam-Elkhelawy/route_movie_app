@@ -33,7 +33,7 @@ class _SearchTabState extends State<SearchTab> {
             SearchRemoteDSImplementation(),
           ),
         ),
-      )..add(SearchFilmEvent( searchKey)),
+      )..add(SearchFilmEvent(searchKey)),
       child: BlocConsumer<SearchBloc, SearchState>(
         listener: (context, state) {
           // if (state.screenStatus == ScreenStatus.loading) {

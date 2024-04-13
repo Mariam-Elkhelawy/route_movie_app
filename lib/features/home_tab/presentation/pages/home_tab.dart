@@ -17,6 +17,9 @@ import 'package:route_movie_app/features/home_tab/presentation/bloc/home_bloc.da
 import 'package:route_movie_app/features/home_tab/presentation/widgets/new_relase_films.dart';
 import 'package:route_movie_app/features/home_tab/presentation/widgets/popular_film_widget.dart';
 import 'package:route_movie_app/features/home_tab/presentation/widgets/recommended_films.dart';
+import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
+
+import '../../../../core/firebase/firebase_functions.dart';
 
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
@@ -112,7 +115,7 @@ class HomeTab extends StatelessWidget {
                     clipBehavior: Clip.none,
                     viewportFraction: 1,
                     enlargeCenterPage: true,
-                    autoPlay: true,
+                    autoPlay: false,
                     autoPlayInterval: const Duration(seconds: 2),
                     autoPlayAnimationDuration: const Duration(seconds: 2),
                     // autoPlayCurve: Curves.easeInBack,
@@ -146,6 +149,27 @@ class HomeTab extends StatelessWidget {
                                           ?.results?[index].id);
                                 },
                                 child: NewReleasesFilms(
+                                  onTap: () {
+                                    WatchListModel model = WatchListModel(
+                                        isWatchList: true,
+                                        id:
+                                            '${state.upComingFilmModel?.results?[index].id ?? 0}',
+                                        title: state.upComingFilmModel
+                                                ?.results?[index].title ??
+                                            '',
+                                        image:
+                                            '${Constants.imagePath}${state.upComingFilmModel?.results?[index].backdropPath ?? ''} ',
+                                        description: state.upComingFilmModel
+                                                ?.results?[index].overview ??
+                                            '',
+                                        releaseDate: state.upComingFilmModel
+                                                ?.results?[index].releaseDate ??
+                                            '',
+                                        movieId: state.upComingFilmModel
+                                                ?.results?[index].id ??
+                                            0);
+                                    FirebaseFunctions.addWatchList(model);
+                                  },
                                   filmImage:
                                       '${Constants.imagePath}${state.upComingFilmModel?.results?[index].posterPath ?? ''} ',
                                 ),
