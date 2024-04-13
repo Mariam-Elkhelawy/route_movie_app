@@ -10,11 +10,14 @@ class RecommendedFilms extends StatelessWidget {
       required this.filmImage,
       required this.filmDate,
       required this.filmName,
-      required this.filmRating});
+      required this.filmRating,
+      required this.onTap});
   String filmImage;
   String filmRating;
   String filmName;
   String filmDate;
+  VoidCallback onTap;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +30,11 @@ class RecommendedFilms extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //NewReleasesFilms(filmImage: filmImage),
+          // NewReleasesFilms(
+          //     onTap: () {
+          //       onTap();
+          //     },
+          //     filmImage: filmImage),
           Padding(
             padding: const EdgeInsets.all(6.0),
             child: Column(

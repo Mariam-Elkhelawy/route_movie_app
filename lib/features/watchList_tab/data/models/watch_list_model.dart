@@ -17,6 +17,10 @@ class WatchListModel {
     required this.movieId,
   });
 
+  void toggleBookmark() {
+    isWatchList = !isWatchList;
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

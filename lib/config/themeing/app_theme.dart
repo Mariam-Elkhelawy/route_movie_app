@@ -6,6 +6,7 @@ import 'package:route_movie_app/core/utils/styles.dart';
 
 class AppTheme {
   static ThemeData appTheme = ThemeData(
+    brightness: Brightness.dark,
     scaffoldBackgroundColor: AppColor.bgColor,
     appBarTheme:const AppBarTheme(
       iconTheme:  IconThemeData(color: AppColor.whiteColor),

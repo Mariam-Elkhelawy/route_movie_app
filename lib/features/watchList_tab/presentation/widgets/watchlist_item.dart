@@ -2,15 +2,24 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:route_movie_app/core/components/reusable_components/isWatchList_widget.dart';
+import 'package:route_movie_app/core/firebase/firebase_functions.dart';
+import 'package:route_movie_app/core/utils/app_images.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
 import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
 
 import '../../../../config/routes/app_routes_names.dart';
 import '../../../../core/utils/app_colors.dart';
 
-class WatchListItem extends StatelessWidget {
+class WatchListItem extends StatefulWidget {
   WatchListItem({super.key, required this.watchListModel});
   WatchListModel watchListModel;
+
+  @override
+  State<WatchListItem> createState() => _WatchListItemState();
+}
+
+class _WatchListItemState extends State<WatchListItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,7 +31,7 @@ class WatchListItem extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 Navigator.pushNamed(context, AppRoutesNames.movieDetails,
-                    arguments: watchListModel.movieId);
+                    arguments: widget.watchListModel.movieId);
               },
               child: Row(
                 children: [
@@ -32,7 +41,7 @@ class WatchListItem extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(4.r),
                         child: CachedNetworkImage(
-                          imageUrl: watchListModel.image,
+                          imageUrl: widget.watchListModel.image,
                           fit: BoxFit.cover,
                           width: 140.w,
                           height: 95.h,
@@ -47,15 +56,40 @@ class WatchListItem extends StatelessWidget {
                               const Icon(Icons.error),
                         ),
                       ),
-                      if (watchListModel.isWatchList)
-                        InkWell(
-                          onTap: () {},
-                          child: Image.asset(
-                            'assets/images/ic_watchList_bookmark.png',
-                            width: 27.w,
-                            height: 36.h,
-                          ),
-                        ),
+                      InkWell(
+                        onTap: () async {
+                          await FirebaseFunctions.deleteWatchList(
+                              widget.watchListModel.id, widget.watchListModel);
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              content:
+                                  const Text('Film Removed from WatchList'),
+                              actions: [
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('OK'),
+                                )
+                              ],
+                            ),
+                          );
+                          widget.watchListModel.toggleBookmark();
+                          setState(() {});
+                        },
+                        child: widget.watchListModel.isWatchList
+                            ? Image.asset(
+                                AppImages.icWatchListBookmark,
+                                width: 27.w,
+                                height: 36.h,
+                              )
+                            : Image.asset(
+                                AppImages.icBookmark,
+                                width: 27.w,
+                                height: 36.h,
+                              ),
+                      ),
                     ],
                   ),
                   Padding(
@@ -66,26 +100,25 @@ class WatchListItem extends StatelessWidget {
                       children: [
                         SizedBox(
                           width: 215.w,
-
                           child: Text(
-
-                            watchListModel.title,
+                            widget.watchListModel.title,
                             overflow: TextOverflow.visible,
                             maxLines: 2,
-                            style: AppStyles.bodyMedium.copyWith(fontSize: 15.sp),
+                            style:
+                                AppStyles.bodyMedium.copyWith(fontSize: 15.sp),
                           ),
                         ),
                         SizedBox(
                           height: 5.h,
                         ),
-                        Text(watchListModel.releaseDate,
+                        Text(widget.watchListModel.releaseDate,
                             style: AppStyles.bodySmall),
                         SizedBox(
                           height: 5.h,
                         ),
                         SizedBox(
                           width: 215.w,
-                          child: Text(watchListModel.description,
+                          child: Text(widget.watchListModel.description,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: AppStyles.bodySmall),
@@ -97,8 +130,8 @@ class WatchListItem extends StatelessWidget {
               ),
             ),
           ),
-          Divider(
-            color: Color(0xFF707070),
+          const Divider(
+            color: AppColor.dividerColor,
           )
         ],
       ),
