@@ -6,10 +6,8 @@ import 'package:route_movie_app/core/firebase/firebase_functions.dart';
 import 'package:route_movie_app/core/utils/app_colors.dart';
 import 'package:route_movie_app/core/utils/app_strings.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
+import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
 import 'package:route_movie_app/features/watchList_tab/presentation/widgets/watchlist_item.dart';
-
-import '../../../search_tab/presentation/widgets/custom_watchlist.dart';
-import '../../data/models/watch_list_model.dart';
 
 class WatchListTab extends StatelessWidget {
   const WatchListTab({super.key});

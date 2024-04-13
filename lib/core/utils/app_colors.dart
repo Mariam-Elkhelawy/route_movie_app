@@ -15,5 +15,7 @@ class AppColor{
   static const Color moviesContainerBgColor = Color(0xFF282A28);
   static const Color borderColor = Color(0xFF514F4F);
   static const Color genreTextColor = Color(0xFFCBCBCB);
+  static const Color dividerColor = Color(0xFF707070);
+  static const Color cursorColor = Color(0xFF48CFAD);
 
 }
