@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:route_movie_app/core/utils/app_colors.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
 
-class CustomWatchList extends StatelessWidget {
-  CustomWatchList(
+class CustomSearchWidget extends StatelessWidget {
+  CustomSearchWidget(
       {super.key,
-      required this.isWatchList,
       required this.filmImage,
       required this.filmName,
       required this.filmOverView,
       required this.filmYear});
-  bool isWatchList;
   String filmImage;
   String filmName;
   String filmOverView;
@@ -29,12 +28,6 @@ class CustomWatchList extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   children: [
                     Image.network(filmImage),
-                    if (isWatchList)
-                      Image.asset(
-                        'assets/images/ic_watchList_bookmark.png',
-                        width: 27.w,
-                        height: 36.h,
-                      )
                   ],
                 ),
                 Padding(
@@ -56,8 +49,8 @@ class CustomWatchList extends StatelessWidget {
               ],
             ),
           ),
-          Divider(
-            color: Color(0xFF707070),
+          const Divider(
+            color: AppColor.dividerColor,
           )
         ],
       ),

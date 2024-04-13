@@ -17,10 +17,18 @@ import 'package:route_movie_app/features/home_tab/presentation/bloc/home_bloc.da
 import 'package:route_movie_app/features/home_tab/presentation/widgets/new_relase_films.dart';
 import 'package:route_movie_app/features/home_tab/presentation/widgets/popular_film_widget.dart';
 import 'package:route_movie_app/features/home_tab/presentation/widgets/recommended_films.dart';
+import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
 
-class HomeTab extends StatelessWidget {
+import '../../../../core/firebase/firebase_functions.dart';
+
+class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
 
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -68,7 +76,6 @@ class HomeTab extends StatelessWidget {
           showDialog(
             context: context,
             builder: (context) {
-              print(state.failures?.message);
               return AlertDialog(
                 title: const Text(AppStrings.error),
                 content: Text(state.failures?.message ?? ""),
@@ -85,6 +92,25 @@ class HomeTab extends StatelessWidget {
                   itemCount: state.popularFilmModel?.results?.length ?? 0,
                   itemBuilder:
                       (BuildContext context, int itemIndex, int pageViewIndex) {
+                    WatchListModel model = WatchListModel(
+                        isWatchList: true,
+                        id:
+                            '${state.popularFilmModel?.results?[itemIndex].id ?? 0}',
+                        title:
+                            state.popularFilmModel?.results?[itemIndex].title ??
+                                '',
+                        image:
+                            '${Constants.imagePath}${state.popularFilmModel?.results?[itemIndex].backdropPath ?? ''} ',
+                        description: state.popularFilmModel?.results?[itemIndex]
+                                .overview ??
+                            '',
+                        releaseDate: state.popularFilmModel?.results?[itemIndex]
+                                .releaseDate ??
+                            '',
+                        movieId:
+                            state.popularFilmModel?.results?[itemIndex].id ??
+                                0);
+
                     return InkWell(
                       onTap: () {
                         Navigator.pushNamed(
@@ -93,6 +119,7 @@ class HomeTab extends StatelessWidget {
                                 state.popularFilmModel?.results?[itemIndex].id);
                       },
                       child: PopularFilmWidget(
+                        watchListModel: model,
                         imageBackdropPath:
                             '${Constants.imagePath}${state.popularFilmModel?.results?[itemIndex].backdropPath ?? ''}',
                         imagePosterPath:
@@ -138,6 +165,24 @@ class HomeTab extends StatelessWidget {
                         Expanded(
                           child: ListView.separated(
                             itemBuilder: (context, index) {
+                              WatchListModel model = WatchListModel(
+                                  isWatchList: true,
+                                  id:
+                                      '${state.upComingFilmModel?.results?[index].id ?? 0}',
+                                  title: state.upComingFilmModel
+                                          ?.results?[index].title ??
+                                      '',
+                                  image:
+                                      '${Constants.imagePath}${state.upComingFilmModel?.results?[index].backdropPath ?? ''} ',
+                                  description: state.upComingFilmModel
+                                          ?.results?[index].overview ??
+                                      '',
+                                  releaseDate: state.upComingFilmModel
+                                          ?.results?[index].releaseDate ??
+                                      '',
+                                  movieId: state.upComingFilmModel
+                                          ?.results?[index].id ??
+                                      0);
                               return InkWell(
                                 onTap: () {
                                   Navigator.pushNamed(
@@ -146,6 +191,29 @@ class HomeTab extends StatelessWidget {
                                           ?.results?[index].id);
                                 },
                                 child: NewReleasesFilms(
+                                  watchListModel: model,
+                                  onTap: () async {
+                                    await FirebaseFunctions.addWatchlist(
+                                        watchListModel: model,
+                                        onException: (e) {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                              content: Text(e),
+                                              actions: [
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text('OK'),
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        });
+                                    // model.toggleBookmark();
+                                    // setState(() {});
+                                  },
                                   filmImage:
                                       '${Constants.imagePath}${state.upComingFilmModel?.results?[index].posterPath ?? ''} ',
                                 ),
@@ -191,6 +259,44 @@ class HomeTab extends StatelessWidget {
                                         ?.results?[index].id);
                               },
                               child: RecommendedFilms(
+                                onTap: () async {
+                                  WatchListModel model = WatchListModel(
+                                      isWatchList: true,
+                                      id:
+                                          '${state.recommendedFilmModel?.results?[index].id ?? 0}',
+                                      title: state.recommendedFilmModel
+                                              ?.results?[index].title ??
+                                          '',
+                                      image:
+                                          '${Constants.imagePath}${state.recommendedFilmModel?.results?[index].backdropPath ?? ''} ',
+                                      description: state.recommendedFilmModel
+                                              ?.results?[index].overview ??
+                                          '',
+                                      releaseDate: state.recommendedFilmModel
+                                              ?.results?[index].releaseDate ??
+                                          '',
+                                      movieId: state.recommendedFilmModel
+                                              ?.results?[index].id ??
+                                          0);
+                                  await FirebaseFunctions.addWatchlist(
+                                      watchListModel: model,
+                                      onException: (e) {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            content: Text(e),
+                                            actions: [
+                                              ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text('OK'),
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      });
+                                },
                                 filmImage:
                                     '${Constants.imagePath}${state.recommendedFilmModel?.results?[index].posterPath ?? ''} ',
                                 filmDate: state.recommendedFilmModel
@@ -200,7 +306,7 @@ class HomeTab extends StatelessWidget {
                                         ?.results?[index].title ??
                                     '',
                                 filmRating:
-                                    ' ${state.recommendedFilmModel?.results?[index].popularity ?? ''}',
+                                    ' ${state.recommendedFilmModel?.results?[index].voteAverage ?? ''}',
                               ),
                             );
                           },

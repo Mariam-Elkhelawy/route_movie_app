@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:route_movie_app/core/components/reusable_components/isWatchList_widget.dart';
 import 'package:route_movie_app/core/utils/app_colors.dart';
-import 'package:route_movie_app/core/utils/app_images.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
+import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
 
 class PopularFilmWidget extends StatelessWidget {
   PopularFilmWidget(
@@ -11,12 +12,13 @@ class PopularFilmWidget extends StatelessWidget {
       required this.imageBackdropPath,
       required this.imagePosterPath,
       required this.filmDate,
-      required this.filmTitle});
+      required this.filmTitle,
+      required this.watchListModel});
   String imageBackdropPath;
   String imagePosterPath;
   String filmTitle;
   String filmDate;
-  bool watchlist = false;
+  WatchListModel watchListModel;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -57,31 +59,22 @@ class PopularFilmWidget extends StatelessWidget {
                       height: 199.h,
                       fit: BoxFit.fill,
                       progressIndicatorBuilder:
-                          (context, url, downloadProgress) => Center(
-                        child: CircularProgressIndicator(
-                          value: downloadProgress.progress,
-                          color: AppColor.primaryColor,
-                        ),
-                      ),
+                          (context, url, downloadProgress) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: downloadProgress.progress,
+                            color: AppColor.primaryColor,
+                          ),
+                        );
+                      },
                       errorWidget: (context, url, error) =>
                           const Icon(Icons.error),
                     ),
                   ),
                   InkWell(
                     onTap: () {
-                      watchlist = true;
                     },
-                    child: watchlist
-                        ? Image.asset(
-                            AppImages.icWatchListBookmark,
-                            width: 27.w,
-                            height: 36.h,
-                          )
-                        : Image.asset(
-                            AppImages.icBookmark,
-                            width: 27.w,
-                            height: 36.h,
-                          ),
+                     child: IsWatchList(isWatchList: false,watchListModel: watchListModel,)
                   ),
                 ],
               ),
