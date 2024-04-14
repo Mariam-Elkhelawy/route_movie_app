@@ -15,6 +15,7 @@ class MovieListWidget extends StatelessWidget {
     required this.movieTitle,
     required this.releaseDate,
     required this.onTap,
+    required this.onClicked,
   });
 
   final String imageUrl;
@@ -22,6 +23,7 @@ class MovieListWidget extends StatelessWidget {
   final String movieTitle;
   final String releaseDate;
   final VoidCallback onTap;
+  final VoidCallback onClicked;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -61,12 +63,17 @@ class MovieListWidget extends StatelessWidget {
                   ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-                Image.asset(
-                  AppImages.icBookmark,
-                  width: 27.w,
-                  height: 36.h,
-                ),
-              ],
+                Positioned(
+                  left: -2,
+                  child: InkWell(
+                    onTap: onClicked,
+                    child: Image.asset(
+                      AppImages.icBookmark,
+                      width: 27.w,
+                      height: 36.h,
+                    ),
+                  ),
+                )],
             ),
             SizedBox(
               height: 5.h,
@@ -114,7 +121,7 @@ class MovieListWidget extends StatelessWidget {
                   ),
                   Text(releaseDate, style: AppStyles.dateText),
                   SizedBox(
-                    height: 10.h,
+                    height: 9.h,
                   ),
                 ],
               ),

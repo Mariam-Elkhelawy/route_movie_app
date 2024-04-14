@@ -84,7 +84,7 @@ class DiscoverMoviePage extends StatelessWidget {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     mainAxisSpacing: 15.h,
-                    childAspectRatio: 1.5 / 2,
+                    childAspectRatio: 1.35 / 2,
                   ),
                   itemBuilder: (context, index) {
                     return DiscoverMovieItem(

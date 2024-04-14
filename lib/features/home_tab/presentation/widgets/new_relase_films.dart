@@ -43,24 +43,14 @@ class _NewReleasesFilmsState extends State<NewReleasesFilms> {
             errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
         ),
-        InkWell(
-          onTap: () {
-            widget.onTap();
-            // showDialog(
-            //   context: context,
-            //   builder: (context) => AlertDialog(
-            //     content: const Text('Film Added To WatchList'),
-            //     actions: [
-            //       ElevatedButton(
-            //           onPressed: () {
-            //             Navigator.pop(context);
-            //           },
-            //           child: const Text('OK'),)
-            //     ],
-            //   ),
-            // );
-          },
-          child: IsWatchList(watchListModel: widget.watchListModel),
+        Positioned(
+          left: -1,
+          child: InkWell(
+            onTap: () {
+              widget.onTap();
+            },
+            child: IsWatchList(watchListModel: widget.watchListModel),
+          ),
         ),
       ],
     );

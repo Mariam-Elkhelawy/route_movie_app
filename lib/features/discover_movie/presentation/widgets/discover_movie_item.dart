@@ -33,10 +33,9 @@ class DiscoverMovieItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5.h),
                 child: CachedNetworkImage(
-                  width: 120.w,
-                  height: 220.h,
+                  width: 115.w,
                   imageUrl: imageUrl,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
                       Center(
                     child: CircularProgressIndicator(
