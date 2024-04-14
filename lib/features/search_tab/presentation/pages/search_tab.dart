@@ -13,14 +13,9 @@ import 'package:route_movie_app/features/search_tab/presentation/bloc/search_blo
 import 'package:route_movie_app/features/search_tab/presentation/widgets/custom_search_widget.dart';
 import 'package:route_movie_app/features/search_tab/presentation/widgets/custom_text_field.dart';
 
-class SearchTab extends StatefulWidget {
-  const SearchTab({super.key});
+class SearchTab extends StatelessWidget {
+   SearchTab({super.key});
 
-  @override
-  State<SearchTab> createState() => _SearchTabState();
-}
-
-class _SearchTabState extends State<SearchTab> {
   TextEditingController searchController = TextEditingController();
 
   String searchKey = '';
@@ -37,9 +32,10 @@ class _SearchTabState extends State<SearchTab> {
       )..add(SearchFilmEvent(searchKey)),
       child: BlocConsumer<SearchBloc, SearchState>(
         listener: (context, state) {
-          if (state.screenStatus == ScreenStatus.loading) {
+         /* if (state.screenStatus == ScreenStatus.loading) {
             showDialog(
               context: context,
+
               builder: (context) {
                 return const AlertDialog(
                   title: Center(
@@ -50,8 +46,8 @@ class _SearchTabState extends State<SearchTab> {
                 );
               },
             );
-          }
-          if (state.screenStatus == ScreenStatus.success) {
+          }*/
+         /* if (state.screenStatus == ScreenStatus.success) {
             // BlocProvider.of<SearchBloc>(context)
             //     .add(SearchFilmEvent(searchKey));
             Expanded(
@@ -71,7 +67,7 @@ class _SearchTabState extends State<SearchTab> {
                 itemCount: state.searchFilmModel?.results?.length,
               ),
             );
-          }
+          }*/
           if (state.screenStatus == ScreenStatus.failure) {
             showDialog(
               context: context,
@@ -92,10 +88,12 @@ class _SearchTabState extends State<SearchTab> {
                 children: [
                   SizedBox(height: 20.h),
                   CustomTextField(
-                    onChanged: (String? value) {
-                      searchKey = value ?? '';
-                      setState(() {});
+                    onChanged: (value) {
+                      searchKey = value;
+                      BlocProvider.of<SearchBloc>(context).add(SearchFilmEvent(searchKey));
+
                     },
+                    //onPreseed:  (){  BlocProvider.of<SearchBloc>(context).add(SearchFilmEvent(searchController.text));},
                     searchController: searchController,
                   ),
                   if (searchKey == '') ...[
@@ -107,28 +105,29 @@ class _SearchTabState extends State<SearchTab> {
                       style: AppStyles.bodyMedium,
                     ),
                   ],
-                  // if (searchKey != '') ...[
-                  //   Expanded(
-                  //     child: ListView.builder(
-                  //       itemBuilder: (context, index) {
-                  //         CustomSearchWidget(
-                  //           filmImage:
-                  //               '${Constants.imagePath}${state.searchFilmModel?.results?[index].posterPath ?? ''} ',
-                  //           filmName:
-                  //               state.searchFilmModel?.results?[index].title ??
-                  //                   '',
-                  //           filmOverView: state.searchFilmModel?.results?[index]
-                  //                   .originalTitle ??
-                  //               '',
-                  //           filmYear: state.searchFilmModel?.results?[index]
-                  //                   .releaseDate ??
-                  //               '',
-                  //         );
-                  //       },
-                  //       itemCount: state.searchFilmModel?.results?.length,
-                  //     ),
-                  //   )
-                  // ]
+                   if (searchKey != '') ...[
+                     Expanded(
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return CustomSearchWidget(
+                            filmImage:
+                                '${Constants.imagePath}${state.searchFilmModel?.results?[index].posterPath ?? ''} ',
+                            filmName:
+                                state.searchFilmModel?.results?[index].title ??
+                                    '',
+                            filmOverView: state.searchFilmModel?.results?[index]
+                                    .originalTitle ??
+                                '',
+                            filmYear: state.searchFilmModel?.results?[index]
+                                    .releaseDate ??
+                                '',
+                          );
+                        },
+                        itemCount: state.searchFilmModel?.results?.length ?? 0,
+                      ),
+                    )
+                  ]
+
                 ],
               ),
             ),
@@ -136,5 +135,6 @@ class _SearchTabState extends State<SearchTab> {
         },
       ),
     );
+
   }
 }

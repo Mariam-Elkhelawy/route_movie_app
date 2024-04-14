@@ -9,7 +9,7 @@ class Constants {
   static const String animationImage =
       '$imagePath/1XDDXPXGiI8id7MrUxK36ke7gkX.jpg';
   static const String scienceFictionImage =
-      '$imagePath/7ZP8HtgOIDaBs12krXgUIygqEsy.jpg';
+      '$imagePath/9c0lHTXRqDBxeOToVzRu0GArSne.jpg';
   static const String actionImage =
       '$imagePath/qekky2LbtT1wtbD5MDgQvjfZQ24.jpg';
   static const String fantasyImage =
@@ -21,21 +21,21 @@ class Constants {
   static const String romanceImage =
       '$imagePath/e3gVl1gnxEFKLTF6pn6KRqUPi9K.jpg';
   static const String mysteryImage =
-      '$imagePath/wUp0bUXaveR40ikBhDgWwNTijuD.jpg';
-  static const String warImage = '$imagePath/2C3CdVzINUm5Cm1lrbT2uiRstwX.jpg';
+      '$imagePath/TGsfNWkASegCfAn6ED1b08a9O6.jpg';
+  static const String warImage = '$imagePath/eTvN54pd83TrSEOz6wbsXEJktCV.jpg';
   static const String familyImage =
-      '$imagePath/2KGxQFV9Wp1MshPBf8BuqWUgVAz.jpg';
+      '$imagePath/jr8tSoJGj33XLgFBy6lmZhpGQNu.jpg';
   static const String crimeImage = '$imagePath/iqqMJwvPlovftBfdHVrpP2B1IxE.jpg';
   static const String historyImage =
-      '$imagePath/354kfjVb96mtFALMhBE6jzHGiA2.jpg';
+      '$imagePath/zb6fM1CX41D9rF9hdgclu0peUmy.jpg';
   static const String dramaImage = '$imagePath/dgiOBykxfUAtb01VUnkHsTCwfsG.jpg';
   static const String comedyImage =
-      '$imagePath/u4u4c5I12Vt6lZI3j6e8CAbOMnW.jpg';
+      '$imagePath/w4I5CX8pbVX4lixASIQGZaVcuNn.jpg';
   static const String westernImage =
-      '$imagePath/bQ8fRUaitJvi54O2lUT6Ta7FVHK.jpg';
+      '$imagePath/sGOw65ZmfgGfistCjuNsazjs6j9.jpg';
   static const String tvMovieImage =
-      '$imagePath/v5IKGoliGxvEKQhEt4nyky0GKco.jpg';
+      '$imagePath/7IJHdLr4Bi0rCBgXblVzHGfeyAg.jpg';
   static const String documentaryImage =
-      '$imagePath/tilClWjFZeUTGJu0pxgF72fvUmN.jpg';
-  static const String musicImage = '$imagePath/dlC0ed9Ugh3FzydnkBtV5lRXUu4.jpg';
+      '$imagePath/qd09px0NYGVneO0I2ZFi0yJSqA6.jpg';
+  static const String musicImage = '$imagePath/6mJrgL7Mi13XjJeGYJFlD6UEVQw.jpg';
 }

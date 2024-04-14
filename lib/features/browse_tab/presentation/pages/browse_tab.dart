@@ -98,13 +98,13 @@ class BrowseTab extends StatelessWidget {
                 Expanded(
                   child: GridView.builder(
                     padding:
-                        EdgeInsets.symmetric(vertical: 20.h, horizontal: 5.h),
+                        EdgeInsets.symmetric(vertical: 15.h, horizontal: 5.h),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2, // number of items in each row
-                      mainAxisSpacing: 30, // spacing between rows
-                      crossAxisSpacing: 40,
-                      childAspectRatio: 1.7 / 1,
+                      mainAxisSpacing: 20, // spacing between rows
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 1.8 / 1.1,
                     ),
                     itemBuilder: (context, index) => BrowseCategoryItem(
                       categoryModel: categories[index],

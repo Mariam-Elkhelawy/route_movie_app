@@ -8,16 +8,20 @@ import 'package:route_movie_app/features/search_tab/data/models/SearchFilmModel.
 class SearchRemoteDSImplementation implements SearchRemoteDs {
   @override
   Future<SearchFilmModel> getSearchFilms(String searchQuery) async {
-    ApiManager apiManager = ApiManager();
-    Response response =
-        await apiManager.getData(endPoint: EndPoints.search, queryParameters: {
-      'query': searchQuery
-    }, headers: {
-          "Authorization": Constants.apiToken,
-          "accept": "application/json"
-
-        });
-    SearchFilmModel searchFilmModel = SearchFilmModel.fromJson(response.data);
-    return searchFilmModel;
+    try {
+      final apiManager = ApiManager();
+      final response = await apiManager.getData(
+        endPoint: EndPoints.search,
+        queryParameters: {'query': searchQuery},
+        headers: {"Authorization": Constants.apiToken},
+      );
+      if (response.statusCode == 200) {
+        return SearchFilmModel.fromJson(response.data);
+      } else {
+        throw Exception('Failed to load films: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to load films: $e');
+    }
   }
 }
