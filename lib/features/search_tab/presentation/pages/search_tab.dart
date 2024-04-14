@@ -14,14 +14,9 @@ import 'package:route_movie_app/features/search_tab/presentation/bloc/search_blo
 import 'package:route_movie_app/features/search_tab/presentation/widgets/custom_search_widget.dart';
 import 'package:route_movie_app/features/search_tab/presentation/widgets/custom_text_field.dart';
 
-class SearchTab extends StatefulWidget {
-  const SearchTab({super.key});
+class SearchTab extends StatelessWidget {
+   SearchTab({super.key});
 
-  @override
-  State<SearchTab> createState() => _SearchTabState();
-}
-
-class _SearchTabState extends State<SearchTab> {
   TextEditingController searchController = TextEditingController();
 
   String searchKey = '';
@@ -38,6 +33,7 @@ class _SearchTabState extends State<SearchTab> {
       )..add(SearchFilmEvent(searchKey)),
       child: BlocConsumer<SearchBloc, SearchState>(
         listener: (context, state) {
+
           // if (state.screenStatus == ScreenStatus.loading) {
           //   showDialog(
           //     context: context,
@@ -78,7 +74,9 @@ class _SearchTabState extends State<SearchTab> {
                       searchKey = value;
                       BlocProvider.of<SearchBloc>(context)
                           .add(SearchFilmEvent(searchKey));
+
                     },
+                    //onPreseed:  (){  BlocProvider.of<SearchBloc>(context).add(SearchFilmEvent(searchController.text));},
                     searchController: searchController,
                   ),
                   if (searchKey == '') ...[
@@ -125,6 +123,7 @@ class _SearchTabState extends State<SearchTab> {
                     SizedBox(height: 16.h)
 
                   ]
+
                 ],
               ),
             ),
@@ -132,5 +131,6 @@ class _SearchTabState extends State<SearchTab> {
         },
       ),
     );
+
   }
 }

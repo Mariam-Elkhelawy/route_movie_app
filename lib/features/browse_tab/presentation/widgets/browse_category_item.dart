@@ -31,9 +31,9 @@ class BrowseCategoryItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(4.r),
             child: CachedNetworkImage(
               imageUrl: categoryModel.imageUrl,
-              fit: BoxFit.fill,
-              width: 158.w,
-              height: 90.h,
+              fit: BoxFit.cover,
+              width: 165.w,
+              height: 110.h,
               progressIndicatorBuilder: (context, url, downloadProgress) =>
                   Center(
                     child: CircularProgressIndicator(
@@ -46,11 +46,11 @@ class BrowseCategoryItem extends StatelessWidget {
           ),
           Container(
             alignment: Alignment.center,
-            width: 158,
-            height: 90,
+            width: 165.w,
+            height: 110.h,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4.r),
-              color: AppColor.movieItemBgColor.withOpacity(0.37),
+              color: Colors.black54,
               boxShadow: [
                 BoxShadow(
                   color: AppColor.blackColor.withOpacity(0.16),

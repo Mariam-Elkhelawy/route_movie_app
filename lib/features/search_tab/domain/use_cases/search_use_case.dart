@@ -7,6 +7,6 @@ class SearchUseCase {
   SearchRepo searchRepo;
 
   SearchUseCase(this.searchRepo);
-  Future<Either<Failures, SearchFilmModel>> call(String searchQuery) =>
-      searchRepo.getSearchFilms(searchQuery);
+  Future<Either<Failures, SearchFilmModel>> call(String searchQuery) async{
+      return await searchRepo.getSearchFilms(searchQuery);}
 }
