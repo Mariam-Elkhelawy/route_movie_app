@@ -30,7 +30,7 @@ class SearchTab extends StatelessWidget {
             SearchRemoteDSImplementation(),
           ),
         ),
-      )..add(SearchFilmEvent(searchKey)),
+      ),
       child: BlocConsumer<SearchBloc, SearchState>(
         listener: (context, state) {
 

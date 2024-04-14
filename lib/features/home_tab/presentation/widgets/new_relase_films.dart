@@ -48,20 +48,6 @@ class _NewReleasesFilmsState extends State<NewReleasesFilms> {
           child: InkWell(
             onTap: () {
               widget.onTap();
-              // showDialog(
-              //   context: context,
-              //   builder: (context) => AlertDialog(
-              //     content: const Text('Film Added To WatchList'),
-              //     actions: [
-
-              //       ElevatedButton(
-              //           onPressed: () {
-              //             Navigator.pop(context);
-              //           },
-              //           child: const Text('OK'),)
-              //     ],
-              //   ),
-              // );
             },
             child: IsWatchList(watchListModel: widget.watchListModel),
           ),

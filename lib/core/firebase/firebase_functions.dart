@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
 
 class FirebaseFunctions {
@@ -20,14 +21,36 @@ class FirebaseFunctions {
       final snapshot = await getWatchListCollection().get();
       return snapshot.docs.any((doc) => doc.id == filmId);
     } catch (e) {
-      print('Error checking Film existence: $e');
+      print('Error checking film existence: $e');
       return false;
     }
   }
+  static Future<bool> addWatchlist({
+    required WatchListModel watchListModel,
+    required Function onException,
+  }) async {
+    try {
+      final filmExists = await checkIfFilmExists(watchListModel.id);
+      if (filmExists) {
+        onException(
+            'Film already exists in watchlist : ${watchListModel.title}');
+        return filmExists; // Return the filmExists value
+      }
 
-  static Future<void> addWatchlist(
-      {required WatchListModel watchListModel,
-      required Function onException}) async {
+      await getWatchListCollection().doc(watchListModel.id).set(watchListModel);
+      onException('Film added to watchlist : ${watchListModel.title}');
+      return filmExists; // Return the filmExists value
+    } catch (e) {
+      onException('Error adding film to watchlist: $e');
+      return false; // Return false if an error occurs
+    }
+  }
+
+/*
+  static Future<void> addWatchlist({
+    required WatchListModel watchListModel,
+    required Function onException,
+  }) async {
     try {
       final filmExists = await checkIfFilmExists(watchListModel.id);
       if (filmExists) {
@@ -35,15 +58,16 @@ class FirebaseFunctions {
             'Film already exists in watchlist : ${watchListModel.title}');
         return;
       }
-      await getWatchListCollection().doc().set(watchListModel);
+
+      await getWatchListCollection().doc(watchListModel.id).set(watchListModel);
       onException('Film added to watchlist : ${watchListModel.title}');
     } catch (e) {
       onException('Error adding film to watchlist: $e');
     }
-  }
+  }*/
 
-  static Future<QuerySnapshot<WatchListModel>> getWatchList() {
-    return getWatchListCollection().get();
+  static Stream<QuerySnapshot<WatchListModel>> getWatchList() {
+    return getWatchListCollection().snapshots();
   }
 
   static Future<void> deleteWatchList(
