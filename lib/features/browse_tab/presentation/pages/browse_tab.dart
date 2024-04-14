@@ -52,7 +52,7 @@ class BrowseTab extends StatelessWidget {
       )..add(GetMovieListEvent()),
       child: BlocConsumer<BrowseBloc, BrowseState>(
         listener: (context, state) {
-          if (state.status == ScreenStatus.loading) {
+          /* if (state.status == ScreenStatus.loading) {
             showDialog(
               context: context,
               builder: (context) {
@@ -61,7 +61,7 @@ class BrowseTab extends StatelessWidget {
                 );
               },
             );
-          } /*else if(state.status == ScreenStatus.success){
+          }*/ /*else if(state.status == ScreenStatus.success){
 
             BlocProvider.of<BrowseBloc>(context).add(GetMovieListEvent());
           }*/

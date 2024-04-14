@@ -65,8 +65,6 @@ class _WatchListItemState extends State<WatchListItem> {
                                 await FirebaseFunctions.deleteWatchList(
                                     widget.watchListModel.id,
                                     widget.watchListModel);
-
-                                widget.watchListModel.toggleBookmark();
                               },
                             ),
                           );

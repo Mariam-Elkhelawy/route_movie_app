@@ -107,6 +107,8 @@ class _HomeTabState extends State<HomeTab> {
                     itemCount: state.popularFilmModel?.results?.length ?? 0,
                     itemBuilder: (BuildContext context, int itemIndex,
                         int pageViewIndex) {
+                      bool isInWatchListP = watchlistMovieIds.contains(
+                          state.popularFilmModel?.results?[itemIndex].id ?? 0);
                       WatchListModel model = WatchListModel(
                           isWatchList: true,
                           id:
@@ -134,8 +136,16 @@ class _HomeTabState extends State<HomeTab> {
                                   .popularFilmModel?.results?[itemIndex].id);
                         },
                         child: PopularFilmWidget(
+                          isWatchList: isInWatchListP,
                           onTap: () async {
-                            await FirebaseFunctions.addWatchlist(
+                            setState(() {
+                              isInWatchListP = !isInWatchListP;
+                            });
+                            toggleWatchlistStatus(state
+                                    .popularFilmModel?.results?[itemIndex].id ??
+                                0);
+                            if (isInWatchListP) {
+                              await FirebaseFunctions.addWatchlist(
                                 watchListModel: model,
                                 onException: (e) {
                                   showDialog(
@@ -144,9 +154,9 @@ class _HomeTabState extends State<HomeTab> {
                                       dialogContent: e,
                                     ),
                                   );
-                                });
-                            // model.toggleBookmark();
-                            // setState(() {});
+                                },
+                              );
+                            }
                           },
                           watchListModel: model,
                           imageBackdropPath:
@@ -181,6 +191,8 @@ class _HomeTabState extends State<HomeTab> {
                       height: 186.h,
                       child: ListView.separated(
                         itemBuilder: (context, index) {
+                          bool isInWatchListN = watchlistMovieIds.contains(
+                              state.upComingFilmModel?.results?[index].id ?? 0);
                           WatchListModel model = WatchListModel(
                               isWatchList: true,
                               id:
@@ -207,9 +219,16 @@ class _HomeTabState extends State<HomeTab> {
                                       .upComingFilmModel?.results?[index].id);
                             },
                             child: NewReleasesFilms(
-                              watchListModel: model,
+                              isWatchList: isInWatchListN,
                               onTap: () async {
-                                await FirebaseFunctions.addWatchlist(
+                                setState(() {
+                                  isInWatchListN = !isInWatchListN;
+                                });
+                                toggleWatchlistStatus(state.upComingFilmModel
+                                        ?.results?[index].id ??
+                                    0);
+                                if (isInWatchListN) {
+                                  await FirebaseFunctions.addWatchlist(
                                     watchListModel: model,
                                     onException: (e) {
                                       showDialog(
@@ -218,7 +237,9 @@ class _HomeTabState extends State<HomeTab> {
                                           dialogContent: e,
                                         ),
                                       );
-                                    });
+                                    },
+                                  );
+                                }
                                 // model.toggleBookmark();
                                 // setState(() {});
                               },

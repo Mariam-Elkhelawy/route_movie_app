@@ -5,23 +5,16 @@ import 'package:route_movie_app/core/components/reusable_components/isWatchList_
 import 'package:route_movie_app/core/utils/app_colors.dart';
 import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
 
-class NewReleasesFilms extends StatefulWidget {
-  NewReleasesFilms(
+class NewReleasesFilms extends StatelessWidget {
+  const NewReleasesFilms(
       {super.key,
       required this.filmImage,
       required this.onTap,
-        required this.watchListModel,
-       this.isWatchList});
-  String filmImage;
-  VoidCallback onTap;
-  WatchListModel watchListModel;
-  bool? isWatchList;
+      required this.isWatchList});
+  final String filmImage;
+  final VoidCallback onTap;
+  final bool isWatchList;
 
-  @override
-  State<NewReleasesFilms> createState() => _NewReleasesFilmsState();
-}
-
-class _NewReleasesFilmsState extends State<NewReleasesFilms> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -29,7 +22,7 @@ class _NewReleasesFilmsState extends State<NewReleasesFilms> {
         ClipRRect(
           borderRadius: BorderRadius.circular(4.r),
           child: CachedNetworkImage(
-            imageUrl: widget.filmImage,
+            imageUrl: filmImage,
             fit: BoxFit.cover,
             width: 97.w,
             height: 128.h,
@@ -47,9 +40,11 @@ class _NewReleasesFilmsState extends State<NewReleasesFilms> {
           left: -1,
           child: InkWell(
             onTap: () {
-              widget.onTap();
+              onTap();
             },
-            child: IsWatchList(isWatchList: false,),
+            child: IsWatchList(
+              isWatchList: isWatchList,
+            ),
           ),
         ),
       ],
