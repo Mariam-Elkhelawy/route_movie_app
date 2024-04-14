@@ -29,7 +29,10 @@ class _WatchListItemState extends State<WatchListItem> {
             child: InkWell(
               onTap: () {
                 Navigator.pushNamed(context, AppRoutesNames.movieDetails,
-                    arguments: widget.watchListModel.movieId);
+                    arguments: Map<String, dynamic>.from({
+                      "filmId": widget.watchListModel.movieId,
+                      "isWatchList": true ,
+                    }));
               },
               child: Row(
                 children: [

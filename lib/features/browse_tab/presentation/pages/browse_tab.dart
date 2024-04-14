@@ -112,7 +112,8 @@ class BrowseTab extends StatelessWidget {
                             context, AppRoutesNames.discoverMovie,
                             arguments: Map<String, dynamic>.from({
                               "genreName": state.movieList!.genres![index].name,
-                              "genreId": state.movieList!.genres![index].id
+                              "genreId": state.movieList!.genres![index].id,
+
                             }));
                       },
                     ),

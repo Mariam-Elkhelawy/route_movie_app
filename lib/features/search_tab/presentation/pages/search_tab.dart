@@ -21,8 +21,10 @@ class SearchTab extends StatelessWidget {
 
   String searchKey = '';
 
+
   @override
   Widget build(BuildContext context) {
+    bool? isWatchList;
     return BlocProvider(
       create: (context) => SearchBloc(
         SearchUseCase(
@@ -94,9 +96,10 @@ class SearchTab extends StatelessWidget {
                             onTap: () {
                               Navigator.pushNamed(
                                   context, AppRoutesNames.movieDetails,
-                                  arguments: state.searchFilmModel
-                                          ?.results?[index].id ??
-                                      0);
+                                  arguments: Map<String, dynamic>.from({
+                              "filmId": state.searchFilmModel?.results?[index].id ?? 0,
+                              "isWatchList": isWatchList ?? false,
+                              }));
                             },
                             child: CustomSearchWidget(
                               filmImage:

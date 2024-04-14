@@ -17,10 +17,12 @@ import '../../../../core/utils/constants.dart';
 import '../bloc/discover_movie_bloc.dart';
 
 class DiscoverMoviePage extends StatelessWidget {
-  const DiscoverMoviePage({super.key});
+   DiscoverMoviePage({super.key});
+
 
   @override
   Widget build(BuildContext context) {
+     bool? isWatchList ;
     final Map<String, dynamic> args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String genreName = args['genreName'] as String;
@@ -98,8 +100,10 @@ class DiscoverMoviePage extends StatelessWidget {
                         Navigator.pushNamed(
                             context,
                             AppRoutesNames.movieDetails,
-                          arguments: state.movieDiscoverModel?.results?[index].id ??0
-                        );
+                            arguments: Map<String, dynamic>.from({
+                              "filmId": state.movieDiscoverModel?.results?[index].id ?? 0,
+                              "isWatchList": isWatchList?? false ,
+                            }));
                       },
                     );
                   },

@@ -69,7 +69,7 @@ class _HomeTabState extends State<HomeTab> {
         ..add(HomeRecommendedFilmEvent()),
       child: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
-          if (state.screenStatus == ScreenStatus.loading) {
+          /*if (state.screenStatus == ScreenStatus.loading) {
             showDialog(
               context: context,
               builder: (context) {
@@ -82,7 +82,7 @@ class _HomeTabState extends State<HomeTab> {
                 );
               },
             );
-          }
+          }*/
           // else if (state.screenStatus == ScreenStatus.success) {
           //    BlocProvider.of<HomeBloc>(context).add(HomePopularFilmEvent());
           // }
@@ -132,8 +132,10 @@ class _HomeTabState extends State<HomeTab> {
                         onTap: () {
                           Navigator.pushNamed(
                               context, AppRoutesNames.movieDetails,
-                              arguments: state
-                                  .popularFilmModel?.results?[itemIndex].id);
+                              arguments: Map<String, dynamic>.from({
+                                "filmId": state.popularFilmModel?.results?[itemIndex].id ?? 0,
+                                "isWatchList": isInWatchListP,
+                              }));
                         },
                         child: PopularFilmWidget(
                           isWatchList: isInWatchListP,
@@ -215,8 +217,10 @@ class _HomeTabState extends State<HomeTab> {
                             onTap: () {
                               Navigator.pushNamed(
                                   context, AppRoutesNames.movieDetails,
-                                  arguments: state
-                                      .upComingFilmModel?.results?[index].id);
+                                  arguments: Map<String, dynamic>.from({
+                                  "filmId": state.upComingFilmModel?.results?[index].id ?? 0,
+                                  "isWatchList": isInWatchListN,
+                                  }));
                             },
                             child: NewReleasesFilms(
                               isWatchList: isInWatchListN,
@@ -240,8 +244,6 @@ class _HomeTabState extends State<HomeTab> {
                                     },
                                   );
                                 }
-                                // model.toggleBookmark();
-                                // setState(() {});
                               },
                               filmImage:
                                   '${Constants.imagePath}${state.upComingFilmModel?.results?[index].posterPath ?? ''} ',
@@ -325,9 +327,10 @@ class _HomeTabState extends State<HomeTab> {
                             Navigator.pushNamed(
                               context,
                               AppRoutesNames.movieDetails,
-                              arguments: state.recommendedFilmModel
-                                      ?.results?[index].id ??
-                                  0,
+                                arguments: Map<String, dynamic>.from({
+                                  "filmId": state.recommendedFilmModel?.results?[index].id ?? 0,
+                                  "isWatchList": isInWatchListM,
+                                }),
                             );
                           },
                           child: IsWatchList(isWatchList: isInWatchListM),
