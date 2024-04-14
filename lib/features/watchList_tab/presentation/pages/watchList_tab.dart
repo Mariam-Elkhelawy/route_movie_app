@@ -15,7 +15,6 @@ class WatchListTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.0.w, vertical: 15.h),

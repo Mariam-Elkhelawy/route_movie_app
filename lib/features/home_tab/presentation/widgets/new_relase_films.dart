@@ -49,7 +49,7 @@ class _NewReleasesFilmsState extends State<NewReleasesFilms> {
             onTap: () {
               widget.onTap();
             },
-            child: IsWatchList(isWatchList: true,),
+            child: IsWatchList(isWatchList: false,),
           ),
         ),
       ],

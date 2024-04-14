@@ -86,7 +86,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         ),
       child: BlocConsumer<MovieDetailsBloc, MovieDetailsState>(
         listener: (context, state) {
-          /* if (state.status == ScreenStatus.loading) {
+           if (state.status == ScreenStatus.loading) {
             showDialog(
               context: context,
               builder: (context) {
@@ -95,7 +95,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                 );
               },
             );
-          }*/
+          }
           if (state.status == ScreenStatus.failure) {
             showDialog(
               context: context,
@@ -404,10 +404,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                         0,
                               );
                             },
-                            child: IsWatchList(isWatchList: isInWatchListM)
-                            // isInWatchListM
-                            //     ? Image.asset(AppImages.icWatchListBookmark)
-                            //     : Image.asset(AppImages.icBookmark),
+                            child: IsWatchList(isWatchList: isInWatchListM),
                             );
                       },
                       separatorBuilder: (context, index) {

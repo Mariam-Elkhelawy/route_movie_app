@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:route_movie_app/config/routes/app_routes_names.dart';
-import 'package:route_movie_app/core/utils/constants.dart';
+import 'package:route_movie_app/core/utils/app_images.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/utils/app_strings.dart';
@@ -18,27 +18,26 @@ class BrowseTab extends StatelessWidget {
   BrowseTab({super.key});
 
   List<Genres>? genres;
-  List<CategoryModel> categories =[
-    CategoryModel(id: '28', imageUrl: Constants.actionImage),
-    CategoryModel(id: '12', imageUrl: Constants.adventureImage),
-    CategoryModel(id: '16', imageUrl: Constants.animationImage),
-    CategoryModel(id: '35', imageUrl: Constants.comedyImage),
-    CategoryModel(id: '80', imageUrl: Constants.crimeImage),
-    CategoryModel(id: '99', imageUrl:Constants.documentaryImage),
-    CategoryModel(id: '18', imageUrl: Constants.dramaImage),
-    CategoryModel(id: '10751', imageUrl: Constants.familyImage),
-    CategoryModel(id: '14', imageUrl:Constants.fantasyImage),
-    CategoryModel(id: '36', imageUrl: Constants.historyImage),
-    CategoryModel(id: '27', imageUrl: Constants.horrorImage),
-    CategoryModel(id: '10402', imageUrl: Constants.musicImage),
-    CategoryModel(id: '9648', imageUrl: Constants.mysteryImage),
-    CategoryModel(id: '10749', imageUrl: Constants.romanceImage),
-    CategoryModel(id: '878', imageUrl: Constants.scienceFictionImage),
-    CategoryModel(id: '10770', imageUrl: Constants.tvMovieImage),
-    CategoryModel(id: '53', imageUrl: Constants.thrillerImage),
-    CategoryModel(id: '10752', imageUrl: Constants.warImage),
-    CategoryModel(id: '37', imageUrl: Constants.westernImage),
-
+  List<CategoryModel> categories = [
+    CategoryModel(id: '28', imageUrl: AppImages.actionImage),
+    CategoryModel(id: '12', imageUrl: AppImages.adventureImage),
+    CategoryModel(id: '16', imageUrl: AppImages.animationImage),
+    CategoryModel(id: '35', imageUrl: AppImages.comedyImage),
+    CategoryModel(id: '80', imageUrl: AppImages.crimeImage),
+    CategoryModel(id: '99', imageUrl: AppImages.documentaryImage),
+    CategoryModel(id: '18', imageUrl: AppImages.dramaImage),
+    CategoryModel(id: '10751', imageUrl: AppImages.familyImage),
+    CategoryModel(id: '14', imageUrl: AppImages.fantasyImage),
+    CategoryModel(id: '36', imageUrl: AppImages.historyImage),
+    CategoryModel(id: '27', imageUrl: AppImages.horrorImage),
+    CategoryModel(id: '10402', imageUrl: AppImages.musicImage),
+    CategoryModel(id: '9648', imageUrl: AppImages.mysteryImage),
+    CategoryModel(id: '10749', imageUrl: AppImages.romanceImage),
+    CategoryModel(id: '878', imageUrl: AppImages.scienceFictionImage),
+    CategoryModel(id: '10770', imageUrl: AppImages.tvMovieImage),
+    CategoryModel(id: '53', imageUrl: AppImages.thrillerImage),
+    CategoryModel(id: '10752', imageUrl: AppImages.warImage),
+    CategoryModel(id: '37', imageUrl: AppImages.westernImage),
   ];
 
   @override
@@ -53,8 +52,7 @@ class BrowseTab extends StatelessWidget {
       )..add(GetMovieListEvent()),
       child: BlocConsumer<BrowseBloc, BrowseState>(
         listener: (context, state) {
-          /*if (state.status == ScreenStatus.loading) {
-
+          if (state.status == ScreenStatus.loading) {
             showDialog(
               context: context,
               builder: (context) {
@@ -63,8 +61,7 @@ class BrowseTab extends StatelessWidget {
                 );
               },
             );
-
-          } else if(state.status == ScreenStatus.success){
+          } /*else if(state.status == ScreenStatus.success){
 
             BlocProvider.of<BrowseBloc>(context).add(GetMovieListEvent());
           }*/
