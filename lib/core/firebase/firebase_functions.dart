@@ -20,7 +20,7 @@ class FirebaseFunctions {
       final snapshot = await getWatchListCollection().get();
       return snapshot.docs.any((doc) => doc.id == filmId);
     } catch (e) {
-      print('Error checking film existence: $e');
+      print('Error checking Film existence: $e');
       return false;
     }
   }
@@ -35,7 +35,7 @@ class FirebaseFunctions {
             'Film already exists in watchlist : ${watchListModel.title}');
         return;
       }
-      await getWatchListCollection().doc(watchListModel.id).set(watchListModel);
+      await getWatchListCollection().doc().set(watchListModel);
       onException('Film added to watchlist : ${watchListModel.title}');
     } catch (e) {
       onException('Error adding film to watchlist: $e');

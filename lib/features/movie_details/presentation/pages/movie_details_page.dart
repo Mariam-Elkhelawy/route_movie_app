@@ -110,7 +110,7 @@ class MovieDetailsPage extends StatelessWidget {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 22.w, top: 13.h),
+                  padding: EdgeInsets.only(left: 18.w, top: 13.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -150,10 +150,13 @@ class MovieDetailsPage extends StatelessWidget {
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
                               ),
-                              Image.asset(
-                                AppImages.icBookmark,
-                                width: 27.w,
-                                height: 36.h,
+                              Positioned(
+                                left: -2,
+                                child: Image.asset(
+                                  AppImages.icBookmark,
+                                  width: 27.w,
+                                  height: 36.h,
+                                ),
                               ),
                             ],
                           ),
@@ -189,7 +192,7 @@ class MovieDetailsPage extends StatelessWidget {
                                                 border: Border.all(
                                                   color: AppColor.borderColor,
                                                   width: 1.w,
-                                                )),
+                                                ),),
                                             child: Text(
                                               state.movieDetailsModel
                                                       ?.genres?[index].name ??

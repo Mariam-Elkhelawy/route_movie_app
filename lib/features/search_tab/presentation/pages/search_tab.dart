@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:route_movie_app/config/routes/app_routes_names.dart';
 import 'package:route_movie_app/core/enums/enums.dart';
 import 'package:route_movie_app/core/utils/app_colors.dart';
 import 'package:route_movie_app/core/utils/app_strings.dart';
@@ -37,41 +38,22 @@ class _SearchTabState extends State<SearchTab> {
       )..add(SearchFilmEvent(searchKey)),
       child: BlocConsumer<SearchBloc, SearchState>(
         listener: (context, state) {
-          if (state.screenStatus == ScreenStatus.loading) {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const AlertDialog(
-                  title: Center(
-                    child: CircularProgressIndicator(
-                      color: AppColor.primaryColor,
-                    ),
-                  ),
-                );
-              },
-            );
-          }
-          if (state.screenStatus == ScreenStatus.success) {
-            // BlocProvider.of<SearchBloc>(context)
-            //     .add(SearchFilmEvent(searchKey));
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  CustomSearchWidget(
-                    filmImage:
-                        '${Constants.imagePath}${state.searchFilmModel?.results?[index].posterPath}',
-                    filmName: state.searchFilmModel?.results?[index].title ?? '',
-                    filmOverView:
-                        state.searchFilmModel?.results?[index].originalTitle ??
-                            '',
-                    filmYear:
-                        state.searchFilmModel?.results?[index].releaseDate ?? '',
-                  );
-                },
-                itemCount: state.searchFilmModel?.results?.length,
-              ),
-            );
-          }
+          // if (state.screenStatus == ScreenStatus.loading) {
+          //   showDialog(
+          //     context: context,
+          //     barrierDismissible: false,
+          //     builder: (context) {
+          //       return const AlertDialog(
+          //         title: Center(
+          //           child: CircularProgressIndicator(
+          //             color: AppColor.primaryColor,
+          //           ),
+          //         ),
+          //       );
+          //     },
+          //   );
+          // }
+          if (state.screenStatus == ScreenStatus.success) {}
           if (state.screenStatus == ScreenStatus.failure) {
             showDialog(
               context: context,
@@ -92,9 +74,10 @@ class _SearchTabState extends State<SearchTab> {
                 children: [
                   SizedBox(height: 20.h),
                   CustomTextField(
-                    onChanged: (String? value) {
-                      searchKey = value ?? '';
-                      setState(() {});
+                    onChanged: (String value) {
+                      searchKey = value;
+                      BlocProvider.of<SearchBloc>(context)
+                          .add(SearchFilmEvent(searchKey));
                     },
                     searchController: searchController,
                   ),
@@ -107,28 +90,41 @@ class _SearchTabState extends State<SearchTab> {
                       style: AppStyles.bodyMedium,
                     ),
                   ],
-                  // if (searchKey != '') ...[
-                  //   Expanded(
-                  //     child: ListView.builder(
-                  //       itemBuilder: (context, index) {
-                  //         CustomSearchWidget(
-                  //           filmImage:
-                  //               '${Constants.imagePath}${state.searchFilmModel?.results?[index].posterPath ?? ''} ',
-                  //           filmName:
-                  //               state.searchFilmModel?.results?[index].title ??
-                  //                   '',
-                  //           filmOverView: state.searchFilmModel?.results?[index]
-                  //                   .originalTitle ??
-                  //               '',
-                  //           filmYear: state.searchFilmModel?.results?[index]
-                  //                   .releaseDate ??
-                  //               '',
-                  //         );
-                  //       },
-                  //       itemCount: state.searchFilmModel?.results?.length,
-                  //     ),
-                  //   )
-                  // ]
+                  if (searchKey != '') ...[
+                    SizedBox(height: 25.h),
+                    Expanded(
+                      child: ListView.builder(
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, AppRoutesNames.movieDetails,
+                                  arguments: state.searchFilmModel
+                                          ?.results?[index].id ??
+                                      0);
+                            },
+                            child: CustomSearchWidget(
+                              filmImage:
+                                  '${Constants.imagePath}${state.searchFilmModel?.results?[index].posterPath ?? ''} ',
+                              filmName: state
+                                      .searchFilmModel?.results?[index].title ??
+                                  '',
+                              filmOverView: state.searchFilmModel
+                                      ?.results?[index].originalTitle ??
+                                  '',
+                              filmYear: state.searchFilmModel?.results?[index]
+                                      .releaseDate ??
+                                  '',
+                            ),
+                          );
+                        },
+                        itemCount: state.searchFilmModel?.results?.length,
+                      ),
+
+                    ),
+                    SizedBox(height: 16.h)
+
+                  ]
                 ],
               ),
             ),

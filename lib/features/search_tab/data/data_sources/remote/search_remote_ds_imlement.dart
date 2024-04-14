@@ -18,6 +18,7 @@ class SearchRemoteDSImplementation implements SearchRemoteDs {
 
         });
     SearchFilmModel searchFilmModel = SearchFilmModel.fromJson(response.data);
+    print(response.data);
     return searchFilmModel;
   }
 }

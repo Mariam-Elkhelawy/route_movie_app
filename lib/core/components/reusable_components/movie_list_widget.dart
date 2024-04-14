@@ -61,10 +61,13 @@ class MovieListWidget extends StatelessWidget {
                   ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-                Image.asset(
-                  AppImages.icBookmark,
-                  width: 27.w,
-                  height: 36.h,
+                Positioned(
+                  left: -2,
+                  child: Image.asset(
+                    AppImages.icBookmark,
+                    width: 27.w,
+                    height: 36.h,
+                  ),
                 ),
               ],
             ),
