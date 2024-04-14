@@ -27,7 +27,7 @@ class ContainerMovie extends StatelessWidget {
       height: height,
       color: AppColor.moviesContainerBgColor,
       child: Padding(
-        padding:  EdgeInsets.only(left: 24.w,top: 10.h,bottom: 17.h),
+        padding:  EdgeInsets.only(left: 18.w,top: 8.h,bottom: 16.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

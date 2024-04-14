@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:route_movie_app/config/routes/app_routes_names.dart';
+import 'package:route_movie_app/core/components/reusable_components/Container_movie.dart';
+import 'package:route_movie_app/core/components/reusable_components/movie_list_widget.dart';
 import 'package:route_movie_app/core/enums/enums.dart';
 import 'package:route_movie_app/core/utils/app_colors.dart';
 import 'package:route_movie_app/core/utils/app_strings.dart';
@@ -119,6 +121,28 @@ class _HomeTabState extends State<HomeTab> {
                                 state.popularFilmModel?.results?[itemIndex].id);
                       },
                       child: PopularFilmWidget(
+                        onTap: () async {
+                          await FirebaseFunctions.addWatchlist(
+                              watchListModel: model,
+                              onException: (e) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    content: Text(e),
+                                    actions: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('OK'),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              });
+                          // model.toggleBookmark();
+                          // setState(() {});
+                        },
                         watchListModel: model,
                         imageBackdropPath:
                             '${Constants.imagePath}${state.popularFilmModel?.results?[itemIndex].backdropPath ?? ''}',
@@ -147,187 +171,117 @@ class _HomeTabState extends State<HomeTab> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 85.h),
-                  child: Container(
-                    width: double.infinity,
-                    height: 187.h,
-                    color: AppColor.moviesContainerBgColor,
-                    margin: EdgeInsets.symmetric(vertical: 10.h),
-                    padding:
-                        EdgeInsets.only(left: 16.w, top: 8.h, bottom: 16.h),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppStrings.newReleases,
-                          style: AppStyles.bodyMedium.copyWith(fontSize: 15.sp),
-                        ),
-                        SizedBox(height: 12.h),
-                        Expanded(
-                          child: ListView.separated(
-                            itemBuilder: (context, index) {
-                              WatchListModel model = WatchListModel(
-                                  isWatchList: true,
-                                  id:
-                                      '${state.upComingFilmModel?.results?[index].id ?? 0}',
-                                  title: state.upComingFilmModel
-                                          ?.results?[index].title ??
-                                      '',
-                                  image:
-                                      '${Constants.imagePath}${state.upComingFilmModel?.results?[index].backdropPath ?? ''} ',
-                                  description: state.upComingFilmModel
-                                          ?.results?[index].overview ??
-                                      '',
-                                  releaseDate: state.upComingFilmModel
-                                          ?.results?[index].releaseDate ??
-                                      '',
-                                  movieId: state.upComingFilmModel
-                                          ?.results?[index].id ??
-                                      0);
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, AppRoutesNames.movieDetails,
-                                      arguments: state.upComingFilmModel
-                                          ?.results?[index].id);
-                                },
-                                child: NewReleasesFilms(
+                  child: ContainerMovie(
+                    text: AppStrings.newReleases,
+                    height: 186.h,
+                    child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        WatchListModel model = WatchListModel(
+                            isWatchList: true,
+                            id:
+                                '${state.upComingFilmModel?.results?[index].id ?? 0}',
+                            title: state
+                                    .upComingFilmModel?.results?[index].title ??
+                                '',
+                            image:
+                                '${Constants.imagePath}${state.upComingFilmModel?.results?[index].backdropPath ?? ''} ',
+                            description: state.upComingFilmModel
+                                    ?.results?[index].overview ??
+                                '',
+                            releaseDate: state.upComingFilmModel
+                                    ?.results?[index].releaseDate ??
+                                '',
+                            movieId:
+                                state.upComingFilmModel?.results?[index].id ??
+                                    0);
+                        return InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, AppRoutesNames.movieDetails,
+                                arguments: state
+                                    .upComingFilmModel?.results?[index].id);
+                          },
+                          child: NewReleasesFilms(
+                            watchListModel: model,
+                            onTap: () async {
+                              await FirebaseFunctions.addWatchlist(
                                   watchListModel: model,
-                                  onTap: () async {
-                                    await FirebaseFunctions.addWatchlist(
-                                        watchListModel: model,
-                                        onException: (e) {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) => AlertDialog(
-                                              content: Text(e),
-                                              actions: [
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: const Text('OK'),
-                                                )
-                                              ],
-                                            ),
-                                          );
-                                        });
-                                    // model.toggleBookmark();
-                                    // setState(() {});
-                                  },
-                                  filmImage:
-                                      '${Constants.imagePath}${state.upComingFilmModel?.results?[index].posterPath ?? ''} ',
-                                ),
-                              );
+                                  onException: (e) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        content: Text(e),
+                                        actions: [
+                                          ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('OK'),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  });
+                              // model.toggleBookmark();
+                              // setState(() {});
                             },
-                            itemCount:
-                                state.upComingFilmModel?.results?.length ?? 0,
-                            scrollDirection: Axis.horizontal,
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(
-                                width: 12.w,
-                              );
-                            },
+                            filmImage:
+                                '${Constants.imagePath}${state.upComingFilmModel?.results?[index].posterPath ?? ''} ',
                           ),
-                        ),
-                      ],
+                        );
+                      },
+                      itemCount: state.upComingFilmModel?.results?.length ?? 0,
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          width: 12.w,
+                        );
+                      },
                     ),
                   ),
                 ),
-                Container(
-                  width: double.infinity,
+                SizedBox(height: 25.h),
+                ContainerMovie(
                   height: 246.h,
-                  color: AppColor.moviesContainerBgColor,
-                  margin: EdgeInsets.symmetric(vertical: 12.h),
-                  padding: EdgeInsets.only(left: 16.w, top: 8.h, bottom: 16.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppStrings.recommended,
-                        style: AppStyles.bodyMedium.copyWith(fontSize: 15.sp),
-                      ),
-                      SizedBox(height: 10.h),
-                      Expanded(
-                        child: ListView.separated(
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, AppRoutesNames.movieDetails,
-                                    arguments: state.recommendedFilmModel
-                                        ?.results?[index].id);
-                              },
-                              child: RecommendedFilms(
-                                onTap: () async {
-                                  WatchListModel model = WatchListModel(
-                                      isWatchList: true,
-                                      id:
-                                          '${state.recommendedFilmModel?.results?[index].id ?? 0}',
-                                      title: state.recommendedFilmModel
-                                              ?.results?[index].title ??
-                                          '',
-                                      image:
-                                          '${Constants.imagePath}${state.recommendedFilmModel?.results?[index].backdropPath ?? ''} ',
-                                      description: state.recommendedFilmModel
-                                              ?.results?[index].overview ??
-                                          '',
-                                      releaseDate: state.recommendedFilmModel
-                                              ?.results?[index].releaseDate ??
-                                          '',
-                                      movieId: state.recommendedFilmModel
-                                              ?.results?[index].id ??
-                                          0);
-                                  await FirebaseFunctions.addWatchlist(
-                                      watchListModel: model,
-                                      onException: (e) {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) => AlertDialog(
-                                            content: Text(e),
-                                            actions: [
-                                              ElevatedButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: const Text('OK'),
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      });
-                                },
-                                filmImage:
-                                    '${Constants.imagePath}${state.recommendedFilmModel?.results?[index].posterPath ?? ''} ',
-                                filmDate: state.recommendedFilmModel
-                                        ?.results?[index].releaseDate ??
-                                    '',
-                                filmName: state.recommendedFilmModel
-                                        ?.results?[index].title ??
-                                    '',
-                                filmRating:
-                                    ' ${state.recommendedFilmModel?.results?[index].voteAverage ?? ''}',
-                              ),
-                            );
-                          },
-                          itemCount:
-                              state.recommendedFilmModel?.results?.length ?? 0,
-                          scrollDirection: Axis.horizontal,
-                          separatorBuilder: (BuildContext context, int index) {
-                            return SizedBox(
-                              width: 12.w,
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+                  text: AppStrings.recommended,
+                  child: ListView.separated(
+                    itemCount: state.recommendedFilmModel?.results?.length ?? 0,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return MovieListWidget(
+                        imageUrl:
+                            "${Constants.imagePath}${state.recommendedFilmModel?.results?[index].posterPath ?? ""}",
+                        voteAverage:
+                            "${state.recommendedFilmModel?.results?[index].voteAverage ?? 0.toStringAsFixed(2)}",
+                        movieTitle:
+                            state.recommendedFilmModel?.results?[index].title ??
+                                "",
+                        releaseDate: state.recommendedFilmModel?.results?[index]
+                                .releaseDate ??
+                            "",
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutesNames.movieDetails,
+                            arguments: state
+                                    .recommendedFilmModel?.results?[index].id ??
+                                0,
+                          );
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
+                        width: 14.w,
+                      );
+                    },
                   ),
                 ),
               ],
             ),
           ),
         );
-      }),
+      },),
     );
   }
 }

@@ -22,7 +22,7 @@ class CustomSearchWidget extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 6.0.h, horizontal: 8.w),
+            padding: EdgeInsets.symmetric(vertical: 4.0.h, horizontal: 8.w),
             child: Row(
               children: [
                 Stack(
@@ -43,7 +43,10 @@ class CustomSearchWidget extends StatelessWidget {
                           ),
                         ),
                         errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+
+
+                            const Icon(Icons.error),
+
                       ),
                     ),
                   ],
@@ -76,9 +79,10 @@ class CustomSearchWidget extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 4.h),
           const Divider(
             color: AppColor.dividerColor,
-          )
+          ),
         ],
       ),
     );

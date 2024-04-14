@@ -8,6 +8,7 @@ import 'package:route_movie_app/features/search_tab/data/models/SearchFilmModel.
 class SearchRemoteDSImplementation implements SearchRemoteDs {
   @override
   Future<SearchFilmModel> getSearchFilms(String searchQuery) async {
+
     try {
       final apiManager = ApiManager();
       final response = await apiManager.getData(
@@ -23,5 +24,4 @@ class SearchRemoteDSImplementation implements SearchRemoteDs {
     } catch (e) {
       throw Exception('Failed to load films: $e');
     }
-  }
 }

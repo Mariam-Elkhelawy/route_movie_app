@@ -9,7 +9,7 @@ bool? isWatchList ;
 WatchListModel watchListModel;
   @override
   Widget build(BuildContext context) {
-    return watchListModel.isWatchList
+    return !watchListModel.isWatchList
         ? Image.asset(
       AppImages.icWatchListBookmark,
       width: 27.w,
