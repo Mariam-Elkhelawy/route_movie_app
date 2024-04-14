@@ -25,8 +25,42 @@ import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/styles.dart';
 import '../bloc/movie_details_bloc.dart';
 
-class MovieDetailsPage extends StatelessWidget {
-  const MovieDetailsPage({super.key});
+class MovieDetailsPage extends StatefulWidget {
+  const MovieDetailsPage({
+    super.key,
+  });
+
+  @override
+  State<MovieDetailsPage> createState() => _MovieDetailsPageState();
+}
+
+class _MovieDetailsPageState extends State<MovieDetailsPage> {
+  bool isInWatchList = false;
+  WatchListModel? watchListModel;
+  List<int> watchlistMovieIds = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Check if the movie is already in the watchlist when the widget initializes
+    checkIfInWatchList();
+  }
+
+  void toggleWatchlistStatus(int movieId) {
+    if (watchlistMovieIds.contains(movieId)) {
+      watchlistMovieIds.remove(movieId); // Remove from watchlist
+    } else {
+      watchlistMovieIds.add(movieId); // Add to watchlist
+    }
+  }
+
+  void checkIfInWatchList() async {
+    bool exists =
+        await FirebaseFunctions.checkIfFilmExists(watchListModel?.id ?? '');
+    setState(() {
+      isInWatchList = exists;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,32 +202,32 @@ class MovieDetailsPage extends StatelessWidget {
                                 left: -2,
                                 child: InkWell(
                                   onTap: () async {
-                                    bool isExists =
-                                    await FirebaseFunctions.addWatchlist(
-                                        watchListModel: model,
-                                        onException: (e) {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) => AlertDialog(
-                                              content: Text(e),
-                                              actions: [
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: const Text('OK'),
-                                                )
-                                              ],
-                                            ),
-                                          );
-                                        });
-                                    if(isExists){
-
+                                    setState(() {
+                                      isInWatchList = !isInWatchList;
+                                    });
+                                    if (isInWatchList) {
+                                      await FirebaseFunctions.addWatchlist(
+                                          watchListModel: model,
+                                          onException: (e) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                content: Text(e),
+                                                actions: [
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: const Text('OK'),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          });
                                     }
                                   },
-                                  child: IsWatchList(
-                                    watchListModel: model,
-                                  ),
+                                  child:
+                                      IsWatchList(isWatchList: isInWatchList),
                                 ),
                               ),
                             ],
@@ -309,48 +343,72 @@ class MovieDetailsPage extends StatelessWidget {
                       itemCount: state.moreLikeModel?.results?.length ?? 0,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
+                        bool isInWatchListM = watchlistMovieIds.contains(
+                            state.moreLikeModel?.results?[index].id ?? 0);
+
                         return MovieListWidget(
-                          onClicked: () async {
-                            WatchListModel model = WatchListModel(
-                                isWatchList: true,
-                                id: '${state.movieDetailsModel?.id ?? 0}',
-                                title: state.movieDetailsModel?.title ?? '',
-                                image:
-                                    '${Constants.imagePath}${state.movieDetailsModel?.backdropPath ?? ''} ',
-                                description:
-                                    state.movieDetailsModel?.overview ?? '',
-                                releaseDate:
-                                    state.movieDetailsModel?.releaseDate ?? '',
-                                movieId: state.movieDetailsModel?.id ?? 0);
-                            await FirebaseFunctions.addWatchlist(
-                                watchListModel: model,
-                                onException: (e) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => CustomShowDialog(
-                                      dialogContent: e,
-                                    ),
-                                  );
-                                });
-                          },
-                          imageUrl:
-                              "${Constants.imagePath}${state.moreLikeModel?.results?[index].posterPath ?? ""}",
-                          voteAverage:
-                              "${state.moreLikeModel?.results?[index].voteAverage ?? 0.toStringAsFixed(2)}",
-                          movieTitle:
-                              state.moreLikeModel?.results?[index].title ?? "",
-                          releaseDate: state
-                                  .moreLikeModel?.results?[index].releaseDate ??
-                              "",
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutesNames.movieDetails,
-                              arguments:
-                                  state.moreLikeModel?.results?[index].id ?? 0,
+                            onClicked: () async {
+                              setState(() {
+                                isInWatchListM = !isInWatchListM;
+                              });
+                              toggleWatchlistStatus(
+                                  state.moreLikeModel?.results?[index].id ?? 0);
+                              WatchListModel model = WatchListModel(
+                                  isWatchList: true,
+                                  id:
+                                      '${state.moreLikeModel?.results?[index].id ?? 0}',
+                                  title: state.moreLikeModel?.results?[index]
+                                          .title ??
+                                      '',
+                                  image:
+                                      '${Constants.imagePath}${state.moreLikeModel?.results?[index].backdropPath ?? ''} ',
+                                  description: state.moreLikeModel
+                                          ?.results?[index].overview ??
+                                      '',
+                                  releaseDate: state.moreLikeModel
+                                          ?.results?[index].releaseDate ??
+                                      '',
+                                  movieId:
+                                      state.moreLikeModel?.results?[index].id ??
+                                          0);
+                              if (isInWatchListM) {
+                                await FirebaseFunctions.addWatchlist(
+                                  watchListModel: model,
+                                  onException: (e) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => CustomShowDialog(
+                                        dialogContent: e,
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                            imageUrl:
+                                "${Constants.imagePath}${state.moreLikeModel?.results?[index].posterPath ?? ""}",
+                            voteAverage:
+                                "${state.moreLikeModel?.results?[index].voteAverage ?? 0.toStringAsFixed(2)}",
+                            movieTitle:
+                                state.moreLikeModel?.results?[index].title ??
+                                    "",
+                            releaseDate: state.moreLikeModel?.results?[index]
+                                    .releaseDate ??
+                                "",
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutesNames.movieDetails,
+                                arguments:
+                                    state.moreLikeModel?.results?[index].id ??
+                                        0,
+                              );
+                            },
+                            child: IsWatchList(isWatchList: isInWatchListM)
+                            // isInWatchListM
+                            //     ? Image.asset(AppImages.icWatchListBookmark)
+                            //     : Image.asset(AppImages.icBookmark),
                             );
-                          },
-                        );
                       },
                       separatorBuilder: (context, index) {
                         return SizedBox(

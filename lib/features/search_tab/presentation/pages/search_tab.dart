@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:route_movie_app/config/routes/app_routes_names.dart';
 import 'package:route_movie_app/core/enums/enums.dart';
-import 'package:route_movie_app/core/utils/app_colors.dart';
+import 'package:route_movie_app/core/utils/app_images.dart';
 import 'package:route_movie_app/core/utils/app_strings.dart';
 import 'package:route_movie_app/core/utils/constants.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
@@ -15,7 +15,7 @@ import 'package:route_movie_app/features/search_tab/presentation/widgets/custom_
 import 'package:route_movie_app/features/search_tab/presentation/widgets/custom_text_field.dart';
 
 class SearchTab extends StatelessWidget {
-   SearchTab({super.key});
+  SearchTab({super.key});
 
   TextEditingController searchController = TextEditingController();
 
@@ -33,7 +33,6 @@ class SearchTab extends StatelessWidget {
       ),
       child: BlocConsumer<SearchBloc, SearchState>(
         listener: (context, state) {
-
           // if (state.screenStatus == ScreenStatus.loading) {
           //   showDialog(
           //     context: context,
@@ -74,14 +73,12 @@ class SearchTab extends StatelessWidget {
                       searchKey = value;
                       BlocProvider.of<SearchBloc>(context)
                           .add(SearchFilmEvent(searchKey));
-
                     },
-                    //onPreseed:  (){  BlocProvider.of<SearchBloc>(context).add(SearchFilmEvent(searchController.text));},
                     searchController: searchController,
                   ),
                   if (searchKey == '') ...[
                     SizedBox(height: 250.h),
-                    Image.asset('assets/images/no_movie.png'),
+                    Image.asset(AppImages.noMovies),
                     SizedBox(height: 10.h),
                     Text(
                       AppStrings.noMovie,
@@ -118,12 +115,9 @@ class SearchTab extends StatelessWidget {
                         },
                         itemCount: state.searchFilmModel?.results?.length,
                       ),
-
                     ),
                     SizedBox(height: 16.h)
-
                   ]
-
                 ],
               ),
             ),
@@ -131,6 +125,5 @@ class SearchTab extends StatelessWidget {
         },
       ),
     );
-
   }
 }

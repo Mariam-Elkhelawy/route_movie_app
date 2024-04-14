@@ -54,6 +54,7 @@ class FirebaseFunctions {
     try {
       final filmExists = await checkIfFilmExists(watchListModel.id);
       if (filmExists) {
+
         onException(
             'Film already exists in watchlist : ${watchListModel.title}');
         return;

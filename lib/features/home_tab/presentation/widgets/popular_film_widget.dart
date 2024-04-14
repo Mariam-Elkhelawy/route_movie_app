@@ -76,7 +76,7 @@ class PopularFilmWidget extends StatelessWidget {
                     onTap: () {
                       onTap();
                     },
-                     child: IsWatchList(watchListModel: watchListModel,)
+                     child: IsWatchList(isWatchList: true,)
                   ),
                 ],
               ),

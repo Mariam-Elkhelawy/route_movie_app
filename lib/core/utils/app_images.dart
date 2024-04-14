@@ -6,4 +6,6 @@ class AppImages{
   static const String icWatchList = 'assets/images/ic_watch_list.png';
   static const String icWatchListBookmark = 'assets/images/ic_watchList_bookmark.png';
   static const String icBookmark = 'assets/images/ic_bookmark.png';
+  static const String noMovies = 'assets/images/no_movie.png';
+  static const String searchTextField = 'assets/images/ic_textField.png';
 }

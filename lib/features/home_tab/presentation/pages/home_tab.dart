@@ -226,73 +226,73 @@ class _HomeTabState extends State<HomeTab> {
                     ),
                   ),
                   SizedBox(height: 25.h),
-                  ContainerMovie(
-                    height: 246.h,
-                    text: AppStrings.recommended,
-                    child: ListView.separated(
-                      itemCount:
-                          state.recommendedFilmModel?.results?.length ?? 0,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return MovieListWidget(
-                          onClicked: () async {
-                            WatchListModel model = WatchListModel(
-                                isWatchList: true,
-                                id:
-                                    '${state.recommendedFilmModel?.results?[index].id ?? 0}',
-                                title: state.recommendedFilmModel
-                                        ?.results?[index].title ??
-                                    '',
-                                image:
-                                    '${Constants.imagePath}${state.recommendedFilmModel?.results?[index].backdropPath ?? ''} ',
-                                description: state.recommendedFilmModel
-                                        ?.results?[index].overview ??
-                                    '',
-                                releaseDate: state.recommendedFilmModel
-                                        ?.results?[index].releaseDate ??
-                                    '',
-                                movieId: state.recommendedFilmModel
-                                        ?.results?[index].id ??
-                                    0);
-                            await FirebaseFunctions.addWatchlist(
-                                watchListModel: model,
-                                onException: (e) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => CustomShowDialog(
-                                      dialogContent: e,
-                                    ),
-                                  );
-                                });
-                          },
-                          imageUrl:
-                              "${Constants.imagePath}${state.recommendedFilmModel?.results?[index].posterPath ?? ""}",
-                          voteAverage:
-                              "${state.recommendedFilmModel?.results?[index].voteAverage ?? 0.toStringAsFixed(2)}",
-                          movieTitle: state.recommendedFilmModel
-                                  ?.results?[index].title ??
-                              "",
-                          releaseDate: state.recommendedFilmModel
-                                  ?.results?[index].releaseDate ??
-                              "",
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutesNames.movieDetails,
-                              arguments: state.recommendedFilmModel
-                                      ?.results?[index].id ??
-                                  0,
-                            );
-                          },
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return SizedBox(
-                          width: 14.w,
-                        );
-                      },
-                    ),
-                  ),
+                  // ContainerMovie(
+                  //   height: 246.h,
+                  //   text: AppStrings.recommended,
+                  //   child: ListView.separated(
+                  //     itemCount:
+                  //         state.recommendedFilmModel?.results?.length ?? 0,
+                  //     scrollDirection: Axis.horizontal,
+                  //     itemBuilder: (context, index) {
+                  //       return MovieListWidget(
+                  //         onClicked: () async {
+                  //           WatchListModel model = WatchListModel(
+                  //               isWatchList: true,
+                  //               id:
+                  //                   '${state.recommendedFilmModel?.results?[index].id ?? 0}',
+                  //               title: state.recommendedFilmModel
+                  //                       ?.results?[index].title ??
+                  //                   '',
+                  //               image:
+                  //                   '${Constants.imagePath}${state.recommendedFilmModel?.results?[index].backdropPath ?? ''} ',
+                  //               description: state.recommendedFilmModel
+                  //                       ?.results?[index].overview ??
+                  //                   '',
+                  //               releaseDate: state.recommendedFilmModel
+                  //                       ?.results?[index].releaseDate ??
+                  //                   '',
+                  //               movieId: state.recommendedFilmModel
+                  //                       ?.results?[index].id ??
+                  //                   0);
+                  //           await FirebaseFunctions.addWatchlist(
+                  //               watchListModel: model,
+                  //               onException: (e) {
+                  //                 showDialog(
+                  //                   context: context,
+                  //                   builder: (context) => CustomShowDialog(
+                  //                     dialogContent: e,
+                  //                   ),
+                  //                 );
+                  //               });
+                  //         },
+                  //         imageUrl:
+                  //             "${Constants.imagePath}${state.recommendedFilmModel?.results?[index].posterPath ?? ""}",
+                  //         voteAverage:
+                  //             "${state.recommendedFilmModel?.results?[index].voteAverage ?? 0.toStringAsFixed(2)}",
+                  //         movieTitle: state.recommendedFilmModel
+                  //                 ?.results?[index].title ??
+                  //             "",
+                  //         releaseDate: state.recommendedFilmModel
+                  //                 ?.results?[index].releaseDate ??
+                  //             "",
+                  //         onTap: () {
+                  //           Navigator.pushNamed(
+                  //             context,
+                  //             AppRoutesNames.movieDetails,
+                  //             arguments: state.recommendedFilmModel
+                  //                     ?.results?[index].id ??
+                  //                 0,
+                  //           );
+                  //         },
+                  //       );
+                  //     },
+                  //     separatorBuilder: (context, index) {
+                  //       return SizedBox(
+                  //         width: 14.w,
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                 ],
               ),
             ),
