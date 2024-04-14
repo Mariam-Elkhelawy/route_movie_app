@@ -13,13 +13,14 @@ class PopularFilmWidget extends StatelessWidget {
       required this.imagePosterPath,
       required this.filmDate,
       required this.filmTitle,
-      required this.watchListModel,required this.onTap});
+      required this.watchListModel,required this.onTap, required this.isWatchList});
   String imageBackdropPath;
   String imagePosterPath;
   String filmTitle;
   String filmDate;
   WatchListModel watchListModel;
   VoidCallback onTap;
+   bool isWatchList;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -76,7 +77,7 @@ class PopularFilmWidget extends StatelessWidget {
                     onTap: () {
                       onTap();
                     },
-                     child: IsWatchList(isWatchList: false,watchListModel: watchListModel,)
+                     child: IsWatchList(isWatchList: isWatchList,)
                   ),
                 ],
               ),

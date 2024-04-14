@@ -12,7 +12,6 @@ class AppRoutes {
     switch (settings.name) {
       case AppRoutesNames.splash:
         return MaterialPageRoute(
-
           builder: (context) => const SplashScreen(),
           settings: settings,
         );
@@ -23,14 +22,14 @@ class AppRoutes {
         );
       case AppRoutesNames.discoverMovie:
         return MaterialPageRoute(
-          builder: (context) => const DiscoverMoviePage(),
+          builder: (context) =>  DiscoverMoviePage(),
           settings: settings,
-
         );
-         case AppRoutesNames.movieDetails:
+      case AppRoutesNames.movieDetails:
         return MaterialPageRoute(
-            builder: (context) => const MovieDetailsPage(),
-            settings: settings);
+          builder: (context) => const MovieDetailsPage(),
+          settings: settings,
+        );
 
       default:
         return MaterialPageRoute(

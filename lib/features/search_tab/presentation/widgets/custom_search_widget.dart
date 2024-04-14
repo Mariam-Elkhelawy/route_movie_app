@@ -7,10 +7,10 @@ import 'package:route_movie_app/core/utils/styles.dart';
 class CustomSearchWidget extends StatelessWidget {
   CustomSearchWidget(
       {super.key,
-        required this.filmImage,
-        required this.filmName,
-        required this.filmOverView,
-        required this.filmYear});
+      required this.filmImage,
+      required this.filmName,
+      required this.filmOverView,
+      required this.filmYear});
   String filmImage;
   String filmName;
   String filmOverView;
@@ -43,10 +43,7 @@ class CustomSearchWidget extends StatelessWidget {
                           ),
                         ),
                         errorWidget: (context, url, error) =>
-
-
                             const Icon(Icons.error),
-
                       ),
                     ),
                   ],

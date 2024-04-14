@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:route_movie_app/core/components/reusable_components/Container_movie.dart';
 import 'package:route_movie_app/core/components/reusable_components/movie_list_widget.dart';
+import 'package:route_movie_app/core/firebase/firebase_functions.dart';
 import 'package:route_movie_app/core/utils/app_colors.dart';
 import 'package:route_movie_app/features/movie_details/data/data_sources/remote/more_like_remote_ds_impl.dart';
 import 'package:route_movie_app/features/movie_details/data/data_sources/remote/movie_details_remote_ds_impl.dart';
@@ -13,7 +14,10 @@ import 'package:route_movie_app/features/movie_details/data/repositories/more_li
 import 'package:route_movie_app/features/movie_details/data/repositories/movie_details_repo_impl.dart';
 import 'package:route_movie_app/features/movie_details/domain/use_cases/more_like_use_case.dart';
 import 'package:route_movie_app/features/movie_details/domain/use_cases/movie_details_use_case.dart';
+import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
 import '../../../../config/routes/app_routes_names.dart';
+import '../../../../core/components/reusable_components/custom_show_dialog.dart';
+import '../../../../core/components/reusable_components/isWatchList_widget.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/utils/app_images.dart';
 import '../../../../core/utils/app_strings.dart';
@@ -21,12 +25,49 @@ import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/styles.dart';
 import '../bloc/movie_details_bloc.dart';
 
-class MovieDetailsPage extends StatelessWidget {
-  const MovieDetailsPage({super.key});
+class MovieDetailsPage extends StatefulWidget {
+  const MovieDetailsPage({
+    super.key,
+  });
+
+  @override
+  State<MovieDetailsPage> createState() => _MovieDetailsPageState();
+}
+
+class _MovieDetailsPageState extends State<MovieDetailsPage> {
+  WatchListModel? watchListModel;
+  List<int> watchlistMovieIds = [];
+  bool isInWatchList = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfInWatchList();
+  }
+
+  void toggleWatchlistStatus(int movieId) {
+    if (watchlistMovieIds.contains(movieId)) {
+      watchlistMovieIds.remove(movieId);
+    } else {
+      watchlistMovieIds.add(movieId);
+    }
+  }
+
+  void checkIfInWatchList() async {
+    bool exists =
+        await FirebaseFunctions.checkIfFilmExists(watchListModel?.id ?? '');
+    setState(() {
+      isInWatchList = exists;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final int movieId = ModalRoute.of(context)!.settings.arguments as int;
+    final Map<String, dynamic> args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    var movieId = args['filmId'] as int;
+    bool isWatchList = args['isWatchList'] ?? false;
     return BlocProvider(
       create: (context) => MovieDetailsBloc(
         MovieDetailsUseCase(
@@ -73,6 +114,16 @@ class MovieDetailsPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          WatchListModel model = WatchListModel(
+            id: '${state.movieDetailsModel?.id ?? 0}',
+            title: state.movieDetailsModel?.title ?? "",
+            image:
+                '${Constants.imagePath}${state.movieDetailsModel?.backdropPath ?? ""}',
+            description: state.movieDetailsModel?.overview ?? "",
+            releaseDate: state.movieDetailsModel?.releaseDate ?? "",
+            movieId: state.movieDetailsModel?.id ?? 0,
+            isWatchList: true,
+          );
           return Scaffold(
             appBar: AppBar(
               title: Text(
@@ -152,10 +203,34 @@ class MovieDetailsPage extends StatelessWidget {
                               ),
                               Positioned(
                                 left: -2,
-                                child: Image.asset(
-                                  AppImages.icBookmark,
-                                  width: 27.w,
-                                  height: 36.h,
+                                child: InkWell(
+                                  onTap: () async {
+                                    setState(() {
+                                      isWatchList = !isWatchList;
+                                      isInWatchList = !isInWatchList;
+                                    });
+                                    if (isWatchList || isInWatchList) {
+                                      await FirebaseFunctions.addWatchlist(
+                                          watchListModel: model,
+                                          onException: (e) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                content: Text(e),
+                                                actions: [
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: const Text('OK'),
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          });
+                                    }
+                                  },
+                                  child: IsWatchList(isWatchList: isInWatchList || isWatchList),
                                 ),
                               ),
                             ],
@@ -187,12 +262,13 @@ class MovieDetailsPage extends StatelessWidget {
                                             height: 25.h,
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(4.r),
-                                                border: Border.all(
-                                                  color: AppColor.borderColor,
-                                                  width: 1.w,
-                                                ),),
+                                              borderRadius:
+                                                  BorderRadius.circular(4.r),
+                                              border: Border.all(
+                                                color: AppColor.borderColor,
+                                                width: 1.w,
+                                              ),
+                                            ),
                                             child: Text(
                                               state.movieDetailsModel
                                                       ?.genres?[index].name ??
@@ -270,7 +346,48 @@ class MovieDetailsPage extends StatelessWidget {
                       itemCount: state.moreLikeModel?.results?.length ?? 0,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
+                        bool isInWatchListM = watchlistMovieIds.contains(
+                            state.moreLikeModel?.results?[index].id ?? 0);
+
                         return MovieListWidget(
+                          onClicked: () async {
+                            setState(() {
+                              isInWatchListM = !isInWatchListM;
+                            });
+                            toggleWatchlistStatus(
+                                state.moreLikeModel?.results?[index].id ?? 0);
+                            WatchListModel model = WatchListModel(
+                                isWatchList: true,
+                                id:
+                                    '${state.moreLikeModel?.results?[index].id ?? 0}',
+                                title: state
+                                        .moreLikeModel?.results?[index].title ??
+                                    '',
+                                image:
+                                    '${Constants.imagePath}${state.moreLikeModel?.results?[index].backdropPath ?? ''} ',
+                                description: state.moreLikeModel
+                                        ?.results?[index].overview ??
+                                    '',
+                                releaseDate: state.moreLikeModel
+                                        ?.results?[index].releaseDate ??
+                                    '',
+                                movieId:
+                                    state.moreLikeModel?.results?[index].id ??
+                                        0);
+                            if (isInWatchListM) {
+                              await FirebaseFunctions.addWatchlist(
+                                watchListModel: model,
+                                onException: (e) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => CustomShowDialog(
+                                      dialogContent: e,
+                                    ),
+                                  );
+                                },
+                              );
+                            }
+                          },
                           imageUrl:
                               "${Constants.imagePath}${state.moreLikeModel?.results?[index].posterPath ?? ""}",
                           voteAverage:
@@ -282,12 +399,15 @@ class MovieDetailsPage extends StatelessWidget {
                               "",
                           onTap: () {
                             Navigator.pushNamed(
-                              context,
-                              AppRoutesNames.movieDetails,
-                              arguments:
-                                  state.moreLikeModel?.results?[index].id ?? 0,
-                            );
+                                context, AppRoutesNames.movieDetails,
+                                arguments: Map<String, dynamic>.from({
+                                  "filmId":
+                                      state.moreLikeModel?.results?[index].id ??
+                                          0,
+                                  "isWatchList": isInWatchListM,
+                                }));
                           },
+                          child: IsWatchList(isWatchList: isInWatchListM),
                         );
                       },
                       separatorBuilder: (context, index) {

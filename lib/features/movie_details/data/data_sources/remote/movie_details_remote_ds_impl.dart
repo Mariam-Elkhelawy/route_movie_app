@@ -18,7 +18,6 @@ class MovieDetailsRemoteDSImpl implements MovieDetailsRemoteDS {
     );
     MovieDetailsModel movieDetailsModel =
         MovieDetailsModel.fromJson(response.data);
-    print(response.data);
     if (response.statusCode == 200) {
       return movieDetailsModel;
     } else {

@@ -15,6 +15,8 @@ class MovieListWidget extends StatelessWidget {
     required this.movieTitle,
     required this.releaseDate,
     required this.onTap,
+    required this.onClicked,
+    required this.child
   });
 
   final String imageUrl;
@@ -22,6 +24,8 @@ class MovieListWidget extends StatelessWidget {
   final String movieTitle;
   final String releaseDate;
   final VoidCallback onTap;
+  final VoidCallback onClicked;
+ final Widget child;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -50,7 +54,7 @@ class MovieListWidget extends StatelessWidget {
                 CachedNetworkImage(
                   width: 97.w,
                   height: 128.h,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   imageUrl: imageUrl,
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
                       Center(
@@ -63,13 +67,13 @@ class MovieListWidget extends StatelessWidget {
                 ),
                 Positioned(
                   left: -2,
-                  child: Image.asset(
-                    AppImages.icBookmark,
-                    width: 27.w,
-                    height: 36.h,
+                  child: InkWell(
+                    onTap:() {
+                      onClicked();
+                    },
+                    child: child
                   ),
-                ),
-              ],
+                )],
             ),
             SizedBox(
               height: 5.h,
@@ -117,7 +121,7 @@ class MovieListWidget extends StatelessWidget {
                   ),
                   Text(releaseDate, style: AppStyles.dateText),
                   SizedBox(
-                    height: 10.h,
+                    height: 9.h,
                   ),
                 ],
               ),

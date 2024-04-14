@@ -1,13 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:route_movie_app/core/components/reusable_components/isWatchList_widget.dart';
+import 'package:route_movie_app/core/components/reusable_components/custom_show_dialog.dart';
 import 'package:route_movie_app/core/firebase/firebase_functions.dart';
 import 'package:route_movie_app/core/utils/app_images.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
 import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
-
 import '../../../../config/routes/app_routes_names.dart';
 import '../../../../core/utils/app_colors.dart';
 
@@ -31,7 +29,10 @@ class _WatchListItemState extends State<WatchListItem> {
             child: InkWell(
               onTap: () {
                 Navigator.pushNamed(context, AppRoutesNames.movieDetails,
-                    arguments: widget.watchListModel.movieId);
+                    arguments: Map<String, dynamic>.from({
+                      "filmId": widget.watchListModel.movieId,
+                      "isWatchList": true ,
+                    }));
               },
               child: Row(
                 children: [
@@ -58,25 +59,18 @@ class _WatchListItemState extends State<WatchListItem> {
                       ),
                       InkWell(
                         onTap: () async {
-                          await FirebaseFunctions.deleteWatchList(
-                              widget.watchListModel.id, widget.watchListModel);
                           showDialog(
                             context: context,
-                            builder: (context) => AlertDialog(
-                              content:
-                                  const Text('Film Removed from WatchList'),
-                              actions: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('OK'),
-                                )
-                              ],
+                            builder: (context) => CustomShowDialog(
+                              dialogContent: 'Film Removed from WatchList',
+                              is2Actions: true,
+                              actionRequired: () async {
+                                await FirebaseFunctions.deleteWatchList(
+                                    widget.watchListModel.id,
+                                    widget.watchListModel);
+                              },
                             ),
                           );
-                          widget.watchListModel.toggleBookmark();
-                          setState(() {});
                         },
                         child: widget.watchListModel.isWatchList
                             ? Image.asset(
@@ -104,24 +98,29 @@ class _WatchListItemState extends State<WatchListItem> {
                             widget.watchListModel.title,
                             overflow: TextOverflow.visible,
                             maxLines: 2,
-                            style:
-                                AppStyles.bodyMedium.copyWith(fontSize: 15.sp),
+                            style: AppStyles.bodyMedium.copyWith(
+                              fontSize: 15.sp,
+                            ),
                           ),
                         ),
                         SizedBox(
                           height: 5.h,
                         ),
-                        Text(widget.watchListModel.releaseDate,
-                            style: AppStyles.bodySmall),
+                        Text(
+                          widget.watchListModel.releaseDate,
+                          style: AppStyles.bodySmall,
+                        ),
                         SizedBox(
                           height: 5.h,
                         ),
                         SizedBox(
                           width: 215.w,
-                          child: Text(widget.watchListModel.description,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: AppStyles.bodySmall),
+                          child: Text(
+                            widget.watchListModel.description,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: AppStyles.bodySmall,
+                          ),
                         ),
                       ],
                     ),

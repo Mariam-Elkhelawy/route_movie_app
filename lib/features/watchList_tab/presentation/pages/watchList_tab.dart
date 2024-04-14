@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:route_movie_app/core/firebase/firebase_functions.dart';
 import 'package:route_movie_app/core/utils/app_colors.dart';
@@ -14,7 +15,6 @@ class WatchListTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.0.w, vertical: 15.h),
@@ -28,8 +28,8 @@ class WatchListTab extends StatelessWidget {
               textAlign: TextAlign.start,
             ),
             SizedBox(height: 10.h),
-            FutureBuilder<QuerySnapshot<WatchListModel>>(
-              future: FirebaseFunctions.getWatchList(),
+            StreamBuilder<QuerySnapshot<WatchListModel>>(
+              stream: FirebaseFunctions.getWatchList(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -40,14 +40,18 @@ class WatchListTab extends StatelessWidget {
                 }
 
                 if (snapshot.hasError) {
-                  return Center(
+                  return const Center(
                     child: Text(AppStrings.error),
                   );
                 }
                 var films =
                     snapshot.data?.docs.map((e) => e.data()).toList() ?? [];
                 if (films.isEmpty) {
-                  return Text('No films in watchlist');
+                  return const Center(
+                    child: Text(
+                      'No films in watchlist',
+                    ),
+                  );
                 }
                 return Expanded(
                   child: ListView.builder(
