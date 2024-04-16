@@ -113,7 +113,6 @@ class BrowseTab extends StatelessWidget {
                             arguments: Map<String, dynamic>.from({
                               "genreName": state.movieList!.genres![index].name,
                               "genreId": state.movieList!.genres![index].id,
-
                             }));
                       },
                     ),
