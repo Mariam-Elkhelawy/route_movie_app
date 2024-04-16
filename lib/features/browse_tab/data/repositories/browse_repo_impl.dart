@@ -8,8 +8,7 @@ class BrowseRepoImplement implements BrowseRepo {
   BrowseRemoteDS browseRemoteDS;
   BrowseRepoImplement(this.browseRemoteDS);
   @override
-  Future<Either<Failures, MovieListModel>> getMovieList(
-      ) async {
+  Future<Either<Failures, MovieListModel>> getMovieList() async {
     try {
       var movieListModel = await browseRemoteDS.getMovieList();
       return Right(movieListModel);

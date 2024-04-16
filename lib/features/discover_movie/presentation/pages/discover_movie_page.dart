@@ -1,15 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:route_movie_app/core/utils/app_colors.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
 import 'package:route_movie_app/features/discover_movie/data/data_sources/remote/discover_movie_ds_impl.dart';
 import 'package:route_movie_app/features/discover_movie/data/repositories/discover_movie_repo_impl.dart';
 import 'package:route_movie_app/features/discover_movie/domain/use_cases/discover_movie_use_case.dart';
 import 'package:route_movie_app/features/discover_movie/presentation/widgets/discover_movie_item.dart';
-
 import '../../../../config/routes/app_routes_names.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/utils/app_strings.dart';
@@ -17,12 +13,11 @@ import '../../../../core/utils/constants.dart';
 import '../bloc/discover_movie_bloc.dart';
 
 class DiscoverMoviePage extends StatelessWidget {
-   DiscoverMoviePage({super.key});
-
+  const DiscoverMoviePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-     bool? isWatchList ;
+    bool? isWatchList;
     final Map<String, dynamic> args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final String genreName = args['genreName'] as String;
@@ -96,13 +91,14 @@ class DiscoverMoviePage extends StatelessWidget {
                           state.movieDiscoverModel?.results?[index].title ?? "",
                       voteAverage:
                           "${state.movieDiscoverModel?.results?[index].voteAverage ?? 0.toStringAsFixed(2)}",
-                      onTap: (){
+                      onTap: () {
                         Navigator.pushNamed(
-                            context,
-                            AppRoutesNames.movieDetails,
+                            context, AppRoutesNames.movieDetails,
                             arguments: Map<String, dynamic>.from({
-                              "filmId": state.movieDiscoverModel?.results?[index].id ?? 0,
-                              "isWatchList": isWatchList?? false ,
+                              "filmId": state
+                                      .movieDiscoverModel?.results?[index].id ??
+                                  0,
+                              "isWatchList": isWatchList ?? false,
                             }));
                       },
                     );

@@ -1,4 +1,3 @@
-import 'package:http/http.dart';
 import 'package:route_movie_app/core/api/api_manager.dart';
 import 'package:route_movie_app/core/api/end_points.dart';
 import 'package:route_movie_app/core/utils/app_strings.dart';

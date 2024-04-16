@@ -9,7 +9,8 @@ class DiscoverMovieRepoImplement implements DiscoverMovieRepo {
 
   DiscoverMovieRepoImplement(this.discoverMovieRemoteDS);
   @override
-  Future<Either<Failures, MovieDiscoverModel>> getMovieDiscoverList(int genreId) async {
+  Future<Either<Failures, MovieDiscoverModel>> getMovieDiscoverList(
+      int genreId) async {
     try {
       var result = await discoverMovieRemoteDS.getMovieDiscoverList(genreId);
       return Right(result);
