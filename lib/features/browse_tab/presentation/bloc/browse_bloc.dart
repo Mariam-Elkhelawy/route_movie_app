@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:route_movie_app/core/errors/failures.dart';
 
 import '../../../../core/enums/enums.dart';
@@ -14,9 +11,7 @@ part 'browse_state.dart';
 class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
   BrowseUseCase browseUseCase;
   BrowseBloc(this.browseUseCase) : super(BrowseInitialState()) {
-
-    on<GetMovieListEvent>((event , emit)async{
-
+    on<GetMovieListEvent>((event, emit) async {
       //emit(state.copyWith(status: ScreenStatus.loading));
 
       var result = await browseUseCase.call();
@@ -24,8 +19,7 @@ class BrowseBloc extends Bloc<BrowseEvent, BrowseState> {
         emit(state.copyWith(status: ScreenStatus.failure, failures: l));
       }, (r) {
         emit(state.copyWith(status: ScreenStatus.success, movieList: r));
-      } );
-
+      });
     });
   }
 }

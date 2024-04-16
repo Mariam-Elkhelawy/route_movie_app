@@ -1,6 +1,5 @@
 part of 'discover_movie_bloc.dart';
 
-@immutable
 class DiscoverMovieState {
   ScreenStatus? status;
   MovieDiscoverModel? movieDiscoverModel;
@@ -18,7 +17,7 @@ class DiscoverMovieState {
   }
 }
 
- class DiscoverMovieInitialState extends DiscoverMovieState {
+class DiscoverMovieInitialState extends DiscoverMovieState {
   DiscoverMovieInitialState()
       : super(
           status: ScreenStatus.initial,

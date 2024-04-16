@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
@@ -36,11 +35,11 @@ class BrowseCategoryItem extends StatelessWidget {
               height: 110.h,
               progressIndicatorBuilder: (context, url, downloadProgress) =>
                   Center(
-                    child: CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                      color: AppColor.primaryColor,
-                    ),
-                  ),
+                child: CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                  color: AppColor.primaryColor,
+                ),
+              ),
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),

@@ -1,7 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:route_movie_app/core/components/reusable_components/Container_movie.dart';
@@ -14,12 +11,15 @@ import 'package:route_movie_app/features/movie_details/data/repositories/more_li
 import 'package:route_movie_app/features/movie_details/data/repositories/movie_details_repo_impl.dart';
 import 'package:route_movie_app/features/movie_details/domain/use_cases/more_like_use_case.dart';
 import 'package:route_movie_app/features/movie_details/domain/use_cases/movie_details_use_case.dart';
+import 'package:route_movie_app/features/movie_details/presentation/widgets/container_genre_widget.dart';
+import 'package:route_movie_app/features/movie_details/presentation/widgets/custom_stack_widget.dart';
+import 'package:route_movie_app/features/movie_details/presentation/widgets/poster_widget.dart';
+import 'package:route_movie_app/features/movie_details/presentation/widgets/vote_widget.dart';
 import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
 import '../../../../config/routes/app_routes_names.dart';
 import '../../../../core/components/reusable_components/custom_show_dialog.dart';
 import '../../../../core/components/reusable_components/isWatchList_widget.dart';
 import '../../../../core/enums/enums.dart';
-import '../../../../core/utils/app_images.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/styles.dart';
@@ -38,7 +38,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   WatchListModel? watchListModel;
   List<int> watchlistMovieIds = [];
   bool isInWatchList = false;
-
 
   @override
   void initState() {
@@ -134,31 +133,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    CachedNetworkImage(
-                      width: 412.w,
-                      height: 217.h,
-                      fit: BoxFit.cover,
-                      imageUrl:
-                          '${Constants.imagePath}${state.movieDetailsModel?.backdropPath ?? ""}',
-                      progressIndicatorBuilder:
-                          (context, url, downloadProgress) => Center(
-                        child: CircularProgressIndicator(
-                          value: downloadProgress.progress,
-                          color: AppColor.primaryColor,
-                        ),
-                      ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
-                    ),
-                    Icon(
-                      Icons.play_circle_filled_outlined,
-                      color: AppColor.whiteColor,
-                      size: 60.w,
-                    ),
-                  ],
+                CustomStackWidget(
+                  imageUrl:
+                      '${Constants.imagePath}${state.movieDetailsModel?.backdropPath ?? ""}',
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 18.w, top: 13.h),
@@ -177,63 +154,37 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                       Text(
                         state.movieDetailsModel?.releaseDate ?? "",
                         style: AppStyles.dateSmall,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 20.h),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Stack(
-                            alignment: Alignment.topLeft,
-                            children: [
-                              CachedNetworkImage(
-                                width: 129.w,
-                                height: 210.h,
-                                fit: BoxFit.fill,
-                                imageUrl:
-                                    '${Constants.imagePath}${state.movieDetailsModel?.posterPath ?? ""}',
-                                progressIndicatorBuilder:
-                                    (context, url, downloadProgress) => Center(
-                                  child: CircularProgressIndicator(
-                                    value: downloadProgress.progress,
-                                    color: AppColor.primaryColor,
-                                  ),
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error),
-                              ),
-                              Positioned(
-                                left: -2,
-                                child: InkWell(
-                                  onTap: () async {
-                                    setState(() {
-                                      isWatchList = !isWatchList;
-                                      isInWatchList = !isInWatchList;
+                          PosterWidget(
+                            posterUrl:
+                                '${Constants.imagePath}${state.movieDetailsModel?.posterPath ?? ""}',
+                            onTap: () async {
+                              setState(() {
+                                isWatchList = !isWatchList;
+                                isInWatchList = !isInWatchList;
+                              });
+                              if (isWatchList || isInWatchList) {
+                                await FirebaseFunctions.addWatchlist(
+                                    watchListModel: model,
+                                    onException: (e) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => CustomShowDialog(
+                                          dialogContent: e,
+                                        ),
+                                      );
                                     });
-                                    if (isWatchList || isInWatchList) {
-                                      await FirebaseFunctions.addWatchlist(
-                                          watchListModel: model,
-                                          onException: (e) {
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) => AlertDialog(
-                                                content: Text(e),
-                                                actions: [
-                                                  ElevatedButton(
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: const Text('OK'),
-                                                  )
-                                                ],
-                                              ),
-                                            );
-                                          });
-                                    }
-                                  },
-                                  child: IsWatchList(isWatchList: isInWatchList || isWatchList),
-                                ),
-                              ),
-                            ],
+                              }
+                            },
+                            child: IsWatchList(
+                              isWatchList: isInWatchList || isWatchList,
+                            ),
                           ),
                           SizedBox(width: 11.w),
                           Expanded(
@@ -257,25 +208,10 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                                 ?.genres?.length ??
                                             0,
                                         itemBuilder: (context, index) {
-                                          return Container(
-                                            width: 65.w,
-                                            height: 25.h,
-                                            alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(4.r),
-                                              border: Border.all(
-                                                color: AppColor.borderColor,
-                                                width: 1.w,
-                                              ),
-                                            ),
-                                            child: Text(
-                                              state.movieDetailsModel
-                                                      ?.genres?[index].name ??
-                                                  "",
-                                              style: AppStyles.genreText,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
+                                          return ContainerGenreWidget(
+                                            genreName: state.movieDetailsModel
+                                                    ?.genres?[index].name ??
+                                                "",
                                           );
                                         },
                                       ),
@@ -298,34 +234,10 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                     SizedBox(
                                       height: 3.h,
                                     ),
-                                    Expanded(
-                                      child: Row(
-                                        children: [
-                                          ShaderMask(
-                                            blendMode: BlendMode.srcIn,
-                                            shaderCallback: (Rect bounds) {
-                                              return const RadialGradient(
-                                                colors: [
-                                                  AppColor.primaryColor,
-                                                  AppColor.primaryLinearColor
-                                                ],
-                                              ).createShader(bounds);
-                                            },
-                                            child: const Icon(
-                                              Icons.star,
-                                              size: 20,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 7.w,
-                                          ),
-                                          Text(
-                                            "${state.movieDetailsModel?.voteAverage ?? 0.toStringAsFixed(2)}",
-                                            style: AppStyles.averageRate,
-                                          )
-                                        ],
-                                      ),
-                                    )
+                                    VoteWidget(
+                                      voteAverage:
+                                          "${state.movieDetailsModel?.voteAverage ?? 0.toStringAsFixed(2)}",
+                                    ),
                                   ],
                                 ),
                               ),

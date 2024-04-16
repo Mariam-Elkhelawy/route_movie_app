@@ -1,6 +1,5 @@
 import '../../models/MovieDiscoverModel.dart';
 
-abstract class DiscoverMovieRemoteDS{
-
+abstract class DiscoverMovieRemoteDS {
   Future<MovieDiscoverModel> getMovieDiscoverList(int genreId);
 }

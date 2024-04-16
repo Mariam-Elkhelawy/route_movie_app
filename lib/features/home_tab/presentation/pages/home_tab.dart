@@ -69,7 +69,7 @@ class _HomeTabState extends State<HomeTab> {
         ..add(HomeRecommendedFilmEvent()),
       child: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
-          /*if (state.screenStatus == ScreenStatus.loading) {
+         /* if (state.screenStatus == ScreenStatus.loading) {
             showDialog(
               context: context,
               builder: (context) {
