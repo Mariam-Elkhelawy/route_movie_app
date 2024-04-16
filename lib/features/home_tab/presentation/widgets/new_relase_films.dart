@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:route_movie_app/core/components/reusable_components/isWatchList_widget.dart';
 import 'package:route_movie_app/core/utils/app_colors.dart';
-import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
 
 class NewReleasesFilms extends StatelessWidget {
   const NewReleasesFilms(

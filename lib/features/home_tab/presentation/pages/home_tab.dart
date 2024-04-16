@@ -19,9 +19,7 @@ import 'package:route_movie_app/features/home_tab/presentation/bloc/home_bloc.da
 import 'package:route_movie_app/features/home_tab/presentation/widgets/new_relase_films.dart';
 import 'package:route_movie_app/features/home_tab/presentation/widgets/popular_film_widget.dart';
 import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
-
-import '../../../../core/components/reusable_components/isWatchList_widget.dart';
-import '../../../../core/utils/app_colors.dart';
+import '../../data/models/PopularFilmModel.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -36,9 +34,9 @@ class _HomeTabState extends State<HomeTab> {
 
   void toggleWatchlistStatus(int movieId) {
     if (watchlistMovieIds.contains(movieId)) {
-      watchlistMovieIds.remove(movieId); // Remove from watchlist
+      watchlistMovieIds.remove(movieId);
     } else {
-      watchlistMovieIds.add(movieId); // Add to watchlist
+      watchlistMovieIds.add(movieId);
     }
   }
 
@@ -128,50 +126,31 @@ class _HomeTabState extends State<HomeTab> {
                               state.popularFilmModel?.results?[itemIndex].id ??
                                   0);
 
-                      return InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, AppRoutesNames.movieDetails,
-                              arguments: Map<String, dynamic>.from({
-                                "filmId": state.popularFilmModel?.results?[itemIndex].id ?? 0,
-                                "isWatchList": isInWatchListP,
-                              }));
+                      return PopularFilmWidget(
+                        isWatchList: isInWatchListP,
+                        onTap: () async {
+                          setState(() {
+                            isInWatchListP = !isInWatchListP;
+                          });
+                          toggleWatchlistStatus(
+                              state.popularFilmModel?.results?[itemIndex].id ??
+                                  0);
+                          if (isInWatchListP) {
+                            await FirebaseFunctions.addWatchlist(
+                              watchListModel: model,
+                              onException: (e) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => CustomShowDialog(
+                                    dialogContent: e,
+                                  ),
+                                );
+                              },
+                            );
+                          }
                         },
-                        child: PopularFilmWidget(
-                          isWatchList: isInWatchListP,
-                          onTap: () async {
-                            setState(() {
-                              isInWatchListP = !isInWatchListP;
-                            });
-                            toggleWatchlistStatus(state
-                                    .popularFilmModel?.results?[itemIndex].id ??
-                                0);
-                            if (isInWatchListP) {
-                              await FirebaseFunctions.addWatchlist(
-                                watchListModel: model,
-                                onException: (e) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => CustomShowDialog(
-                                      dialogContent: e,
-                                    ),
-                                  );
-                                },
-                              );
-                            }
-                          },
-                          watchListModel: model,
-                          imageBackdropPath:
-                              '${Constants.imagePath}${state.popularFilmModel?.results?[itemIndex].backdropPath ?? ''}',
-                          imagePosterPath:
-                              '${Constants.imagePath}${state.popularFilmModel?.results?[itemIndex].posterPath ?? ''} ',
-                          filmDate: state.popularFilmModel?.results?[itemIndex]
-                                  .releaseDate ??
-                              '',
-                          filmTitle: state.popularFilmModel?.results?[itemIndex]
-                                  .title ??
-                              '',
-                        ),
+                        movie: state.popularFilmModel?.results?[itemIndex] ??
+                            Results(),
                       );
                     },
                     options: CarouselOptions(
@@ -203,7 +182,7 @@ class _HomeTabState extends State<HomeTab> {
                                       .title ??
                                   '',
                               image:
-                                  '${Constants.imagePath}${state.upComingFilmModel?.results?[index].backdropPath ?? ''} ',
+                                  '${Constants.imagePath}${state.upComingFilmModel?.results?[index].backdropPath ?? '${Constants.imagePath}/j3Z3XktmWB1VhsS8iXNcrR86PXi.jpg'} ',
                               description: state.upComingFilmModel
                                       ?.results?[index].overview ??
                                   '',
@@ -218,8 +197,10 @@ class _HomeTabState extends State<HomeTab> {
                               Navigator.pushNamed(
                                   context, AppRoutesNames.movieDetails,
                                   arguments: Map<String, dynamic>.from({
-                                  "filmId": state.upComingFilmModel?.results?[index].id ?? 0,
-                                  "isWatchList": isInWatchListN,
+                                    "filmId": state.upComingFilmModel
+                                            ?.results?[index].id ??
+                                        0,
+                                    "isWatchList": isInWatchListN,
                                   }));
                             },
                             child: NewReleasesFilms(
@@ -246,7 +227,7 @@ class _HomeTabState extends State<HomeTab> {
                                 }
                               },
                               filmImage:
-                                  '${Constants.imagePath}${state.upComingFilmModel?.results?[index].posterPath ?? ''} ',
+                                  '${Constants.imagePath}${state.upComingFilmModel?.results?[index].posterPath ?? '${Constants.imagePath}/j3Z3XktmWB1VhsS8iXNcrR86PXi.jpg'} ',
                             ),
                           );
                         },
@@ -274,6 +255,8 @@ class _HomeTabState extends State<HomeTab> {
                             state.recommendedFilmModel?.results?[index].id ??
                                 0);
                         return MovieListWidget(
+                          movie: state.recommendedFilmModel?.results?[index] ??
+                              Results(),
                           onClicked: () async {
                             setState(() {
                               isInWatchListM = !isInWatchListM;
@@ -313,27 +296,7 @@ class _HomeTabState extends State<HomeTab> {
                               );
                             }
                           },
-                          imageUrl:
-                              "${Constants.imagePath}${state.recommendedFilmModel?.results?[index].posterPath ?? ""}",
-                          voteAverage:
-                              "${state.recommendedFilmModel?.results?[index].voteAverage ?? 0.toStringAsFixed(2)}",
-                          movieTitle: state.recommendedFilmModel
-                                  ?.results?[index].title ??
-                              "",
-                          releaseDate: state.recommendedFilmModel
-                                  ?.results?[index].releaseDate ??
-                              "",
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutesNames.movieDetails,
-                                arguments: Map<String, dynamic>.from({
-                                  "filmId": state.recommendedFilmModel?.results?[index].id ?? 0,
-                                  "isWatchList": isInWatchListM,
-                                }),
-                            );
-                          },
-                          child: IsWatchList(isWatchList: isInWatchListM),
+                          isWatchList: isInWatchListM,
                         );
                       },
                       separatorBuilder: (context, index) {

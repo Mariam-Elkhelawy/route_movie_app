@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:route_movie_app/core/api/api_manager.dart';
 import 'package:route_movie_app/core/api/end_points.dart';
@@ -20,9 +18,6 @@ class BrowseRemoteDSImplement implements BrowseRemoteDS {
     });
     MovieListModel movieListModel = MovieListModel.fromJson(response.data);
 
-
-    
-    print(response.data.toString());
     if (response.statusCode == 200) {
       return movieListModel;
     } else {

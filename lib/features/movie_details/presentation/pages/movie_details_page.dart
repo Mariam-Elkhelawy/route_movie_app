@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:route_movie_app/core/components/reusable_components/Container_movie.dart';
@@ -19,10 +17,10 @@ import '../../../../config/routes/app_routes_names.dart';
 import '../../../../core/components/reusable_components/custom_show_dialog.dart';
 import '../../../../core/components/reusable_components/isWatchList_widget.dart';
 import '../../../../core/enums/enums.dart';
-import '../../../../core/utils/app_images.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/styles.dart';
+import '../../../home_tab/data/models/PopularFilmModel.dart';
 import '../bloc/movie_details_bloc.dart';
 
 class MovieDetailsPage extends StatefulWidget {
@@ -38,7 +36,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   WatchListModel? watchListModel;
   List<int> watchlistMovieIds = [];
   bool isInWatchList = false;
-
 
   @override
   void initState() {
@@ -230,7 +227,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                           });
                                     }
                                   },
-                                  child: IsWatchList(isWatchList: isInWatchList || isWatchList),
+                                  child: IsWatchList(
+                                      isWatchList:
+                                          isInWatchList || isWatchList),
                                 ),
                               ),
                             ],
@@ -388,31 +387,14 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                               );
                             }
                           },
-                          imageUrl:
-                              "${Constants.imagePath}${state.moreLikeModel?.results?[index].posterPath ?? ""}",
-                          voteAverage:
-                              "${state.moreLikeModel?.results?[index].voteAverage ?? 0.toStringAsFixed(2)}",
-                          movieTitle:
-                              state.moreLikeModel?.results?[index].title ?? "",
-                          releaseDate: state
-                                  .moreLikeModel?.results?[index].releaseDate ??
-                              "",
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, AppRoutesNames.movieDetails,
-                                arguments: Map<String, dynamic>.from({
-                                  "filmId":
-                                      state.moreLikeModel?.results?[index].id ??
-                                          0,
-                                  "isWatchList": isInWatchListM,
-                                }));
-                          },
-                          child: IsWatchList(isWatchList: isInWatchListM),
+                          movie:
+                              state.moreLikeModel?.results?[index] ?? Results(),
+                          isWatchList: isInWatchListM,
                         );
                       },
                       separatorBuilder: (context, index) {
                         return SizedBox(
-                          width: 14.w,
+                          width: 14.w
                         );
                       },
                     ),
