@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:route_movie_app/config/routes/app_routes_names.dart';
 import 'package:route_movie_app/core/components/reusable_components/Container_movie.dart';
 import 'package:route_movie_app/core/components/reusable_components/custom_show_dialog.dart';
 import 'package:route_movie_app/core/components/reusable_components/movie_list_widget.dart';
@@ -23,23 +22,11 @@ import '../../data/models/PopularFilmModel.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
-
   @override
   State<HomeTab> createState() => _HomeTabState();
 }
 
 class _HomeTabState extends State<HomeTab> {
-  WatchListModel? watchListModel;
-  List<int> watchlistMovieIds = [];
-
-  void toggleWatchlistStatus(int movieId) {
-    if (watchlistMovieIds.contains(movieId)) {
-      watchlistMovieIds.remove(movieId);
-    } else {
-      watchlistMovieIds.add(movieId);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -67,7 +54,7 @@ class _HomeTabState extends State<HomeTab> {
         ..add(HomeRecommendedFilmEvent()),
       child: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
-         /* if (state.screenStatus == ScreenStatus.loading) {
+          /* if (state.screenStatus == ScreenStatus.loading) {
             showDialog(
               context: context,
               builder: (context) {
@@ -81,9 +68,6 @@ class _HomeTabState extends State<HomeTab> {
               },
             );
           }*/
-          // else if (state.screenStatus == ScreenStatus.success) {
-          //    BlocProvider.of<HomeBloc>(context).add(HomePopularFilmEvent());
-          // }
           if (state.screenStatus == ScreenStatus.failure) {
             showDialog(
               context: context,
@@ -105,7 +89,7 @@ class _HomeTabState extends State<HomeTab> {
                     itemCount: state.popularFilmModel?.results?.length ?? 0,
                     itemBuilder: (BuildContext context, int itemIndex,
                         int pageViewIndex) {
-                      bool isInWatchListP = watchlistMovieIds.contains(
+                     bool isInWatchListP = watchlistMovieIds.contains(
                           state.popularFilmModel?.results?[itemIndex].id ?? 0);
                       WatchListModel model = WatchListModel(
                           isWatchList: true,
@@ -172,7 +156,7 @@ class _HomeTabState extends State<HomeTab> {
                       height: 186.h,
                       child: ListView.separated(
                         itemBuilder: (context, index) {
-                          bool isInWatchListN = watchlistMovieIds.contains(
+                         bool isInWatchListN = watchlistMovieIds.contains(
                               state.upComingFilmModel?.results?[index].id ?? 0);
                           WatchListModel model = WatchListModel(
                               isWatchList: true,
@@ -192,43 +176,31 @@ class _HomeTabState extends State<HomeTab> {
                               movieId:
                                   state.upComingFilmModel?.results?[index].id ??
                                       0);
-                          return InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, AppRoutesNames.movieDetails,
-                                  arguments: Map<String, dynamic>.from({
-                                    "filmId": state.upComingFilmModel
-                                            ?.results?[index].id ??
-                                        0,
-                                    "isWatchList": isInWatchListN,
-                                  }));
+                          return NewReleasesFilms(
+                            movie: state.upComingFilmModel?.results?[index] ??
+                                Results(),
+                            isWatchList: isInWatchListN,
+                            onTap: () async {
+                              setState(() {
+                                isInWatchListN =!isInWatchListN;
+                              });
+                              toggleWatchlistStatus(
+                                  state.upComingFilmModel?.results?[index].id ??
+                                      0);
+                              if (isInWatchListN) {
+                                await FirebaseFunctions.addWatchlist(
+                                  watchListModel: model,
+                                  onException: (e) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => CustomShowDialog(
+                                        dialogContent: e,
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
                             },
-                            child: NewReleasesFilms(
-                              isWatchList: isInWatchListN,
-                              onTap: () async {
-                                setState(() {
-                                  isInWatchListN = !isInWatchListN;
-                                });
-                                toggleWatchlistStatus(state.upComingFilmModel
-                                        ?.results?[index].id ??
-                                    0);
-                                if (isInWatchListN) {
-                                  await FirebaseFunctions.addWatchlist(
-                                    watchListModel: model,
-                                    onException: (e) {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) => CustomShowDialog(
-                                          dialogContent: e,
-                                        ),
-                                      );
-                                    },
-                                  );
-                                }
-                              },
-                              filmImage:
-                                  '${Constants.imagePath}${state.upComingFilmModel?.results?[index].posterPath ?? '${Constants.imagePath}/j3Z3XktmWB1VhsS8iXNcrR86PXi.jpg'} ',
-                            ),
                           );
                         },
                         itemCount:

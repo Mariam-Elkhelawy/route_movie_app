@@ -64,10 +64,11 @@ class MovieListWidget extends StatelessWidget {
                 Positioned(
                   left: -2,
                   child: InkWell(
-                      onTap: () {
-                        onClicked();
-                      },
-                      child: IsWatchList(isWatchList: isWatchList)),
+                    onTap: () {
+                      onClicked();
+                    },
+                    child: IsWatchList(isWatchList: isWatchList),
+                  ),
                 )
               ],
             ),

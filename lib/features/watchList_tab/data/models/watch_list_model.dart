@@ -1,3 +1,5 @@
+import 'package:route_movie_app/features/home_tab/data/models/PopularFilmModel.dart';
+
 class WatchListModel {
   String id;
   String title;
@@ -39,5 +41,15 @@ class WatchListModel {
       isWatchList: json['isWatchList'],
       movieId: json['movieId'],
     );
+  }
+}
+
+List<int> watchlistMovieIds = [];
+Results? movie;
+void toggleWatchlistStatus(int movieId) {
+  if (watchlistMovieIds.contains(movieId)) {
+    watchlistMovieIds.remove(movieId);
+  } else {
+    watchlistMovieIds.add(movieId);
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:route_movie_app/core/firebase/firebase_functions.dart';
 import 'package:route_movie_app/core/utils/app_colors.dart';
+import 'package:route_movie_app/core/utils/app_images.dart';
 import 'package:route_movie_app/core/utils/app_strings.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
 import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
@@ -47,10 +48,19 @@ class WatchListTab extends StatelessWidget {
                 var films =
                     snapshot.data?.docs.map((e) => e.data()).toList() ?? [];
                 if (films.isEmpty) {
-                  return const Center(
-                    child: Text(
-                      'No films in watchlist',
-                    ),
+                  return Column(
+                    children: [
+                      SizedBox(height: 250.h),
+                      Image.asset(AppImages.noMovies),
+                      SizedBox(height: 10.h),
+                       Center(
+                        child: Text(
+                          AppStrings.noMovieWatchList,
+                          style: AppStyles.bodyMedium,
+
+                        ),
+                      ),
+                    ],
                   );
                 }
                 return Expanded(
