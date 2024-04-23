@@ -6,7 +6,8 @@ import 'package:route_movie_app/core/utils/app_strings.dart';
 import 'package:route_movie_app/features/browse_tab/presentation/pages/browse_tab.dart';
 import 'package:route_movie_app/features/home_tab/presentation/pages/home_tab.dart';
 import 'package:route_movie_app/features/search_tab/presentation/pages/search_tab.dart';
-import 'package:route_movie_app/features/watchList_tab/presentation/pages/WatchList_tab.dart';
+import 'package:route_movie_app/features/watchList_tab/presentation/pages/watchList_tab.dart';
+
 
 class LayoutScreen extends StatefulWidget {
   const LayoutScreen({super.key});
@@ -92,8 +93,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
 List<Widget> screens = [
   const HomeTab(),
-  const SearchTab(),
-  const BrowseTab(),
+   SearchTab(),
+   BrowseTab(),
   const WatchListTab()
 ];
 
