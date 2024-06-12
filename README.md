@@ -46,6 +46,21 @@ route_movie_app/
 └── README.md                 # Project README file
 
 
+### Explanation:
+
+- **`lib/`**: Contains the main application logic.
+  - **`core/`**: Core functionalities and utilities used throughout the app.
+  - **`data/`**: Data layer containing API integrations and data sources.
+  - **`domain/`**: Domain layer with entities, repositories, and use cases.
+  - **`presentation/`**: Presentation layer using BLoC for state management, UI widgets, and screens.
+    - **`blocs/`**: Business Logic Components (BLoCs) managing app state.
+    - **`screens/`**: Different UI screens of the application.
+    - **`widgets/`**: Reusable UI components and widgets.
+- **`assets/`**: Contains static assets such as images used in the app.
+- **`pubspec.yaml`**: Configuration file specifying dependencies and metadata for the Flutter project.
+- **`README.md`**: Markdown file containing project documentation and information.
+
+This structure helps organize the project into logical components, making it easier to navigate and understand the codebase.
 ## Getting Started
 
 To get started with the Flutter Movie App, follow these steps:
