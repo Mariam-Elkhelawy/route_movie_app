@@ -48,17 +48,19 @@ This structure helps organize the project into logical components, making it eas
   - **`config/`**: Contains configuration files specific to the application setup.
   - **`features/`**: Each feature of the application resides in its own directory under `features/`.
     - **`feature_name/`**: Replace `feature_name` with the actual name of each feature.
-      - **`data/`**: Manages data layer operations such as API integrations and data sources.
-      - **`domain/`**: Contains domain logic including entities, repositories, and use cases.
-      - **`presentation/`**: Presentation layer using BLoC for state management, UI widgets, and screens.
-        - **`blocs/`**: Business Logic Components (BLoCs) managing app state.
-        - **`screens/`**: Different UI screens of the application.
-        - **`widgets/`**: Reusable UI components and widgets.
+       - **`data/`**: Manages data layer operations such as API integrations and data sources.
+       - **`domain/`**: Contains domain logic including entities, repositories, and use cases.
+       - **`presentation/`**: Presentation layer using BLoC for state management, UI widgets, and screens.
+         - **`blocs/`**: Business Logic Components (BLoCs) managing app state.
+          - **`screens/`**: Different UI screens of the application.
+         - **`widgets/`**: Reusable UI components and widgets.
 - **`assets/`**: Stores static assets such as images that are used in various parts of the application.
 - **`pubspec.yaml`**: The project's configuration file where dependencies and metadata are specified.
 - **`README.md`**: This Markdown file contains documentation and information about the project structure, features, and usage instructions.
 
-This structure helps organize the project into logical components based on functionality, making it easier to navigate, understand, and maintain. Adjust the directory names (`core/`, `config/`, `features/`, `presentation/`, etc.) and descriptions as per your actual project setup and requirements.
+This structure helps organize the project into logical components, making it easier to navigate and understand the codebase.
+
+
 
 ## 📸 Screenshots
 
