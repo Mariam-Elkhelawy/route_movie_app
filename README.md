@@ -79,11 +79,6 @@ Here are some screenshots of the app:
    ```bash
     flutter run
 
-
-
-   
-
-
 ## Getting Started
 
 To get started with the Flutter Movie App, follow these steps:
