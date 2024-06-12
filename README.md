@@ -48,25 +48,20 @@ Here are some screenshots of the app:
 
 <img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/ea067b78-ca1d-4646-b706-80531a1a4579" alt="Splash Screen" height="400">
 
-*Splash Screen: The Logo of the app.*
 
 
 <img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/0e187550-a375-462b-8a3c-4905f076df86" alt="Splash Screen" height="400">
 
-*Home Screen: Displaying popular and new movies.*
 
 
 <img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/36d68163-30b5-46ad-b7eb-e4b0c8b66b90" alt="Search Screen" height="400"> &emsp; 
 <img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/282355a1-9cd9-46eb-80fb-09a0caaa3642" alt="Search Screen" height="400">
 
-*Search Screen: Searching for movies.*
 
 <img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/36d68163-30b5-46ad-b7eb-e4b0c8b66b90" alt="Category Screen" height="400">  <img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/282355a1-9cd9-46eb-80fb-09a0caaa3642" alt="Category Screen" height="400">
 
-*Category Screen: Browsing movies by categories.*
 
 <img src="screenshots/bookmark_screen.png" alt="Bookmark Screen" height="400">
-*Bookmark Screen: Viewing bookmarked movies.*
 
 ## 🚀 Installation
 
