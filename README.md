@@ -52,7 +52,7 @@ Here are some screenshots of the app:
 
 
 
-<img src="screenshots/bookmark_screen.png" alt="Bookmark Screen" height="400">
+<img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/70d04f88-7205-42e6-a627-ba7bbed0c0c9" alt="Bookmark Screen" height="400">
 
 ## 🚀 Installation
 
