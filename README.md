@@ -1,4 +1,4 @@
-# 🎬 Flutter Movie App 🍿
+# 🎬 Route Movie App 🍿
 
 Welcome to the Flutter Movie App repository! This project aims to provide users with access to popular and newly released movies. Users can explore movie suggestions, search for specific films, view movie details including synopsis and genre, and even bookmark their favorite movies for later viewing.
 
