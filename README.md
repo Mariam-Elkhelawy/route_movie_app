@@ -42,6 +42,46 @@ The project structure is organized according to the Clean Architecture principle
 
 This structure helps organize the project into logical components, making it easier to navigate and understand the codebase.
 
+## Project Structure
+
+The Route Movie App project is organized into the following directory structure:
+
+- **`lib/`**: Contains the main application logic.
+  - **`core/`**: Core functionalities and utilities used throughout the app.
+  - **`config/`**: Configuration files and settings.
+  - **`features/`**: Each feature of the app is organized into subdirectories.
+    - **`feature_name/`**:
+      - **`data/`**: Data layer for the feature, including API integrations and data sources.
+      - **`domain/`**: Domain layer with entities, repositories, and use cases specific to the feature.
+      - **`presentation/`**: Presentation layer using BLoC for state management, UI widgets, and screens.
+  - **`presentation/`**: Presentation layer with BLoCs, screens, and widgets shared across features.
+    - **`blocs/`**: Business Logic Components (BLoCs) managing app state.
+    - **`screens/`**: Different UI screens of the application.
+    - **`widgets/`**: Reusable UI components and widgets.
+- **`assets/`**: Contains static assets such as images used in the app.
+- **`pubspec.yaml`**: Configuration file specifying dependencies and metadata for the Flutter project.
+- **`README.md`**: Markdown file containing project documentation and information.
+
+### Explanation:
+
+- **`lib/`**: This directory contains the main logic of the application.
+  - **`core/`**: Houses core functionalities and utilities shared across the entire app.
+  - **`config/`**: Contains configuration files specific to the application setup.
+  - **`features/`**: Each feature of the application resides in its own directory under `features/`.
+    - **`feature_name/`**: Replace `feature_name` with the actual name of each feature.
+      - **`data/`**: Manages data layer operations such as API integrations and data sources.
+      - **`domain/`**: Contains domain logic including entities, repositories, and use cases.
+      - **`presentation/`**: Handles UI-related tasks using BLoC for state management, widgets, and screens.
+  - **`presentation/`**: Shared presentation layer components used across different features.
+    - **`blocs/`**: Centralizes business logic components (BLoCs) managing app-wide state.
+    - **`screens/`**: Includes all UI screens implemented in the application.
+    - **`widgets/`**: Houses reusable UI components and widgets used throughout the app.
+- **`assets/`**: Stores static assets such as images that are used in various parts of the application.
+- **`pubspec.yaml`**: The project's configuration file where dependencies and metadata are specified.
+- **`README.md`**: This Markdown file contains documentation and information about the project structure, features, and usage instructions.
+
+This structure helps organize the project into logical components based on functionality, making it easier to navigate, understand, and maintain. Adjust the directory names (`core/`, `config/`, `features/`, `presentation/`, etc.) and descriptions as per your actual project setup and requirements.
+
 ## 📸 Screenshots
 
 Here are some screenshots of the app:
