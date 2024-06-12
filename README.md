@@ -51,7 +51,7 @@ Here are some screenshots of the app:
 *Splash Screen: The Logo of the app.*
 
 
-<img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/ea067b78-ca1d-4646-b706-80531a1a4579" alt="Splash Screen" height="400">
+<img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/0e187550-a375-462b-8a3c-4905f076df86" alt="Splash Screen" height="400">
 
 *Home Screen: Displaying popular and new movies.*
 
