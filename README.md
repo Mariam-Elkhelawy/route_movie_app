@@ -114,8 +114,8 @@ Contributions are welcome! If you'd like to contribute, please follow these step
 
 ## 👥 Contributors
 
-- **Mariam Elkhelawy** - [Mariam-Elkhelawy](https://github.com/Mariam-Elkhelawy)
 - **Omnia Nabil** - [Omnia-97](https://github.com/Omnia-97)
+- **Mariam Elkhelawy** - [Mariam-Elkhelawy](https://github.com/Mariam-Elkhelawy)
 
 ## 📜 License
 
