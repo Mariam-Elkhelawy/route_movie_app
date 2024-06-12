@@ -24,11 +24,32 @@ This project is our graduation project from Route Academy.
 - **☁️ Backend:** Firebase (Firestore, Authentication)
 - **🔗REST APIs:** Movie database API (TMDb API)
 
+## 📁 Project Structure
+
+The project structure is organized according to the Clean Architecture principles:
+route_movie_app/
+│
+├── lib/
+│   ├── core/                 # Core functionalities and utilities
+│   ├── data/                 # Data layer: API and data sources
+│   ├── domain/               # Domain layer: entities, repositories, use cases
+│   ├── presentation/         # Presentation layer: BLoC, UI widgets and screens
+│   │   ├── blocs/            # BLoC components
+│   │   ├── screens/          # Different screen UIs
+│   │   └── widgets/          # Reusable UI widgets
+│   └── main.dart             # Entry point of the application
+│
+├── assets/                   # Directory for image and other assets
+│
+├── pubspec.yaml              # Pubspec file for dependencies and metadata
+│
+└── README.md                 # Project README file
 
 
 ## Getting Started
 
 To get started with the Flutter Movie App, follow these steps:
+
 
 1. Clone the Repository: git clone https://github.com/yourusername/flutter-movie-app.git
    
