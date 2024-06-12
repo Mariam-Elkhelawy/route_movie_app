@@ -21,7 +21,7 @@ This project is our graduation project from Route Academy.
 
 - **📦 State Management:** BLoC (Business Logic Component)
 - **🏛️ Architecture:** Clean Architecture
-- **☁️ Backend:** Firebase (Firestore, Authentication)
+- **☁️ Backend:** Firebase (Firestore)
 - **🔗REST APIs:** Movie database API (TMDb API)
 
 ## 📁 Project Structure
@@ -94,15 +94,6 @@ To use the movie database API and Firebase, follow these steps to configure your
 1. **Create a Firebase project** and configure Firestore.
 2. **Download the `google-services.json`** file and place it in the `android/app` directory of your Flutter project.
 3. **Add your Firebase configuration** to the project.
-
-## 📝 Usage
-
-Here's how you can use the Route Movie App:
-
-- **Home Screen:** Browse popular and new movies.
-- **Search:** Use the search bar to find movies.
-- **Categories:** Browse movies by different categories.
-- **Bookmark:** Save your favorite movies to watch later.
 
 ## 🤝 Contributing
 
