@@ -46,9 +46,11 @@ This structure helps organize the project into logical components, making it eas
 
 Here are some screenshots of the app:
 
-![Splash Screen](https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/ea067b78-ca1d-4646-b706-80531a1a4579)
+<img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/ea067b78-ca1d-4646-b706-80531a1a4579" alt="Splash Screen" height="400">
 
-![Home Screen](https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/ea067b78-ca1d-4646-b706-80531a1a4579)
+
+<img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/ea067b78-ca1d-4646-b706-80531a1a4579" alt="Splash Screen" height="400">
+
 *Home Screen: Displaying popular and new movies.*
 
 ![Search Screen](screenshots/search_screen.png)
