@@ -2,29 +2,27 @@
 
 Welcome to the Flutter Movie App repository! This project aims to provide users with access to popular and newly released movies. Users can explore movie suggestions, search for specific films, view movie details including synopsis and genre, and even bookmark their favorite movies for later viewing.
 
-## Features
+This project is our graduation project from Route Academy.
 
-✨ Browse Trending Movies: Stay up-to-date with the latest and hottest films currently in theaters.
+- **🎥 Display Movies:** Browse popular and new movies.
+- **🔍 Search Functionality:** Search for movies using keywords.
+- **✨ Browse Trending Movies:** Stay up-to-date with the latest and hottest films currently in theaters.
+- **📂 Categories:** Browse movies by different categories for better navigation.
+- **🎥 Movie Details:** Get comprehensive information about each movie, including its storyline and genre.
+- **🎭 Genre-based Recommendations:** Discover similar movies based on genre preferences.
+- **🔖 Bookmarking:** Save your favorite movies to a bookmark list for easy access later.
+- **🔥 Firebase Integration:** Store user data and bookmarks securely in Firebase.
+- **🌐 API Integration:** Fetch movie data from a movie database API.
+- **📱 Responsive Design:** Enjoy a seamless experience across various screen sizes and devices.
 
-🔍 Search Functionality: Easily find any movie you're looking for by searching its title.
+## 🛠️ Technologies Used
 
-🎥 Movie Details: Get comprehensive information about each movie, including its storyline and genre.
+- **📦 State Management:** BLoC (Business Logic Component)
+- **🏛️ Architecture:** Clean Architecture
+- **☁️ Backend:** Firebase (Firestore, Authentication)
+- **🔗REST APIs:** Movie database API (TMDb API)
 
-🎭 Genre-based Recommendations: Discover similar movies based on genre preferences.
 
-💖 Favorite Movies: Save your favorite films to revisit them anytime, thanks to Firebase Cloud Store integration.
-
-📱 Responsive Design: Enjoy a seamless experience across various screen sizes and devices.
-
-## Tech Stack
-
-🧱 Clean Architecture: Ensures maintainability, testability, and scalability of the codebase.
-
-🔒 Firebase Cloud Store: Stores user's favorite movies securely in the cloud.
-
-🔍 BLoC Pattern: Utilizes Business Logic Component pattern for state management.
-
-📡 REST APIs: Interacts with movie APIs to fetch data and keep the app updated with the latest information.
 
 ## Getting Started
 
