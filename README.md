@@ -89,7 +89,7 @@ To use the movie database API and Firebase, follow these steps to configure your
 
 ### Firebase:
 
-1. **Create a Firebase project** and configure Firestore and Authentication.
+1. **Create a Firebase project** and configure Firestore.
 2. **Download the `google-services.json`** file and place it in the `android/app` directory of your Flutter project.
 3. **Add your Firebase configuration** to the project.
 
