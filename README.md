@@ -41,6 +41,55 @@ The project structure is organized according to the Clean Architecture principle
 - **`README.md`**: Markdown file containing project documentation and information.
 
 This structure helps organize the project into logical components, making it easier to navigate and understand the codebase.
+## Project Structure
+
+Below is the structure of the Route Movie App project:
+
+- **`lib/`**: Contains the main application logic.
+  - **`core/`**: Core functionalities and utilities.
+    - `constants.dart`
+    - `utilities.dart`
+  - **`data/`**: Data layer with API integrations, models, and repositories.
+    - **`api/`**: API integration files.
+      - `movie_api.dart`
+    - **`models/`**: Data models.
+      - `movie_model.dart`
+    - **`repositories/`**: Data repositories.
+      - `movie_repository.dart`
+  - **`domain/`**: Domain layer with entities, repositories, and use cases.
+    - **`entities/`**: Domain entities.
+      - `movie_entity.dart`
+    - **`repositories/`**: Domain repositories.
+      - `movie_repository.dart`
+    - **`use_cases/`**: Use cases for business logic.
+      - `get_movies_use_case.dart`
+  - **`presentation/`**: Presentation layer with BLoCs, screens, and widgets.
+    - **`blocs/`**: Business Logic Components.
+      - `movie_bloc.dart`
+    - **`screens/`**: User interface screens.
+      - `home_screen.dart`
+      - `search_screen.dart`
+    - **`widgets/`**: Reusable UI components.
+      - `movie_card.dart`
+      - `search_bar.dart`
+- **`assets/`**: Contains static assets such as images and fonts.
+  - **`images/`**: Image assets.
+    - `movie_poster1.jpg`
+    - `movie_poster2.jpg`
+  - **`fonts/`**: Font assets.
+    - `roboto_regular.ttf`
+- **`android/`**: Android-specific configurations.
+  - **`app/`**: App-level Android configuration.
+    - `build.gradle`
+    - `google-services.json`
+- **`ios/`**: iOS-specific configurations.
+  - **`Runner/`**: iOS app configuration.
+    - `Info.plist`
+  - **`Runner.xcodeproj/`**: Xcode project configuration.
+    - `project.pbxproj`
+- **`pubspec.yaml`**: Flutter project configuration file.
+- **`README.md`**: Markdown file containing project documentation.
+
 
 ## 📸 Screenshots
 
