@@ -54,7 +54,9 @@ Here are some screenshots of the app:
 *Home Screen: Displaying popular and new movies.*
 
 
-<img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/36d68163-30b5-46ad-b7eb-e4b0c8b66b90" alt="Search Screen" height="400">  <img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/282355a1-9cd9-46eb-80fb-09a0caaa3642" alt="Search Screen" height="400">
+<img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/36d68163-30b5-46ad-b7eb-e4b0c8b66b90" alt="Search Screen" height="400"> 
+<img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/282355a1-9cd9-46eb-80fb-09a0caaa3642" alt="Search Screen" height="400">
+
 *Search Screen: Searching for movies.*
 
 <img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/36d68163-30b5-46ad-b7eb-e4b0c8b66b90" alt="Category Screen" height="400">  <img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/282355a1-9cd9-46eb-80fb-09a0caaa3642" alt="Category Screen" height="400">
