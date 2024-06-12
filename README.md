@@ -41,6 +41,30 @@ The project structure is organized according to the Clean Architecture principle
 - **`README.md`**: Markdown file containing project documentation and information.
 
 This structure helps organize the project into logical components, making it easier to navigate and understand the codebase.
+
+## 📸 Screenshots
+
+Here are some screenshots of the app:
+
+![Home Screen](screenshots/home_screen.png)
+*Home Screen: Displaying popular and new movies.*
+
+![Search Screen](screenshots/search_screen.png)
+*Search Screen: Searching for movies.*
+
+![Category Screen](screenshots/category_screen.png)
+*Category Screen: Browsing movies by categories.*
+
+![Bookmark Screen](screenshots/bookmark_screen.png)
+*Bookmark Screen: Viewing bookmarked movies.*
+
+## 🚀 Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Mariam-Elkhelawy/route_movie_app.git
+
+
 ## Getting Started
 
 To get started with the Flutter Movie App, follow these steps:
