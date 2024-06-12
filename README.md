@@ -48,6 +48,8 @@ Here are some screenshots of the app:
 
 <img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/ea067b78-ca1d-4646-b706-80531a1a4579" alt="Splash Screen" height="400">
 
+*Splash Screen: The Logo of the app.*
+
 
 <img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/ea067b78-ca1d-4646-b706-80531a1a4579" alt="Splash Screen" height="400">
 
@@ -101,15 +103,6 @@ To use the movie database API and Firebase, follow these steps to configure your
 2. **Download the `google-services.json`** file and place it in the `android/app` directory of your Flutter project.
 3. **Add your Firebase configuration** to the project.
 
-## 🤝 Contributing
-
-Contributions are welcome! If you'd like to contribute, please follow these steps:
-
-1. Fork the repository.
-2. Create your feature branch (`git checkout -b feature/YourFeature`).
-3. Commit your changes (`git commit -am 'Add some feature'`).
-4. Push to the branch (`git push origin feature/YourFeature`).
-5. Open a Pull Request.
 
 ## 👥 Contributors
 
