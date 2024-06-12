@@ -78,23 +78,48 @@ Here are some screenshots of the app:
 4. **Run the application:**
    ```bash
     flutter run
+## ⚙️ Configuration
 
-## Getting Started
+To use the movie database API and Firebase, follow these steps to configure your project:
 
-To get started with the Flutter Movie App, follow these steps:
+### Movie Database API:
+
+1. **Sign up for an API key** from a movie database provider (e.g., TMDb).
+2. **Add the API key** to the appropriate configuration file in your project.
+
+### Firebase:
+
+1. **Create a Firebase project** and configure Firestore and Authentication.
+2. **Download the `google-services.json`** file and place it in the `android/app` directory of your Flutter project.
+3. **Add your Firebase configuration** to the project.
+
+## 📝 Usage
+
+Here's how you can use the Route Movie App:
+
+- **Home Screen:** Browse popular and new movies.
+- **Search:** Use the search bar to find movies.
+- **Categories:** Browse movies by different categories.
+- **Bookmark:** Save your favorite movies to watch later.
+
+## 🤝 Contributing
+
+Contributions are welcome! If you'd like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create your feature branch (`git checkout -b feature/YourFeature`).
+3. Commit your changes (`git commit -am 'Add some feature'`).
+4. Push to the branch (`git push origin feature/YourFeature`).
+5. Open a Pull Request.
+
+## 👥 Contributors
+
+- **Mariam Elkhelawy** - [Mariam-Elkhelawy](https://github.com/Mariam-Elkhelawy)
+- **Omnia Nabil** - [Omnia-97](https://github.com/Omnia-97)
+
+## 📜 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 
-1. Clone the Repository: git clone https://github.com/yourusername/flutter-movie-app.git
-   
-2. Set Up Firebase: Connect the app to your Firebase project and configure Firebase Cloud Store. 
 
-3. Install Dependencies: Run flutter pub get to install all necessary dependencies.
-
-4. Run the App: Launch the app on your preferred emulator or physical device using flutter run.
-
-## Contributions
-
-Contributions to the Flutter Movie App project are highly encouraged and welcomed! Feel free to submit pull requests for new features, bug fixes, or any improvements you deem necessary.
-
-## Credits:
-This project is maintained by Omnia-97 and Mariam-Elkhelawy.
