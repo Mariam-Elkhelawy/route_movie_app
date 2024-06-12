@@ -95,9 +95,7 @@ To use the movie database API and Firebase, follow these steps to configure your
 - **Omnia Nabil** - [Omnia-97](https://github.com/Omnia-97)
 - **Mariam Elkhelawy** - [Mariam-Elkhelawy](https://github.com/Mariam-Elkhelawy)
 
-## 📜 License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 
 
