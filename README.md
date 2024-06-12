@@ -27,26 +27,6 @@ This project is our graduation project from Route Academy.
 ## 📁 Project Structure
 
 The project structure is organized according to the Clean Architecture principles:
-route_movie_app/
-│
-├── lib/
-│   ├── core/                 # Core functionalities and utilities
-│   ├── data/                 # Data layer: API and data sources
-│   ├── domain/               # Domain layer: entities, repositories, use cases
-│   ├── presentation/         # Presentation layer: BLoC, UI widgets and screens
-│   │   ├── blocs/            # BLoC components
-│   │   ├── screens/          # Different screen UIs
-│   │   └── widgets/          # Reusable UI widgets
-│   └── main.dart             # Entry point of the application
-│
-├── assets/                   # Directory for image and other assets
-│
-├── pubspec.yaml              # Pubspec file for dependencies and metadata
-│
-└── README.md                 # Project README file
-
-
-### Explanation:
 
 - **`lib/`**: Contains the main application logic.
   - **`core/`**: Core functionalities and utilities used throughout the app.
