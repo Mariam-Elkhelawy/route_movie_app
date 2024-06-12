@@ -61,8 +61,27 @@ Here are some screenshots of the app:
 ## 🚀 Installation
 
 1. **Clone the repository:**
+   
    ```bash
    git clone https://github.com/Mariam-Elkhelawy/route_movie_app.git
+
+2. **Navigate to the project directory:**
+   
+   ```bash
+   cd route_movie_app
+
+3. **Install the dependencies:**
+
+   ```bash
+   flutter pub get
+   
+4. **Run the application:**
+   ```bash
+    flutter run
+
+
+
+   
 
 
 ## Getting Started
