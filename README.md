@@ -53,13 +53,14 @@ Here are some screenshots of the app:
 
 *Home Screen: Displaying popular and new movies.*
 
-![Search Screen](screenshots/search_screen.png)
+
+<img src="https://github.com/Mariam-Elkhelawy/route_movie_app/assets/112530709/ea067b78-ca1d-4646-b706-80531a1a4579" alt="Search Screen" height="400">
 *Search Screen: Searching for movies.*
 
-![Category Screen](screenshots/category_screen.png)
+<img src="screenshots/category_screen.png" alt="Category Screen" height="400">
 *Category Screen: Browsing movies by categories.*
 
-![Bookmark Screen](screenshots/bookmark_screen.png)
+<img src="screenshots/bookmark_screen.png" alt="Bookmark Screen" height="400">
 *Bookmark Screen: Viewing bookmarked movies.*
 
 ## 🚀 Installation
