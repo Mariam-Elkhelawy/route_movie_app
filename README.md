@@ -4,6 +4,8 @@ Welcome to the Flutter Movie App repository! This project aims to provide users 
 
 This project is our graduation project from Route Academy.
 
+## ✨ Features
+
 - **🎥 Display Movies:** Browse popular and new movies.
 - **🔍 Search Functionality:** Search for movies using keywords.
 - **✨ Browse Trending Movies:** Stay up-to-date with the latest and hottest films currently in theaters.
