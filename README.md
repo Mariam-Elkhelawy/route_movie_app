@@ -28,32 +28,17 @@ This project is our graduation project from Route Academy.
 
 The project structure is organized according to the Clean Architecture principles:
 
-- **`lib/`**: Contains the main application logic.
-  - **`core/`**: Core functionalities and utilities used throughout the app.
-  - **`data/`**: Data layer containing API integrations and data sources.
-  - **`domain/`**: Domain layer with entities, repositories, and use cases.
-  - **`presentation/`**: Presentation layer using BLoC for state management, UI widgets, and screens.
-    - **`blocs/`**: Business Logic Components (BLoCs) managing app state.
-    - **`screens/`**: Different UI screens of the application.
-    - **`widgets/`**: Reusable UI components and widgets.
-- **`assets/`**: Contains static assets such as images used in the app.
-- **`pubspec.yaml`**: Configuration file specifying dependencies and metadata for the Flutter project.
-- **`README.md`**: Markdown file containing project documentation and information.
-
-This structure helps organize the project into logical components, making it easier to navigate and understand the codebase.
-
-
 - **`lib/`**: This directory contains the main logic of the application.
-  - **`core/`**: Houses core functionalities and utilities shared across the entire app.
+  - **`core/`**: Core functionalities and utilities used throughout the app.
   - **`config/`**: Contains configuration files specific to the application setup.
   - **`features/`**: Each feature of the application resides in its own directory under `features/`.
     - **`feature_name/`**: Replace `feature_name` with the actual name of each feature.
        - **`data/`**: Manages data layer operations such as API integrations and data sources.
        - **`domain/`**: Contains domain logic including entities, repositories, and use cases.
        - **`presentation/`**: Presentation layer using BLoC for state management, UI widgets, and screens.
-         - **`blocs/`**: Business Logic Components (BLoCs) managing app state.
+          - **`blocs/`**: Business Logic Components (BLoCs) managing app state.
           - **`screens/`**: Different UI screens of the application.
-         - **`widgets/`**: Reusable UI components and widgets.
+          - **`widgets/`**: Reusable UI components and widgets.
 - **`assets/`**: Stores static assets such as images that are used in various parts of the application.
 - **`pubspec.yaml`**: The project's configuration file where dependencies and metadata are specified.
 - **`README.md`**: This Markdown file contains documentation and information about the project structure, features, and usage instructions.
