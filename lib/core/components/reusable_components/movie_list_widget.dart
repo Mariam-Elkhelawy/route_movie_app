@@ -1,23 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:route_movie_app/core/components/reusable_components/Container_movie.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
-
 import '../../utils/app_colors.dart';
-import '../../utils/app_images.dart';
 
 class MovieListWidget extends StatelessWidget {
-  const MovieListWidget({
-    super.key,
-    required this.imageUrl,
-    required this.voteAverage,
-    required this.movieTitle,
-    required this.releaseDate,
-    required this.onTap,
-    required this.onClicked,
-    required this.child
-  });
+  const MovieListWidget(
+      {super.key,
+      required this.imageUrl,
+      required this.voteAverage,
+      required this.movieTitle,
+      required this.releaseDate,
+      required this.onTap,
+      required this.onClicked,
+      required this.child});
 
   final String imageUrl;
   final String voteAverage;
@@ -25,11 +21,11 @@ class MovieListWidget extends StatelessWidget {
   final String releaseDate;
   final VoidCallback onTap;
   final VoidCallback onClicked;
- final Widget child;
+  final Widget child;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         onTap();
       },
       child: Container(
@@ -53,7 +49,7 @@ class MovieListWidget extends StatelessWidget {
               children: [
                 CachedNetworkImage(
                   width: 97.w,
-                  height: 128.h,
+                  height: 126.h,
                   fit: BoxFit.cover,
                   imageUrl: imageUrl,
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
@@ -68,12 +64,12 @@ class MovieListWidget extends StatelessWidget {
                 Positioned(
                   left: -2,
                   child: InkWell(
-                    onTap:() {
-                      onClicked();
-                    },
-                    child: child
-                  ),
-                )],
+                      onTap: () {
+                        onClicked();
+                      },
+                      child: child),
+                )
+              ],
             ),
             SizedBox(
               height: 5.h,
