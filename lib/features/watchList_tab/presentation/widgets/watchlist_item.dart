@@ -31,7 +31,7 @@ class _WatchListItemState extends State<WatchListItem> {
                 Navigator.pushNamed(context, AppRoutesNames.movieDetails,
                     arguments: Map<String, dynamic>.from({
                       "filmId": widget.watchListModel.movieId,
-                      "isWatchList": true ,
+                      "isWatchList": true,
                     }));
               },
               child: Row(
@@ -62,12 +62,14 @@ class _WatchListItemState extends State<WatchListItem> {
                           showDialog(
                             context: context,
                             builder: (context) => CustomShowDialog(
-                              dialogContent: 'Film Removed from WatchList',
+                              dialogContent:
+                                  'Remove film ${widget.watchListModel.title} from WatchList ?',
                               is2Actions: true,
                               actionRequired: () async {
+                                widget.watchListModel.isWatchList = false;
                                 await FirebaseFunctions.deleteWatchList(
-                                    widget.watchListModel.id,
-                                    widget.watchListModel);
+                                  id: widget.watchListModel.id,
+                                );
                               },
                             ),
                           );

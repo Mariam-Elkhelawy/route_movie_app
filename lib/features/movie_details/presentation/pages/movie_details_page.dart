@@ -16,13 +16,13 @@ import 'package:route_movie_app/features/movie_details/presentation/widgets/cust
 import 'package:route_movie_app/features/movie_details/presentation/widgets/poster_widget.dart';
 import 'package:route_movie_app/features/movie_details/presentation/widgets/vote_widget.dart';
 import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
-import '../../../../config/routes/app_routes_names.dart';
 import '../../../../core/components/reusable_components/custom_show_dialog.dart';
 import '../../../../core/components/reusable_components/isWatchList_widget.dart';
 import '../../../../core/enums/enums.dart';
 import '../../../../core/utils/app_strings.dart';
 import '../../../../core/utils/constants.dart';
 import '../../../../core/utils/styles.dart';
+import '../../../home_tab/data/models/PopularFilmModel.dart';
 import '../bloc/movie_details_bloc.dart';
 
 class MovieDetailsPage extends StatefulWidget {
@@ -36,21 +36,12 @@ class MovieDetailsPage extends StatefulWidget {
 
 class _MovieDetailsPageState extends State<MovieDetailsPage> {
   WatchListModel? watchListModel;
-  List<int> watchlistMovieIds = [];
   bool isInWatchList = false;
 
   @override
   void initState() {
     super.initState();
     checkIfInWatchList();
-  }
-
-  void toggleWatchlistStatus(int movieId) {
-    if (watchlistMovieIds.contains(movieId)) {
-      watchlistMovieIds.remove(movieId);
-    } else {
-      watchlistMovieIds.add(movieId);
-    }
   }
 
   void checkIfInWatchList() async {
@@ -299,27 +290,9 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                                 },
                               );
                             }
-                          },
-                          imageUrl:
-                              "${Constants.imagePath}${state.moreLikeModel?.results?[index].posterPath ?? ""}",
-                          voteAverage:
-                              "${state.moreLikeModel?.results?[index].voteAverage ?? 0.toStringAsFixed(2)}",
-                          movieTitle:
-                              state.moreLikeModel?.results?[index].title ?? "",
-                          releaseDate: state
-                                  .moreLikeModel?.results?[index].releaseDate ??
-                              "",
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, AppRoutesNames.movieDetails,
-                                arguments: Map<String, dynamic>.from({
-                                  "filmId":
-                                      state.moreLikeModel?.results?[index].id ??
-                                          0,
-                                  "isWatchList": isInWatchListM,
-                                }));
-                          },
-                          child: IsWatchList(isWatchList: isInWatchListM),
+                          }, movie: state.moreLikeModel?.results?[index]??Results(),
+                          isWatchList: isInWatchListM,
+
                         );
                       },
                       separatorBuilder: (context, index) {

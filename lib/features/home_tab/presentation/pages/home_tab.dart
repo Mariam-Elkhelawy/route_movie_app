@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:route_movie_app/config/routes/app_routes_names.dart';
 import 'package:route_movie_app/core/components/reusable_components/Container_movie.dart';
 import 'package:route_movie_app/core/components/reusable_components/custom_show_dialog.dart';
 import 'package:route_movie_app/core/components/reusable_components/movie_list_widget.dart';
@@ -19,29 +18,15 @@ import 'package:route_movie_app/features/home_tab/presentation/bloc/home_bloc.da
 import 'package:route_movie_app/features/home_tab/presentation/widgets/new_relase_films.dart';
 import 'package:route_movie_app/features/home_tab/presentation/widgets/popular_film_widget.dart';
 import 'package:route_movie_app/features/watchList_tab/data/models/watch_list_model.dart';
-
-import '../../../../core/components/reusable_components/isWatchList_widget.dart';
-import '../../../../core/utils/app_colors.dart';
+import '../../data/models/PopularFilmModel.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
-
   @override
   State<HomeTab> createState() => _HomeTabState();
 }
 
 class _HomeTabState extends State<HomeTab> {
-  WatchListModel? watchListModel;
-  List<int> watchlistMovieIds = [];
-
-  void toggleWatchlistStatus(int movieId) {
-    if (watchlistMovieIds.contains(movieId)) {
-      watchlistMovieIds.remove(movieId); // Remove from watchlist
-    } else {
-      watchlistMovieIds.add(movieId); // Add to watchlist
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -69,7 +54,7 @@ class _HomeTabState extends State<HomeTab> {
         ..add(HomeRecommendedFilmEvent()),
       child: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
-         /* if (state.screenStatus == ScreenStatus.loading) {
+          /* if (state.screenStatus == ScreenStatus.loading) {
             showDialog(
               context: context,
               builder: (context) {
@@ -83,9 +68,6 @@ class _HomeTabState extends State<HomeTab> {
               },
             );
           }*/
-          // else if (state.screenStatus == ScreenStatus.success) {
-          //    BlocProvider.of<HomeBloc>(context).add(HomePopularFilmEvent());
-          // }
           if (state.screenStatus == ScreenStatus.failure) {
             showDialog(
               context: context,
@@ -107,7 +89,7 @@ class _HomeTabState extends State<HomeTab> {
                     itemCount: state.popularFilmModel?.results?.length ?? 0,
                     itemBuilder: (BuildContext context, int itemIndex,
                         int pageViewIndex) {
-                      bool isInWatchListP = watchlistMovieIds.contains(
+                     bool isInWatchListP = watchlistMovieIds.contains(
                           state.popularFilmModel?.results?[itemIndex].id ?? 0);
                       WatchListModel model = WatchListModel(
                           isWatchList: true,
@@ -128,50 +110,31 @@ class _HomeTabState extends State<HomeTab> {
                               state.popularFilmModel?.results?[itemIndex].id ??
                                   0);
 
-                      return InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, AppRoutesNames.movieDetails,
-                              arguments: Map<String, dynamic>.from({
-                                "filmId": state.popularFilmModel?.results?[itemIndex].id ?? 0,
-                                "isWatchList": isInWatchListP,
-                              }));
+                      return PopularFilmWidget(
+                        isWatchList: isInWatchListP,
+                        onTap: () async {
+                          setState(() {
+                            isInWatchListP = !isInWatchListP;
+                          });
+                          toggleWatchlistStatus(
+                              state.popularFilmModel?.results?[itemIndex].id ??
+                                  0);
+                          if (isInWatchListP) {
+                            await FirebaseFunctions.addWatchlist(
+                              watchListModel: model,
+                              onException: (e) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => CustomShowDialog(
+                                    dialogContent: e,
+                                  ),
+                                );
+                              },
+                            );
+                          }
                         },
-                        child: PopularFilmWidget(
-                          isWatchList: isInWatchListP,
-                          onTap: () async {
-                            setState(() {
-                              isInWatchListP = !isInWatchListP;
-                            });
-                            toggleWatchlistStatus(state
-                                    .popularFilmModel?.results?[itemIndex].id ??
-                                0);
-                            if (isInWatchListP) {
-                              await FirebaseFunctions.addWatchlist(
-                                watchListModel: model,
-                                onException: (e) {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) => CustomShowDialog(
-                                      dialogContent: e,
-                                    ),
-                                  );
-                                },
-                              );
-                            }
-                          },
-                          watchListModel: model,
-                          imageBackdropPath:
-                              '${Constants.imagePath}${state.popularFilmModel?.results?[itemIndex].backdropPath ?? ''}',
-                          imagePosterPath:
-                              '${Constants.imagePath}${state.popularFilmModel?.results?[itemIndex].posterPath ?? ''} ',
-                          filmDate: state.popularFilmModel?.results?[itemIndex]
-                                  .releaseDate ??
-                              '',
-                          filmTitle: state.popularFilmModel?.results?[itemIndex]
-                                  .title ??
-                              '',
-                        ),
+                        movie: state.popularFilmModel?.results?[itemIndex] ??
+                            Results(),
                       );
                     },
                     options: CarouselOptions(
@@ -193,7 +156,7 @@ class _HomeTabState extends State<HomeTab> {
                       height: 186.h,
                       child: ListView.separated(
                         itemBuilder: (context, index) {
-                          bool isInWatchListN = watchlistMovieIds.contains(
+                         bool isInWatchListN = watchlistMovieIds.contains(
                               state.upComingFilmModel?.results?[index].id ?? 0);
                           WatchListModel model = WatchListModel(
                               isWatchList: true,
@@ -203,7 +166,7 @@ class _HomeTabState extends State<HomeTab> {
                                       .title ??
                                   '',
                               image:
-                                  '${Constants.imagePath}${state.upComingFilmModel?.results?[index].backdropPath ?? ''} ',
+                                  '${Constants.imagePath}${state.upComingFilmModel?.results?[index].backdropPath ?? '${Constants.imagePath}/j3Z3XktmWB1VhsS8iXNcrR86PXi.jpg'} ',
                               description: state.upComingFilmModel
                                       ?.results?[index].overview ??
                                   '',
@@ -213,41 +176,31 @@ class _HomeTabState extends State<HomeTab> {
                               movieId:
                                   state.upComingFilmModel?.results?[index].id ??
                                       0);
-                          return InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, AppRoutesNames.movieDetails,
-                                  arguments: Map<String, dynamic>.from({
-                                  "filmId": state.upComingFilmModel?.results?[index].id ?? 0,
-                                  "isWatchList": isInWatchListN,
-                                  }));
+                          return NewReleasesFilms(
+                            movie: state.upComingFilmModel?.results?[index] ??
+                                Results(),
+                            isWatchList: isInWatchListN,
+                            onTap: () async {
+                              setState(() {
+                                isInWatchListN =!isInWatchListN;
+                              });
+                              toggleWatchlistStatus(
+                                  state.upComingFilmModel?.results?[index].id ??
+                                      0);
+                              if (isInWatchListN) {
+                                await FirebaseFunctions.addWatchlist(
+                                  watchListModel: model,
+                                  onException: (e) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => CustomShowDialog(
+                                        dialogContent: e,
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
                             },
-                            child: NewReleasesFilms(
-                              isWatchList: isInWatchListN,
-                              onTap: () async {
-                                setState(() {
-                                  isInWatchListN = !isInWatchListN;
-                                });
-                                toggleWatchlistStatus(state.upComingFilmModel
-                                        ?.results?[index].id ??
-                                    0);
-                                if (isInWatchListN) {
-                                  await FirebaseFunctions.addWatchlist(
-                                    watchListModel: model,
-                                    onException: (e) {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) => CustomShowDialog(
-                                          dialogContent: e,
-                                        ),
-                                      );
-                                    },
-                                  );
-                                }
-                              },
-                              filmImage:
-                                  '${Constants.imagePath}${state.upComingFilmModel?.results?[index].posterPath ?? ''} ',
-                            ),
                           );
                         },
                         itemCount:
@@ -274,6 +227,8 @@ class _HomeTabState extends State<HomeTab> {
                             state.recommendedFilmModel?.results?[index].id ??
                                 0);
                         return MovieListWidget(
+                          movie: state.recommendedFilmModel?.results?[index] ??
+                              Results(),
                           onClicked: () async {
                             setState(() {
                               isInWatchListM = !isInWatchListM;
@@ -313,27 +268,7 @@ class _HomeTabState extends State<HomeTab> {
                               );
                             }
                           },
-                          imageUrl:
-                              "${Constants.imagePath}${state.recommendedFilmModel?.results?[index].posterPath ?? ""}",
-                          voteAverage:
-                              "${state.recommendedFilmModel?.results?[index].voteAverage ?? 0.toStringAsFixed(2)}",
-                          movieTitle: state.recommendedFilmModel
-                                  ?.results?[index].title ??
-                              "",
-                          releaseDate: state.recommendedFilmModel
-                                  ?.results?[index].releaseDate ??
-                              "",
-                          onTap: () {
-                            Navigator.pushNamed(
-                              context,
-                              AppRoutesNames.movieDetails,
-                                arguments: Map<String, dynamic>.from({
-                                  "filmId": state.recommendedFilmModel?.results?[index].id ?? 0,
-                                  "isWatchList": isInWatchListM,
-                                }),
-                            );
-                          },
-                          child: IsWatchList(isWatchList: isInWatchListM),
+                          isWatchList: isInWatchListM,
                         );
                       },
                       separatorBuilder: (context, index) {

@@ -15,9 +15,6 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
   MoreLikeUseCase moreLikeUseCase;
   MovieDetailsBloc(this.movieDetailsUseCase, this.moreLikeUseCase)
       : super(MovieDetailsInitialState()) {
-    on<MovieDetailsEvent>((event, emit) {
-      // TODO: implement event handler
-    });
     on<GetMovieDetailsEvent>((event, emit) async {
       emit(state.copyWith(status: ScreenStatus.loading));
       var result = await movieDetailsUseCase.call(event.movieId);

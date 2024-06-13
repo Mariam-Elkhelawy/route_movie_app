@@ -17,10 +17,8 @@ import 'package:route_movie_app/features/search_tab/presentation/widgets/custom_
 class SearchTab extends StatelessWidget {
   SearchTab({super.key});
 
-  TextEditingController searchController = TextEditingController();
-
-  String searchKey = '';
-
+   TextEditingController searchController = TextEditingController();
+   String searchKey = '';
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +48,6 @@ class SearchTab extends StatelessWidget {
           //     },
           //   );
           // }
-          if (state.screenStatus == ScreenStatus.success) {}
           if (state.screenStatus == ScreenStatus.failure) {
             showDialog(
               context: context,
@@ -97,9 +94,11 @@ class SearchTab extends StatelessWidget {
                               Navigator.pushNamed(
                                   context, AppRoutesNames.movieDetails,
                                   arguments: Map<String, dynamic>.from({
-                              "filmId": state.searchFilmModel?.results?[index].id ?? 0,
-                              "isWatchList": isWatchList ?? false,
-                              }));
+                                    "filmId": state.searchFilmModel
+                                            ?.results?[index].id ??
+                                        0,
+                                    "isWatchList": isWatchList ?? false,
+                                  }));
                             },
                             child: CustomSearchWidget(
                               filmImage:

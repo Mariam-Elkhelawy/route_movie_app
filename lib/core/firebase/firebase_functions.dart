@@ -21,10 +21,10 @@ class FirebaseFunctions {
       final snapshot = await getWatchListCollection().get();
       return snapshot.docs.any((doc) => doc.id == filmId);
     } catch (e) {
-      print('Error checking film existence: $e');
       return false;
     }
   }
+
   static Future<bool> addWatchlist({
     required WatchListModel watchListModel,
     required Function onException,
@@ -34,46 +34,25 @@ class FirebaseFunctions {
       if (filmExists) {
         onException(
             'Film already exists in watchlist : ${watchListModel.title}');
-        return filmExists; // Return the filmExists value
+        return filmExists;
       }
 
       await getWatchListCollection().doc(watchListModel.id).set(watchListModel);
       onException('Film added to watchlist : ${watchListModel.title}');
-      return filmExists; // Return the filmExists value
+      return filmExists;
     } catch (e) {
       onException('Error adding film to watchlist: $e');
-      return false; // Return false if an error occurs
+      return false;
     }
   }
-
-/*
-  static Future<void> addWatchlist({
-    required WatchListModel watchListModel,
-    required Function onException,
-  }) async {
-    try {
-      final filmExists = await checkIfFilmExists(watchListModel.id);
-      if (filmExists) {
-
-        onException(
-            'Film already exists in watchlist : ${watchListModel.title}');
-        return;
-      }
-
-      await getWatchListCollection().doc(watchListModel.id).set(watchListModel);
-      onException('Film added to watchlist : ${watchListModel.title}');
-    } catch (e) {
-      onException('Error adding film to watchlist: $e');
-    }
-  }*/
 
   static Stream<QuerySnapshot<WatchListModel>> getWatchList() {
     return getWatchListCollection().snapshots();
   }
 
-  static Future<void> deleteWatchList(
-      String id, WatchListModel watchListModel) {
-    watchListModel.isWatchList = false;
+  static Future<void> deleteWatchList({
+    required String id,
+  }) {
     return getWatchListCollection().doc(id).delete();
   }
 }
