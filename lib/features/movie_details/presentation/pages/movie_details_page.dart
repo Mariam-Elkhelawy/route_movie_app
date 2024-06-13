@@ -253,6 +253,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
                             state.moreLikeModel?.results?[index].id ?? 0);
 
                         return MovieListWidget(
+
                           onClicked: () async {
                             setState(() {
                               isInWatchListM = !isInWatchListM;
