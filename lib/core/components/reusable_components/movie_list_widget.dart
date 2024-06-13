@@ -1,27 +1,47 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:route_movie_app/core/utils/styles.dart';
+
 import 'package:route_movie_app/config/routes/app_routes_names.dart';
 import 'package:route_movie_app/core/components/reusable_components/isWatchList_widget.dart';
 import 'package:route_movie_app/core/utils/constants.dart';
 import 'package:route_movie_app/core/utils/styles.dart';
 import '../../../features/home_tab/data/models/PopularFilmModel.dart';
+
 import '../../utils/app_colors.dart';
 
 class MovieListWidget extends StatelessWidget {
   const MovieListWidget(
       {super.key,
+
+      required this.imageUrl,
+      required this.voteAverage,
+      required this.movieTitle,
+      required this.releaseDate,
+      required this.onTap,
+      required this.onClicked,
+      required this.child});
+
       required this.onClicked,
       required this.movie,
       required this.isWatchList});
 
+
   final VoidCallback onClicked;
+
+  final Widget child;
+
   final Results movie;
   final bool isWatchList;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        onTap();
+
         Navigator.pushNamed(context, AppRoutesNames.movieDetails,
             arguments: Map<String, dynamic>.from({
               "filmId": movie.id ?? 0,
@@ -49,7 +69,7 @@ class MovieListWidget extends StatelessWidget {
               children: [
                 CachedNetworkImage(
                   width: 97.w,
-                  height: 128.h,
+                  height: 126.h,
                   fit: BoxFit.cover,
                   imageUrl: '${Constants.imagePath}${movie.posterPath ?? ''} ',
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
